@@ -121,20 +121,29 @@ print(passwordChecker(s))
 
 print("-------------- Question 6 (Bonus) --------------")
 def ipv4Checker(ipv4):
+
     for item in ipv4:
-        if (int(item[0]) == 0 and len(item) != 1) or len(ipv4) != 4 or int(item) < 0 or int(item) > 255 or item == '':
+        #we put all the conditions that prevent an IPv4 from being VALID:
+        #1-an IPv4 have 4 numbers and 3 periods
+        #2-each number must between 0-255
+        #3-a number that have more that 1 digit must not start with 0
+        #4-cannot have consecutive periods
+
+        if item == '' or (int(item[0]) == 0 and len(item) != 1) or len(ipv4) != 4 or (int(item) < 0 and int(item) > 255):
             return False
+    # if it meets the condition then the function will be terminated ,so we don't need an "else:"
     return True
 
 
+#it will keep looping until it meets the contion to break the loop
 while True:
-    try:
+    try: #will try to run this code if an error accure it will skip to "except".
         ip = input("enter your IPv4 : ").split(".")
         result = ipv4Checker(ip)
-        if result:
+        if result: #boolean
             print("your IPv4 is VALID.")
-            break
+            break #the break point of the loop if condtion is met
         else:
             print("your IPv4 is INVALID. Please try AGAIN.")
-    except ValueError:
+    except ValueError: #if an error accures this will prevent the programm from stopping due to a code error
         print("this is not an IPv4! Please try AGAIN.")

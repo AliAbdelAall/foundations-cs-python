@@ -25,7 +25,7 @@ def countDigit(num):
 def findMaxInput(): #handling user input to enter only a list of in seperated by spaces
     while True:
         try:
-            lst = list(map(int,input("enter a number a list of number separated my spaces: ").split()))
+            lst = list(map(int,input("enter a list of number separated my spaces: ").split()))
             return lst
         except ValueError:
             print("the list must be numbers.")
@@ -42,36 +42,44 @@ def findMax(lst):
             return findMax(lst[1:])
 
 
-# def countTagsInput():
-#     print("Enter your HTML code : ")
-#     lists = []
-#     tag_separators = ["<", ">"]
-#     while True:
-#         s = input()
-#         if s:
-#             for separator in tag_separators:
-#                 s = s.replace(separator, "|")
-#             result = s.split("|")
-#             lists.append(result)
-#         else:
-#             break
-#     return lists
-#
-#
-# def countTags(lst):
-#     tag = input("Enter a tag : ")
-#     counter = 0
-#     for line in lst:
-#         if line[1] == tag and line[-1] == "/"+tag:
-#             counter += 1
-#     result = "this tag "+tag+" have been repeated "+str(counter)+ "times."
-#     return result
-#
-#
-# print(countTags(countTagsInput()))
-########### This code is yet to be finished #############
+def countTagInput():
+    tag = input("Enter a tag : ")
 
-def choiceInput(): #handling user input to input only pisitive intrgers
+    return tag
+
+def htmlInput():
+    html_code = """
+<html> 
+<head> 
+<title>My Website</title> 
+</head> 
+<body> 
+<h1>Welcome to my website!</h1> 
+<p>Here you'll find information about me and my hobbies.</p> 
+<h2>Hobbies</h2> 
+<ul> 
+<li>Playing guitar</li> 
+<li>Reading books</li> 
+<li>Traveling</li> 
+<li>Writing cool h1 tags</li> 
+</ul> 
+</body> 
+</html> """
+    return html_code
+
+
+def countTag(html_code, tag):
+    tag_reader = "<" + tag + ">"
+    if len(html_code) < len(tag_reader):
+        return 0
+
+    elif html_code[:len(tag_reader)] == tag_reader:
+        return 1 + countTag(html_code[len(tag_reader):], tag)
+    else:
+        return countTag(html_code[1:], tag)
+
+
+def choiceInput():    #handling user input to input only pisitive intrgers
     while True:
         try:
             n = input("What is your choice ? : ")
@@ -83,25 +91,28 @@ def choiceInput(): #handling user input to input only pisitive intrgers
         except ValueError:
             print("this is not a number.")
 
+
 def choiceMenu():
     print("1. Count Digits\n" + "2. Find Max\n" + "3. Count Tags\n" + "4. Exit ")
+
+
 def main():
     choiceMenu()
     choice = choiceInput()
     while choice != 4:
         if choice == 1:
-            print(countDigit(intInput()))
+            print("the number you entered have", countDigit(intInput()), "digit(s)")
         elif choice == 2:
-            print(findMax(findMaxInput()))
+            print("the max number is", findMax(findMaxInput()))
         elif choice == 3:
-            print("-----this part of the program is still under development :)-----")
+            print("your tag count is", countTag(htmlInput(), countTagInput()))
         else:
-            print("this is an INVALID number !")
+            print("this is an INVALID choice !")
 
         choiceMenu()
         choice = choiceInput()
 
-    print("==> my assignment is not finished perfectly yet but i am still working on it :) <==")
+    print("============> THANK YOU FOR USING MY PROGRAM !!! :) <============")
 
 
 main()

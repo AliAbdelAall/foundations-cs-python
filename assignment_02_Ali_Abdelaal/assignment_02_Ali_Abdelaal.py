@@ -112,7 +112,7 @@ def main():
         choiceMenu()
         choice = choiceInput()
 
-    print("=============> THANK YOU FOR USING MY PROGRAM !!! :) <=============")
+    print("==============> THANK YOU FOR USING MY PROGRAM !!! :) <==============")
 
 
 main()

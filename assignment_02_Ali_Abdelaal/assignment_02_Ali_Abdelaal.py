@@ -1,5 +1,3 @@
-
-
 def intInput(): #handling user input to input only pisitive intrgers
     while True:
         try:

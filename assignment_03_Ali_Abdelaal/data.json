@@ -1,0 +1,14 @@
+{
+     "name" : John Doe
+}     "age" : 30
+}     "email" : john.doe@example.com
+}     "address" : {
+         "street" : 123 Main Street
+    }         "city" : New York
+    }         "zipcode" : 10001
+    }         "country" : United States
+    }
+}     "hobbies" : [
+        Reading/n    ]        Gardening/n    ]        Cooking/n    ]
+}     "is_student" : false
+}

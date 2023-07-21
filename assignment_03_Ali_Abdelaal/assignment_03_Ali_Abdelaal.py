@@ -1,7 +1,7 @@
-def tupleLenInput(): #handling user input to input only pisitive intrgers
+def tupleLenInput(): #handling user input to input only positive integers
     while True:
         # try and except will try to input the code if there was an error the code will not terminate combining it with the while True loop
-        # the programm will ask for the input agai and agai till it meets the condition required to terminate the function after returning
+        # the program will ask for the input again and again till it meets the condition required to terminate the function after returning
         #the right value we want
         try:
             n = input("enter the length of the tuples : ")

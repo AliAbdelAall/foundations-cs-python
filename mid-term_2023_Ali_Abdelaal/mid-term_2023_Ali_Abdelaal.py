@@ -203,13 +203,13 @@ def displayStatistics(tickets):
             event_tickets[event_id] = 1  # if not we create a new key with a value = 1
 
     for key, value in event_tickets.items():
-        print(key, ":", value, "tickets")  # since (tickets) is a list sorted by event ID the dictionary will be too
+        print(key, ":", value, "ticket(s)")  # since (tickets) is a list sorted by event ID the dictionary will be too
 
         if highest_value < value:  # each time we have a bigger value it will become the highest value
             highest_value = value  # and append it to the list of highest events after clearing the previous ones
             highest_events = []
             highest_events.append(key)
-            result = f"{key} has the most tickets, {highest_value} tickets."
+            result = f"{key} has the most tickets, {highest_value} ticket(s)."
         elif highest_value == value:
             highest_events.append(key)  # if the highest value have 1 or more equal(s) it will be added to the list
 
@@ -325,9 +325,9 @@ Ticket found:
             """)
 
             tickets.pop(i)  # ticket removed
-            print(f"Ticket _{ticket_id}_ has been removed")
+            return f"Ticket _{ticket_id}_ has been removed"
 
-    print(f"{ticket_id} does not exist.")  # if ticket not found an appropriate message is displayed
+    return f"{ticket_id} does not exist."  # if ticket not found an appropriate message is displayed
 
 
 # ---------------------------------------- 6. Run Events ---------------------------------------- #
@@ -413,7 +413,8 @@ def saveChanges(tickets):
             priority = ticket['priority']
             # here we add to the file for each line a ticket in format "tick101, ev003, fred, 20230802, 0"
             file_1.write(f"{ticket_id}, {event_id}, {username}, {timestamp}, {priority}")
-            file_1.write("\n")  # we used \n to get to a new line each time we add a ticket
+            if ticket != tickets[-1]:  # if this is not the last element of the list
+                file_1.write("\n")  # we use \n to get to a new line each time we add a ticket
         file_1.close()  # and we close the file everytime we finish with it
 
 
@@ -509,7 +510,7 @@ def main():
                 print(changePriority(ticketSort(tickets_list, key1, key2, key3, key4)))
 
             elif choice == 5:
-                delTicket(tickets_list)
+                print(delTicket(tickets_list))
 
             elif choice == 6:
                 RunEvents(tickets_list)
@@ -534,7 +535,7 @@ def main():
     else:
 
         userMenu()
-        choice = choiceInput()
+        choice = choiceInput()    # if the username is not admin login as user which can only book a ticket or exit
 
         while choice != 2:
             if choice == 1:
@@ -545,7 +546,7 @@ def main():
 
             userMenu()
             choice = choiceInput()
-
+        # and upon exiting if there is a newly booked ticket it will be automatically saved to file
         saveChanges(ticketSort(tickets_list, key4, key2, key3, key1))
         print("Exiting program...")
 

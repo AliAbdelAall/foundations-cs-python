@@ -53,19 +53,21 @@ def choiceInput():
 
 
 def ExportJson(data, indent=0):
-    if isinstance(data, dict):
-        json_str = "{\n"
+    if isinstance(data, dict): #a JSOn file is a string so we have to build it step by step
+        json_str = "{\n" #to start a dict as a string
         for key, value in data.items():
             json_str += f'{" " * (indent + 4)} "{key}" : {ExportJson(value,indent + 4)},\n'
-            json_str = json_str.rstrip(',\n') + '\n' + f'{" " * indent}}}'
+            # json_str +=      4 spaces          key           recursion for the value that could be anything as anothe dict or list or str ....
+            json_str = json_str.rstrip(',\n') + '\n' + f'{" " * indent}}}'  #remove the last comma , new line and remove spaces and close the dict curly brackets
         return json_str
     elif isinstance(data, list):
-        json_str = '[\n'
+        json_str = '[\n' #to start a list as a string
         for item in data:
             json_str += f'{" " * (indent + 4)}{ExportJson(item, indent + 4)},\n'
+            # json_str +=       4 spaces
             json_str = json_str.rstrip(',\n') + '/n' + f'{" " * indent}]'
         return json_str
-    elif isinstance(data, str):
+    elif isinstance(data, str): 
         escaped_str = data .replace('"', '//"').replace('\n', '\\n').replace('\t', '\\t')
         return f"{escaped_str}"
     elif isinstance(data, bool):
@@ -82,7 +84,7 @@ def writeJsonFile(data, filename):
             json_file = ExportJson(data, indent=0)
             file.write(json_file)
             print(f"you have successfully converted data to a JSON as {filename}!")
-    except ValueError as e :
+    except ValueError as e:
         print(f"Error : {e}")
 
 

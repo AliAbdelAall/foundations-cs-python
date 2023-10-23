@@ -11,11 +11,11 @@ users = [
     "Isabella",
 ]
 
-users_indicies = {}
-for i in range(len(users)):
-    users_indicies[users[i]] = i
+users_indices = {}
+for user_index in range(len(users)):
+    users_indices[users[user_index]] = user_index
 
-print(users_indicies)
+print(users_indices)
 
 
 # ____________________________ queue class ____________________________ #
@@ -37,7 +37,7 @@ class Queue:
             print("Queue is empty.")
             return
         else:
-            self.queue.pop()
+            return self.queue.pop()
 
 
 # ______________________________ Node class _____________________________ #
@@ -48,7 +48,7 @@ class Node:
 
 
 # __________________________ linked list class __________________________ #
-class userAccount:
+class UserAccount:
     def __init__(self):
         self.head = None
 
@@ -64,8 +64,8 @@ class userAccount:
                 print(current.data)
                 current = current.next
 
-    def friendList(self, data):
-        if data not in users_indicies:
+    def friendList(self, user):
+        if user not in users_indices:
             print("this user does not exist.")
             return
         else:
@@ -86,7 +86,7 @@ class userAccount:
             self.head = node_to_add
 
     def removeFriend(self, data):
-        if data not in users_indicies:
+        if data not in users_indices:
             print("User does not exist.")
             return
 
@@ -107,21 +107,20 @@ class userAccount:
         print("Friend not found.")
 
 
-class graph:
-    def __init__(self):
+# __________________________ Graph class __________________________ #
+class Graph:
+    def __init__(self, users_list):
         self.graph = []
-
-    def addUsersList(self, userlist):
-        for user in users:
-            self.graph.append(userAccount())
+        for i in range(len(users_list)):
+            self.graph.append(UserAccount())
 
     def addUser(self, vertex):
-        if vertex in users_indicies:
+        if vertex in users_indices:
             print("this user already exist")
         else:
             users.append(vertex)
-            users_indicies[vertex] = len(users) - 1
-            self.graph.append(userAccount(vertex))
+            users_indices[vertex] = len(users) - 1
+            self.graph.append(UserAccount())
 
     def removeUser(self, vertex):
         if vertex not in users:
@@ -129,75 +128,101 @@ class graph:
             return
 
         else:
-            del_user = self.graph[users_indicies[vertex]]
+            del_user = self.graph[users_indices[vertex]]
             del_user_from_friends = del_user.friendList(vertex)
             self.graph.remove(del_user)
-            users.pop(users_indicies[vertex])
-            users_indicies.pop(vertex)
+            users.pop(users_indices[vertex])
+            users_indices.pop(vertex)
 
             if del_user.isEmpty():
                 return
             else:
                 for del_friend in del_user_from_friends:
-                    self.graph[users_indicies[del_friend]].removeFriend(vertex)
+                    self.graph[users_indices[del_friend]].removeFriend(vertex)
             print(f"User {vertex} successfully removed.")
 
     def friendRequest(self):
-        user1 = input("Enter first username : ")
-        user2 = input("Enter second username : ")
+        user1 = usernameInput()
+        user2 = usernameInput()
 
-        if user1 or user2 not in users:
+        if (user1 or user2) not in users_indices:
             print("user(s) does not exist.")
             return
-
+        elif user1 in self.graph[users_indices[user1]].friendList(user2):
+            print(f"{user1} and {user2} are already friends")
         else:
-            self.graph[users_indicies[user1]].addFriend(user2)
-            self.graph[users_indicies[user2]].addFriend(user1)
+            self.graph[users_indices[user1]].addFriend(user2)
+            print(users_indices[user1])
+            print(user1)
+
+            self.graph[users_indices[user2]].addFriend(user1)
+            print(users_indices[user2])
+            print(user2)
 
         print(f"Connection added between {user1} and {user2}.")
 
     def removeFriends(self):
-        user1 = input("Enter first username : ")
-        user2 = input("Enter second username : ")
+        user1 = usernameInput()
+        user2 = usernameInput()
 
         if user1 or user2 not in users:
             print("user(s) does not exist.")
             return
 
         else:
-            self.graph[users_indicies[user1]].removeFriend(user2)
-            self.graph[users_indicies[user2]].removeFriend(user1)
+            self.graph[users_indices[user1]].removeFriend(user2)
+            self.graph[users_indices[user2]].removeFriend(user1)
 
-    def DisplayFriendList(self, vertex):
+    def displayFriendList(self, vertex):
         if vertex not in users:
             print("this user does not exist")
             return
         else:
-            self.graph[users_indicies[vertex]].displayFriends(vertex)
+            self.graph[users_indices[vertex]].displayFriends()
             return
 
     def displayAllUsers(self, starting_vertex):
         visited = [False] * len(self.graph)
         queue = Queue()
-        queue.enqueue(users_indicies[starting_vertex])
+        queue.enqueue(users_indices[starting_vertex])
 
         while False in visited:
             if queue.isEmpty():
                 for i in range(len(visited)):
                     if not visited[i]:
                         queue.enqueue(i)
+            else:
+                v = queue.dequeue()
+                if not visited[v]:
+                    visited[v] = True
+                    print(users[v])
+                    user = self.graph[v]
+                    for friend in user.friendList(users[v]):
+                        v_i = users_indices[friend]
+                        if not visited[v_i]:
+                            queue.enqueue(v_i)
 
-            v = queue.dequeue()
-            if not visited[v]:
-                visited[v] = True
-                print(v, end=" ")
-
-                for w in range(len(self.graph[v])):
-                    if self.graph[v][w] == 1 and not visited[w]:
-                        queue.enqueue(w)
 
 
-platform = graph().addUsersList()
+
+
+    """def displayAllUsers(self, starting_vertex):
+    visited = [False] * len(self.graph)
+    queue = Queue()
+    queue.enqueue(users_indices[starting_vertex])
+    
+    while any(not visited[v] for v in range(len(self.graph))):
+        v = queue.dequeue()
+        if not visited[v]:
+            visited[v] = True
+            print(v, end=" ")
+            
+            for w in range(len(self.graph[v])):
+                if self.graph[v][w] == 1 and not visited[w]:
+                    queue.enqueue(w)"""
+
+
+platform = Graph(users)
 
 
 def usernameInput():
@@ -221,10 +246,10 @@ def Menu():  # a function to print admin Menu
         """
     1. Add a user to the platform. 
     2. Remove a user from the platform. 
-    3. Send a friend request to another user. 
+    3. Send a friend request to another user.
     4. Remove a friend from your list. 
     5. View your list of friends. 
-    6. View the list of users on the platform. 
+    6. View the list of users on the platform.
     7. Exit 
 
     """
@@ -243,16 +268,16 @@ def main():
             platform.removeUser(usernameInput())
 
         elif choice == 3:
-            platform.friendRequest
+            platform.friendRequest()
 
         elif choice == 4:
             print("Not ready yet")
 
         elif choice == 5:
-            print("not ready yet")
+            platform.displayFriendList(usernameInput())
 
         elif choice == 6:
-            platform.displayAllUsers(users_indicies[users[0]])
+            platform.displayAllUsers(users[0])
 
         else:
             print("this is an INVALID choice")

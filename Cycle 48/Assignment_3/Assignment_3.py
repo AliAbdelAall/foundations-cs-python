@@ -25,6 +25,15 @@ def sublistLenInput():
         num = input("Enter the length of the Sub-list again: ")
     return num
 
+def inputList(m):
+    while True:
+        try:
+            lst = list(map(int, input(f"Enter a list of {m} numbers separated by spaces: ").split()))
+            if len(lst) != m:
+                print(f"You must input {m} numbers")
+        except ValueError:
+            print("The list must be all numbers")
+
 
 def addMatrices(matrix_1, matrix_2):   #
     res = []

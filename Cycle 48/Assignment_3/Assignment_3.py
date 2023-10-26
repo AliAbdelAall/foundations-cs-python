@@ -35,7 +35,7 @@ def inputList(m):
             else:
                 return lst
         except ValueError:
-            print("The list must be all numbers/n")
+            print("The list must be all numbers\n")
 
 
 def inputMatrix(n, m):
@@ -92,13 +92,13 @@ def invertDictionary(dct):
     inv_dict = {}
     for key, value in dct.items():
         if value in inv_dict:
-            if value == type(list):
+            if type(inv_dict[value]) == list:
                 inv_dict[value].append(key)
             else:
                 inv_dict[value] = [inv_dict[value], key]
         else:
             inv_dict[value] = key
-    return inv_dict
+    return f"Your dictionary: {dct}\nInverted dictionary: {inv_dict}"
 
 
 # ########### Menu ############
@@ -136,7 +136,7 @@ def main():
         elif choice == 2:
             pass
         elif choice == 3:
-            pass
+            print(invertDictionary(inputDict(inputDictItemsNumber())))
         elif choice == 4:
             pass
         elif choice == 5:

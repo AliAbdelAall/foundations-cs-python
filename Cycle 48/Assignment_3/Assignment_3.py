@@ -46,7 +46,9 @@ def inputMatrix(n, m):
     return matrix
 
 
-def addMatrices(matrix_1, matrix_2):
+def addMatrices(matrix_len, sub_len):  #
+    matrix_1 = inputMatrix(matrix_len, sub_len)
+    matrix_2 = inputMatrix(matrix_len, sub_len)
     res = []
     for i in range(len(matrix_1)):
         row = []

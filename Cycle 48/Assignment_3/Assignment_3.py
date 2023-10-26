@@ -79,11 +79,11 @@ def inputDictItemsNumber():
 def inputDict(n):
     dct = {}
     for i in range(n):
-        key = input(f"Enter Key {i+1}: ")
+        key = input(f"Enter Key {i + 1}: ")
         while key in dct:
             print("Each Key you Enter must be unique")
             key = input(f"Enter Key {i + 1} again: ")
-        value = input(f"Enter Value {i+1}: ")
+        value = input(f"Enter Value {i + 1}: ")
         dct[key] = value
     return dct
 
@@ -112,6 +112,20 @@ def intInputMatrix():
         print("The number of employee(s) must me numeric")
         num = input("Enter the number of Employee(s) again: ")
     return int(num)
+
+
+def inputMatrixEmployee(n):
+    ids = []
+    matrix = []
+    for i in range(n):
+        first_name = input("Enter first name: ")
+        last_name = input("Enter last name: ")
+        e_id = input("Enter ID: ")
+        while id in ids:
+            print("ID is INCORRECT/ALREADY EXIST Enter ID again: ")
+        job_title = input("Enter job title: ")
+        company = input("Enter company name: ")
+        matrix.append([first_name, last_name, e_id, job_title, company])
 
 
 # ########### Menu ############

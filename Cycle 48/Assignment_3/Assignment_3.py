@@ -3,7 +3,7 @@
 def userLogin():
     print("login")
     username = input("Enter yor username: ")
-    return f"Welcome, {username}"
+    print(f"Welcome, {username}")
 
 
 # ########### Question_1 ############
@@ -46,6 +46,7 @@ def inputMatrix(n, m):
     return matrix
 
 
+
 # ###### Function 1 #######
 
 def addMatrices(matrix_len, sub_len):  #
@@ -83,3 +84,28 @@ def inputChoice():
     return choice
 
 
+def main():
+    userLogin()
+    Menu()
+    choice = inputChoice()
+
+    while choice != 7:
+        if choice == 1:
+            print(addMatrices(lenInput(), sublistLenInput()))
+        elif choice == 2:
+            pass
+        elif choice == 3:
+            pass
+        elif choice == 4:
+            pass
+        elif choice == 5:
+            pass
+        elif choice == 6:
+            pass
+        else:
+            print("Your choice is INVALID")
+
+        Menu()
+        choice = inputChoice()
+
+    print("You EXITED the program...")

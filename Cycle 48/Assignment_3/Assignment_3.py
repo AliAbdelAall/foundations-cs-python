@@ -8,7 +8,7 @@ def userLogin():
 
 # ########### Question_1 ############
 
-# ###### Input #######
+# ###### Inputs #######
 
 def lenInput():
     num = input("Enter the length of the Matrix: ")
@@ -63,6 +63,17 @@ def addMatrices(matrix_len, sub_len):
             row.append(matrix_1[i][j] + matrix_2[i][j])
         res.append(row)
     return f"the addition of both matrices is {res}"
+
+
+# ########### Question_3 ############
+
+# ###### Inputs #######
+def inputDictItemsNumber():
+    num = input("Enter the number of items: ")
+    while not num.isdigit():
+        print("Number of items must be numeric")
+        num = input("Enter the number of items again: ")
+    return int(num)
 
 
 # ########### Menu ############

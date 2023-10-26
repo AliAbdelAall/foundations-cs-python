@@ -1,6 +1,6 @@
 # ########### User Login ############
 
-def userLogin():
+def userLogin():  # O(1), since it does only print and take input
     print("login")
     username = input("Enter yor username: ")
     print(f"Welcome, {username}")
@@ -10,7 +10,7 @@ def userLogin():
 
 # ###### Inputs #######
 
-def lenInput():
+def lenInput():  # O(N) N being the number of wrong inputs by the user
     num = input("Enter the length of the Matrix: ")
     while not num.isdigit():
         print("The length must me numeric")
@@ -18,7 +18,7 @@ def lenInput():
     return int(num)
 
 
-def sublistLenInput():
+def sublistLenInput():  # O(N) N being the number of wrong inputs by the user
     num = input("Enter the length of the Sub-lists: ")
     while not num.isdigit():
         print("The length must me numeric")
@@ -26,7 +26,7 @@ def sublistLenInput():
     return int(num)
 
 
-def inputLimitedList(m):
+def inputLimitedList(m):  # O(N) N being the number of wrong inputs by the user
     while True:
         try:
             lst = list(map(int, input(f"Enter a list of {m} numbers separated by spaces: ").split()))
@@ -38,9 +38,10 @@ def inputLimitedList(m):
             print("The list must be all numbers\n")
 
 
-def inputMatrix(n, m):
+def inputMatrix(n, m):  # O(N) N the length of the list
     matrix = []
     for i in range(n):
+        print(f"{n - i} sub-list(s) left.")
         sub = inputLimitedList(m)
         matrix.append(sub)
     return matrix
@@ -48,12 +49,10 @@ def inputMatrix(n, m):
 
 # ###### Function 1 #######
 
-def addMatrices(matrix_len, sub_len):
-    print()
-    print("For the first Matrix:")
+def addMatrices(matrix_len, sub_len):  # O(N^2) or O(n*m) n:matrix_len , m:sub_len
+    print("\nFor the first Matrix:")
     matrix_1 = inputMatrix(matrix_len, sub_len)
-    print()
-    print("For the second Matrix:")
+    print("\nFor the second Matrix:")
     matrix_2 = inputMatrix(matrix_len, sub_len)
     print()
     res = []
@@ -67,15 +66,16 @@ def addMatrices(matrix_len, sub_len):
 
 # ########### Question_2 ############
 
-def checkRotation(n, m):
-    print()
-    print("For Matrix 1: ")
-    matrix_1 = inputMatrix(n, m)
-    print()
-    print("For Matrix 2: ")
-    matrix_2 = inputMatrix(m, n)
-    for i in range(n):
-        for j in range(m):
+# ###### Inputs #######
+
+
+def checkRotation(x, y):  # O(N^2) or O(x*y) x:matrix_len , y:sub_len
+    print("\nFor the first Matrix:")
+    matrix_1 = inputMatrix(x, y)
+    print("\nFor the second Matrix:")
+    matrix_2 = inputMatrix(y, x)
+    for i in range(x):
+        for j in range(y):
             if matrix_1[i][j] != matrix_2[j][i]:
                 return "The two matrices are not rotational"
     return "The two matrices are rotational"
@@ -84,7 +84,8 @@ def checkRotation(n, m):
 # ########### Question_3 ############
 
 # ###### Inputs #######
-def inputDictItemsNumber():
+
+def inputDictItemsNumber():  # O(N) N being the number of wrong inputs by the user
     num = input("Enter the number of items: ")
     while not num.isdigit():
         print("Number of items must be numeric")
@@ -92,7 +93,7 @@ def inputDictItemsNumber():
     return int(num)
 
 
-def inputDict(n):
+def inputDict(n):  # O(N^2) or O(n*m) n:dict key:value pairs number , m:the number of wrong inputs by the user
     dct = {}
     for i in range(n):
         key = input(f"Enter Key {i + 1}: ")
@@ -106,7 +107,7 @@ def inputDict(n):
 
 # ###### Function 3 #######
 
-def invertDictionary(dct):
+def invertDictionary(dct):  # O(N) N:dict "key:value" pairs number
     inv_dict = {}
     for key, value in dct.items():
         if value in inv_dict:
@@ -122,7 +123,7 @@ def invertDictionary(dct):
 # ########### Question_4 ############
 
 # ###### Inputs #######
-def intInputMatrix():
+def intInputMatrix():  # O(N) N being the number of wrong inputs by the user
     num = input("Enter the number of Employee(s): ")
     while not num.isdigit():
         print("The number of employee(s) must me numeric")
@@ -130,8 +131,8 @@ def intInputMatrix():
     return int(num)
 
 
-def inputMatrixEmployee(n):
-    ids = []
+def inputMatrixEmployee(n):  # O(N^2) or O(N*M) N:the number of employees inputted by the user
+    ids = []                                  # M:the number of wrong inputs by the user
     matrix = []
     for i in range(n):
         print()
@@ -149,7 +150,7 @@ def inputMatrixEmployee(n):
 
 # ###### Function 4 #######
 
-def convertMatrixToDictionary(matrix):
+def convertMatrixToDictionary(matrix):  # O(N) N:the number of employees inputted by the user
     dct = {}
     for i in range(len(matrix)):
         dct[matrix[i][2]] = [matrix[i][0], matrix[i][1], matrix[i][3], matrix[i][4]]
@@ -160,7 +161,7 @@ def convertMatrixToDictionary(matrix):
 
 # ###### Inputs #######
 
-def inputCheckPalindrome():
+def inputCheckPalindrome():  # O(N) N being the number of wrong inputs by the user
     s = input("Enter a word: ")
     while len(s) == 0 or len(s.split()) > 1:
         print("You must enter one Word")
@@ -169,7 +170,7 @@ def inputCheckPalindrome():
 
 # ###### Function 5 #######
 
-def checkPalindrome(s):
+def checkPalindrome(s):  # O(N) N : len(s) / 2
     left = 0
     right = len(s) - 1
     while left <= right:
@@ -185,7 +186,7 @@ def checkPalindrome(s):
 
 # ###### Inputs #######
 
-def inputList():
+def inputList():  # O(N) N being the number of wrong inputs by the user
     while True:
         try:
             lst = list(map(int, input("Enter a list of numbers separated by spaces: ").split()))
@@ -194,7 +195,7 @@ def inputList():
             print("The list must be numbers!")
 
 
-def mergeSort(lst):
+def mergeSort(lst):  # O(NlogN) N : len(lst) | "for both mergeSort(lst) and merge(left_half, right_half)"
     if len(lst) <= 1:
         return lst
 
@@ -232,7 +233,7 @@ def merge(left_half, right_half):
     return merged
 
 
-def intInputNumber():
+def intInputNumber():  # O(N) N being the number of wrong inputs by the user
     num = input("Enter a number to look for: ")
     while not num.isdigit():
         print("This is not a numeric number!")
@@ -242,7 +243,7 @@ def intInputNumber():
 
 # ###### Function 6 #######
 
-def searchElement(lst, sorted_lst, k):
+def searchElement(lst, sorted_lst, k):  # O(logN) N:len(sorted_lst)
     print(sorted_lst)
     low = 0
     high = len(sorted_lst) - 1
@@ -259,7 +260,7 @@ def searchElement(lst, sorted_lst, k):
 
 # ########### Menu ############
 
-def Menu():
+def Menu():  # O(1), only print
     print("""
     1. Add Matrices
     2. Check Rotation
@@ -272,7 +273,7 @@ def Menu():
 
 # ########### Choice ############
 
-def inputChoice():
+def inputChoice():  # O(N) N being the number of wrong inputs by the user
     choice = input("Enter you choice: ")
     while not choice.isdigit():
         print("Your choice must be numeric.")
@@ -280,7 +281,7 @@ def inputChoice():
     return int(choice)
 
 
-def main():
+def main():  # since the slowest of the functions is O(N^2), the main should be O(N^2)
     userLogin()
     Menu()
     choice = inputChoice()
@@ -290,7 +291,7 @@ def main():
         if choice == 1:
             print(addMatrices(lenInput(), sublistLenInput()))
         elif choice == 2:
-            pass
+            print(checkRotation(lenInput(), sublistLenInput()))
         elif choice == 3:
             print(invertDictionary(inputDict(inputDictItemsNumber())))
         elif choice == 4:

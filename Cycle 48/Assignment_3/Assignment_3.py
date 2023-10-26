@@ -138,6 +138,17 @@ def convertMatrixToDictionary(matrix):
     return dct
 
 
+# ########### Question_5 ############
+
+# ###### Inputs #######
+
+def inputCheckPalindrome():
+    s = input("Enter a word: ")
+    while len(s) == 0 or len(s.split()) > 1:
+        print("You must enter one Word")
+    return s
+
+
 # ########### Menu ############
 
 def Menu():

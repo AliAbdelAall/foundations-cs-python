@@ -15,7 +15,7 @@ def lenInput():
     while not num.isdigit():
         print("The length must me numeric")
         num = input("Enter the length of the Matrix again: ")
-    return num
+    return int(num)
 
 
 def sublistLenInput():
@@ -23,7 +23,7 @@ def sublistLenInput():
     while not num.isdigit():
         print("The length must me numeric")
         num = input("Enter the length of the Sub-lists again: ")
-    return num
+    return int(num)
 
 
 def inputList(m):
@@ -81,3 +81,5 @@ def inputChoice():
         print("Your choice must be numeric.")
         choice = input("Enter you choice again: ")
     return choice
+
+

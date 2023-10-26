@@ -18,6 +18,14 @@ def lenInput():
     return num
 
 
+def sublistLenInput():
+    num = input("Enter the length of the Sub-list: ")
+    while not num.isdigit():
+        print("The length must me numeric")
+        num = input("Enter the length of the Sub-list again: ")
+    return num
+
+
 def addMatrices(matrix_1, matrix_2):   #
     res = []
     for i in range(len(matrix_1)):

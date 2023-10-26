@@ -71,3 +71,13 @@ def Menu():
     5. Check Palindrome
     6. Search for an Element & Merge Sort
     7. Exit""")
+
+
+# ########### Choice ############
+
+def inputChoice():
+    choice = input("Enter you choice: ")
+    while not choice.isdigit():
+        print("Your choice must be numeric.")
+        choice = input("Enter you choice again: ")
+    return choice

@@ -76,6 +76,23 @@ def inputDictItemsNumber():
     return int(num)
 
 
+def inputDict(n):
+    dct = {}
+    for i in range(n):
+        key = input(f"Enter Key {i+1}: ")
+        while key in dct:
+            print("Each Key you Enter must be unique")
+            key = input(f"Enter Key {i + 1} again: ")
+        value = input(f"Enter Value {i+1}: ")
+        dct[key] = value
+    return dct
+
+
+
+# def invertDictionary():
+
+
+
 # ########### Menu ############
 
 def Menu():

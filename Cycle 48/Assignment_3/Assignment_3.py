@@ -26,7 +26,7 @@ def sublistLenInput():
     return int(num)
 
 
-def inputList(m):
+def inputLimitedList(m):
     while True:
         try:
             lst = list(map(int, input(f"Enter a list of {m} numbers separated by spaces: ").split()))
@@ -41,7 +41,7 @@ def inputList(m):
 def inputMatrix(n, m):
     matrix = []
     for i in range(n):
-        sub = inputList(m)
+        sub = inputLimitedList(m)
         matrix.append(sub)
     return matrix
 
@@ -118,6 +118,8 @@ def inputMatrixEmployee(n):
     ids = []
     matrix = []
     for i in range(n):
+        print()
+        print(f"Employee {i + 1}:")
         first_name = input("Enter first name: ")
         last_name = input("Enter last name: ")
         e_id = input("Enter ID: ")
@@ -126,7 +128,7 @@ def inputMatrixEmployee(n):
         job_title = input("Enter job title: ")
         company = input("Enter company name: ")
         matrix.append([first_name, last_name, e_id, job_title, company])
-    return matrix
+    return f"\nEmployee(s):\n {matrix}"
 
 
 # ###### Function 4 #######
@@ -161,6 +163,53 @@ def checkPalindrome(s):
             left += 1
             right -= 1
     return True
+
+
+# ########### Question_5 ############
+
+def inputList():
+    while True:
+        try:
+            lst = list(map(int, input("Enter a list of numbers separated by spaces").split()))
+            return lst
+        except ValueError:
+            print("The list must be numbers!")
+
+
+def mergeSort(lst):
+    if len(lst) <= 1:
+        return lst
+
+    middle = len(lst) // 2
+    left_half = mergeSort(lst[:middle])
+    right_half = mergeSort(lst[middle:])
+
+    return merge(left_half, right_half)
+
+
+def merge(left_half, right_half):
+    merged = []
+    left_index = 0
+    right_index = 0
+
+    while left_index < len(left_half) and right_index < len(right_half):
+
+        if left_half[left_index] > right_half[right_index]:
+            merged.append(left_half[left_index])
+            left_index += 1
+
+        elif left_half[left_index] < right_half[right_index]:
+            merged.append(right_half[right_index])
+            right_index += 1
+
+        elif left_half[left_index] == right_half[right_index]:
+            merged.append(left_half[left_index])
+            merged.append(right_half[right_index])
+            left_index += 1
+            right_index += 1
+
+    merged.extend(left_half[left_index:])
+    merged.extend(right_half[right_index:])
 
 
 # ########### Menu ############
@@ -200,9 +249,9 @@ def main():
         elif choice == 3:
             print(invertDictionary(inputDict(inputDictItemsNumber())))
         elif choice == 4:
-            pass
+            print(convertMatrixToDictionary(inputMatrixEmployee(intInputMatrix())))
         elif choice == 5:
-            pass
+            print(checkPalindrome(inputCheckPalindrome()))
         elif choice == 6:
             pass
         else:

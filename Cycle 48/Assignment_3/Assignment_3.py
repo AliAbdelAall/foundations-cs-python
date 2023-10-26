@@ -65,6 +65,22 @@ def addMatrices(matrix_len, sub_len):
     return f"the addition of both matrices is {res}"
 
 
+# ########### Question_2 ############
+
+def checkRotation(n, m):
+    print()
+    print("For Matrix 1: ")
+    matrix_1 = inputMatrix(n, m)
+    print()
+    print("For Matrix 2: ")
+    matrix_2 = inputMatrix(m, n)
+    for i in range(n):
+        for j in range(m):
+            if matrix_1[i][j] != matrix_2[j][i]:
+                return "The two matrices are not rotational"
+    return "The two matrices are rotational"
+
+
 # ########### Question_3 ############
 
 # ###### Inputs #######

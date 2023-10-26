@@ -8,7 +8,17 @@ def userLogin():
 
 # ########### Question_1 ############
 
-def addMatrices(matrix_1, matrix_2):
+# ###### Input #######:
+
+def lenInput():
+    num = input("Enter the length of the Matrix: ")
+    while not num.isdigit():
+        print("The length must me numeric")
+        num = input("Enter the length of the Matrix again: ")
+    return num
+
+
+def addMatrices(matrix_1, matrix_2):   #
     res = []
     for i in range(len(matrix_1)):
         row = []
@@ -16,3 +26,5 @@ def addMatrices(matrix_1, matrix_2):
             row.append(matrix_1[i][j]+matrix_2[i][j])
         res.append(row)
     return res
+
+

@@ -88,6 +88,8 @@ def inputDict(n):
     return dct
 
 
+# ###### Function 3 #######
+
 def invertDictionary(dct):
     inv_dict = {}
     for key, value in dct.items():
@@ -99,6 +101,17 @@ def invertDictionary(dct):
         else:
             inv_dict[value] = key
     return f"Your dictionary: {dct}\nInverted dictionary: {inv_dict}"
+
+
+# ########### Question_4 ############
+
+# ###### Inputs #######
+def intInputMatrix():
+    num = input("Enter the number of Employee(s): ")
+    while not num.isdigit():
+        print("The number of employee(s) must me numeric")
+        num = input("Enter the number of Employee(s) again: ")
+    return int(num)
 
 
 # ########### Menu ############

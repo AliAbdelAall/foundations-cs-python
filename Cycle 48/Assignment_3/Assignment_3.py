@@ -88,9 +88,17 @@ def inputDict(n):
     return dct
 
 
-
-# def invertDictionary():
-
+def invertDictionary(dct):
+    inv_dict = {}
+    for key, value in dct.items():
+        if value in inv_dict:
+            if value == type(list):
+                inv_dict[value].append(key)
+            else:
+                inv_dict[value] = [inv_dict[value], key]
+        else:
+            inv_dict[value] = key
+    return inv_dict
 
 
 # ########### Menu ############

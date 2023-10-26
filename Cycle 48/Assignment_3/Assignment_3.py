@@ -35,7 +35,7 @@ def inputList(m):
             else:
                 return lst
         except ValueError:
-            print("The list must be all numbers")
+            print("The list must be all numbers/n")
 
 
 def inputMatrix(n, m):
@@ -46,19 +46,23 @@ def inputMatrix(n, m):
     return matrix
 
 
-
 # ###### Function 1 #######
 
-def addMatrices(matrix_len, sub_len):  #
+def addMatrices(matrix_len, sub_len):
+    print()
+    print("For the first Matrix:")
     matrix_1 = inputMatrix(matrix_len, sub_len)
+    print()
+    print("For the second Matrix:")
     matrix_2 = inputMatrix(matrix_len, sub_len)
+    print()
     res = []
     for i in range(len(matrix_1)):
         row = []
         for j in range(len(matrix_1[i])):
             row.append(matrix_1[i][j] + matrix_2[i][j])
         res.append(row)
-    return res
+    return f"the addition of both matrices is {res}"
 
 
 # ########### Menu ############
@@ -81,13 +85,14 @@ def inputChoice():
     while not choice.isdigit():
         print("Your choice must be numeric.")
         choice = input("Enter you choice again: ")
-    return choice
+    return int(choice)
 
 
 def main():
     userLogin()
     Menu()
     choice = inputChoice()
+    print()
 
     while choice != 7:
         if choice == 1:
@@ -109,3 +114,6 @@ def main():
         choice = inputChoice()
 
     print("You EXITED the program...")
+
+
+main()

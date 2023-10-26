@@ -165,7 +165,9 @@ def checkPalindrome(s):
     return True
 
 
-# ########### Question_5 ############
+# ########### Question_6 ############
+
+# ###### Inputs #######
 
 def inputList():
     while True:
@@ -210,6 +212,16 @@ def merge(left_half, right_half):
 
     merged.extend(left_half[left_index:])
     merged.extend(right_half[right_index:])
+
+    return merged
+
+
+def intInputNumber():
+    num = input("Enter a number to look for: ")
+    while not num.isdigit():
+        print("This is not a numeric number!")
+        num = input("Enter a number to look for again: ")
+    return int(num)
 
 
 # ########### Menu ############

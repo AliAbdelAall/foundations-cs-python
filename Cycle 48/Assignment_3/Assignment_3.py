@@ -126,6 +126,16 @@ def inputMatrixEmployee(n):
         job_title = input("Enter job title: ")
         company = input("Enter company name: ")
         matrix.append([first_name, last_name, e_id, job_title, company])
+    return matrix
+
+
+# ###### Function 4 #######
+
+def convertMatrixToDictionary(matrix):
+    dct = {}
+    for i in range(len(matrix)):
+        dct[matrix[i][2]] = [matrix[i][0], matrix[i][1], matrix[i][3], matrix[i][4]]
+    return dct
 
 
 # ########### Menu ############

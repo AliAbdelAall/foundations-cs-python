@@ -138,7 +138,7 @@ def intInputMatrix():  # O(N) N being the number of wrong inputs by the user
 
 
 def inputMatrixEmployee(n):  # O(N^2) or O(N*M) N:the number of employees inputted by the user
-    ids = []  # M:the number of wrong inputs by the user
+    ids = []                                  # M:the number of wrong inputs by the user
     matrix = []
     for i in range(n):
         print()
@@ -151,7 +151,7 @@ def inputMatrixEmployee(n):  # O(N^2) or O(N*M) N:the number of employees inputt
         job_title = input("Enter job title: ")
         company = input("Enter company name: ")
         matrix.append([first_name, last_name, e_id, job_title, company])
-    return f"\nEmployee(s):\n {matrix}"
+    return matrix
 
 
 # ###### Function 4 #######
@@ -160,7 +160,7 @@ def convertMatrixToDictionary(matrix):  # O(N) N:the number of employees inputte
     dct = {}
     for i in range(len(matrix)):
         dct[matrix[i][2]] = [matrix[i][0], matrix[i][1], matrix[i][3], matrix[i][4]]
-    return dct
+    return f"\nEmployee(s):\n{dct}"
 
 
 # ########### Question_5 ############

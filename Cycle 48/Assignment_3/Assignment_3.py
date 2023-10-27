@@ -243,18 +243,10 @@ def intInputNumber():  # O(N) N being the number of wrong inputs by the user
 
 # ###### Function 6 #######
 
-def searchElement(lst, sorted_lst, k):  # O(logN) N:len(sorted_lst)
-    print(sorted_lst)
-    low = 0
-    high = len(sorted_lst) - 1
-    while low <= high:
-        middle = (low + high) // 2
-        if k == sorted_lst[middle]:
-            return f"The number {k} was found at index {lst.index(k)}"
-        elif k < sorted_lst[middle]:
-            high = middle - 1
-        elif k > sorted_lst[middle]:
-            low = middle + 1
+def searchElement(lst, k):
+    for i in range(len(lst)):
+        if k == lst[i]:
+            return f"The number {k} was found at index {i}\n"
     return f"The number {k} was not found"
 
 
@@ -300,7 +292,8 @@ def main():  # since the slowest of the functions is O(N^2), the main should be 
             print(checkPalindrome(inputCheckPalindrome()))
         elif choice == 6:
             lst = inputList()
-            print(searchElement(lst, mergeSort(lst), intInputNumber()))
+            k = intInputNumber()
+            print(SearchElement(lst, k))
         else:
             print("Your choice is INVALID")
 

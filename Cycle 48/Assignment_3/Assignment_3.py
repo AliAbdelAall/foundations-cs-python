@@ -12,16 +12,22 @@ def userLogin():  # O(1), since it does only print and take input
 
 def lenInput():  # O(N) N being the number of wrong inputs by the user
     num = input("Enter the length of the Matrix: ")
-    while not num.isdigit():
-        print("The length must me numeric")
+    while len(num.split()) > 1 or not num.isdigit():
+        if len(num.split()) > 1:
+            print("You must enter one number")
+        elif not num.isdigit():
+            print("The length must me numeric")
         num = input("Enter the length of the Matrix again: ")
     return int(num)
 
 
 def sublistLenInput():  # O(N) N being the number of wrong inputs by the user
     num = input("Enter the length of the Sub-lists: ")
-    while not num.isdigit():
-        print("The length must me numeric")
+    while len(num.split()) > 1 or not num.isdigit():
+        if len(num.split()) > 1:
+            print("You must enter one number")
+        elif not num.isdigit():
+            print("The length must me numeric")
         num = input("Enter the length of the Sub-lists again: ")
     return int(num)
 
@@ -66,7 +72,7 @@ def addMatrices(matrix_len, sub_len):  # O(N^2) or O(n*m) n:matrix_len , m:sub_l
 
 # ########### Question_2 ############
 
-# ###### Inputs #######
+# ###### Function 2 #######
 
 
 def checkRotation(x, y):  # O(N^2) or O(x*y) x:matrix_len , y:sub_len
@@ -132,7 +138,7 @@ def intInputMatrix():  # O(N) N being the number of wrong inputs by the user
 
 
 def inputMatrixEmployee(n):  # O(N^2) or O(N*M) N:the number of employees inputted by the user
-    ids = []                                  # M:the number of wrong inputs by the user
+    ids = []  # M:the number of wrong inputs by the user
     matrix = []
     for i in range(n):
         print()
@@ -243,10 +249,27 @@ def intInputNumber():  # O(N) N being the number of wrong inputs by the user
 
 # ###### Function 6 #######
 
-def searchElement(lst, k):
+def SearchElement(lst, k):  # O(N) N:len(lst)
     for i in range(len(lst)):
         if k == lst[i]:
             return f"The number {k} was found at index {i}\n"
+    return f"The number {k} was not found"
+
+
+# ###### Function 6(2) #######
+
+def binarySearchElement(sorted_lst, k):  # O(logN) N:len(sorted_lst)
+    print(f"After sorting the list:\n{sorted_lst}")
+    low = 0
+    high = len(sorted_lst) - 1
+    while low <= high:
+        middle = (low + high) // 2
+        if k == sorted_lst[middle]:
+            return f"The number {k} was found at index {middle}\n"
+        elif k < sorted_lst[middle]:
+            high = middle - 1
+        elif k > sorted_lst[middle]:
+            low = middle + 1
     return f"The number {k} was not found"
 
 
@@ -294,6 +317,7 @@ def main():  # since the slowest of the functions is O(N^2), the main should be 
             lst = inputList()
             k = intInputNumber()
             print(SearchElement(lst, k))
+            print(binarySearchElement(mergeSort(lst), k))
         else:
             print("Your choice is INVALID")
 

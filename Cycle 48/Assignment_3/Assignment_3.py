@@ -279,7 +279,8 @@ def Menu():  # O(1), only print
     4. Convert Matrix to Dictionary
     5. Check Palindrome
     6. Search for an Element & Merge Sort
-    7. Exit""")
+    7. Exit
+    """)
 
 
 # ########### Choice ############
@@ -319,8 +320,9 @@ def main():  # since the slowest of the functions is O(N^2), the main should be 
 
         Menu()
         choice = inputChoice()
+        print()
 
-    print("You EXITED the program...")
+    print("\nYou EXITED the program...")
 
 
 main()

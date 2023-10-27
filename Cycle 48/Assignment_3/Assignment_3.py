@@ -176,16 +176,12 @@ def inputCheckPalindrome():  # O(N) N being the number of wrong inputs by the us
 
 # ###### Function 5 #######
 
-def checkPalindrome(s):  # O(N) N : len(s) / 2
-    left = 0
-    right = len(s) - 1
-    while left <= right:
-        if s[left] != s[right]:
-            return False
-        else:
-            left += 1
-            right -= 1
-    return True
+def checkPalindrome(s):  # O(N)  N:len(s) / 2
+    if len(s) <= 1:
+        return True
+    elif s[0] != s[-1]:
+        return False
+    return True and checkPalindrome(s[1:-1])
 
 
 # ########### Question_6 ############

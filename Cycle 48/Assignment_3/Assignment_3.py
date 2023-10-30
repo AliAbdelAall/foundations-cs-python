@@ -143,11 +143,16 @@ def inputMatrixEmployee(n):  # O(N^2) or O(N*M) N:the number of employees inputt
     for i in range(n):
         print()
         print(f"Employee {i + 1}:")
+
         first_name = input("Enter first name: ")
         last_name = input("Enter last name: ")
+
         e_id = input("Enter ID: ")
         while id in ids:
             print("ID is INCORRECT/ALREADY EXIST Enter ID again: ")
+            e_id = input("Enter ID again: ")
+        ids.append(e_id)
+
         job_title = input("Enter job title: ")
         company = input("Enter company name: ")
         matrix.append([first_name, last_name, e_id, job_title, company])

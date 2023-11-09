@@ -1,6 +1,6 @@
 current_tabs = []
 
-
+# ------- choice 1 ------ #
 def openTab():
     new_tab = {}
 
@@ -13,9 +13,11 @@ def openTab():
     current_tabs.append(new_tab)
     print(f"New tab opened with Title : {title}")
 
+# ------- choice 2 ------ #
 
+# ----- Inputs ---- #
 def inputTabIndex():
-    print(f"you have {len(current_tabs)} opened.")
+    print(f"you have {len(current_tabs)} opened Tabs.")
     index = input("Enter the Index of the Tab you wish to close: ")
 
     while not index.isdigit():
@@ -24,25 +26,39 @@ def inputTabIndex():
 
     if len(current_tabs) >= 1:
         while int(index) >= len(current_tabs):
-            print(f"you have {len(current_tabs)} opened.")
+            print(f"you have {len(current_tabs)} opened Tabs.")
 
             if len(current_tabs) == 1:
                 print("you have only 1 Tab opened at index 0")
+                index = input("Enter the Index of the Tab you wish to close again: ")
             elif len(current_tabs) > 1:
                 print("choose Tab at index 0 --> {len(current_tabs) - 1}")
+                index = input("Enter the Index of the Tab you wish to close again: ")
 
     return index
 
 
+# ----- Function ---- #
 def closeTab(index):
     if len(current_tabs) == 0:
         print("there is no opened Tabs currently!you must open a Tab first.")
+
     elif index == "":
         current_tabs.pop()
         print(f"Tab at index {len(current_tabs) - 1} has been closed.")
+
     else:
-        current_tabs.remove(int(index))
+        current_tabs.pop(int(index))
         print("Tab at index ", index, " has been closed.")
+
+
+# ------- choice 4 ------ #
+
+def displayTabs():
+    if len(current_tabs) == 0:
+        print("There is no opened tabs to display!")
+    for i in range(len(current_tabs)):
+        print(f'Tab{i+1} : {current_tabs[i]["Title"]}')
 
 
 # ------- User login & greeting ------- #
@@ -97,7 +113,7 @@ def main():
         elif choice == 3:
             pass
         elif choice == 4:
-            pass
+            displayTabs()
         elif choice == 5:
             pass
         elif choice == 6:

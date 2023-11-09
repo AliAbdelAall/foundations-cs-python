@@ -1,10 +1,27 @@
+current_tabs = []
+
+
+def openTab():
+    new_tab = {}
+
+    title = input("Enter your new Tab Title: ")
+    url = input("Enter your new Tab URL: ")
+
+    new_tab["Title"] = title
+    new_tab["URL"] = url
+
+    current_tabs.append(new_tab)
+
+
 # ------- User login & greeting ------- #
 def greetUser():
     print("Log-in:")
     username = input("Enter your Username: ")
+
     while username == "":
         print("you must enter a Username!")
         username = input("Enter your Username again: ")
+
     print("Welcome to our program", username)
 
 
@@ -26,9 +43,11 @@ def displayMenu():
 # ------- Choice Input ------- #
 def inputChoice():
     choice = input("Enter a number as your choice: ")
+
     while not choice.isdigit():
         print("your choice must me numeric number!")
         choice = input("Enter a number as your choice again: ")
+
     return int(choice)
 
 

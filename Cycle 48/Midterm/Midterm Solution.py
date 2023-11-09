@@ -1,3 +1,4 @@
+# ------- User login & greeting ------- #
 def greetUser():
     print("Log-in:")
     username = input("Enter your Username: ")
@@ -7,6 +8,7 @@ def greetUser():
     print("Welcome to our program", username)
 
 
+# ------- Menu Display ------- #
 def displayMenu():
     print("""
 1. Open Tab
@@ -21,6 +23,7 @@ def displayMenu():
 """)
 
 
+# ------- Choice Input ------- #
 def inputChoice():
     choice = input("Enter a number as your choice: ")
     while not choice.isdigit():
@@ -29,3 +32,36 @@ def inputChoice():
     return int(choice)
 
 
+# ------- Main ------- #
+def main():
+    greetUser()
+    displayMenu()
+    choice = inputChoice()
+
+    while choice != 9:
+        if choice == 1:
+            pass
+        elif choice == 2:
+            pass
+        elif choice == 3:
+            pass
+        elif choice == 4:
+            pass
+        elif choice == 5:
+            pass
+        elif choice == 6:
+            pass
+        elif choice == 7:
+            pass
+        elif choice == 8:
+            pass
+        else:
+            print("Invalid choice!")
+
+        displayMenu()
+        choice = inputChoice()
+
+    print("you Exited the program...")
+
+
+main()

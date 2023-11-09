@@ -1,3 +1,12 @@
+def greetUser():
+    print("Log-in:")
+    username = input("Enter your Username: ")
+    while username == "":
+        print("you must enter a Username!")
+        username = input("Enter your Username again: ")
+    print("Welcome to our program", username)
+
+
 def displayMenu():
     print("""
 1. Open Tab
@@ -18,4 +27,5 @@ def inputChoice():
         print("your choice must me numeric number!")
         choice = input("Enter a number as your choice again: ")
     return int(choice)
+
 

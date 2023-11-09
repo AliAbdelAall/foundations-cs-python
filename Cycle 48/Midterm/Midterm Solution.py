@@ -13,6 +13,26 @@ def openTab():
     current_tabs.append(new_tab)
 
 
+def inputTabIndex():
+    print(f"you have {len(current_tabs)} opened.")
+    index = input("Enter the Index of the Tab you wish to close: ")
+
+    while not index.isdigit():
+        print("the Index must be numeric!")
+        index = input("Enter the Index of the Tab you wish to close again: ")
+
+    if len(current_tabs) >= 1:
+        while int(index) >= len(current_tabs):
+            print(f"you have {len(current_tabs)} opened.")
+
+            if len(current_tabs) == 1:
+                print("you have only 1 Tab opened at index 0")
+            elif len(current_tabs) > 1:
+                print("choose Tab at index 0 --> {len(current_tabs) - 1}")
+
+    return index
+
+
 # ------- User login & greeting ------- #
 def greetUser():
     print("Log-in:")

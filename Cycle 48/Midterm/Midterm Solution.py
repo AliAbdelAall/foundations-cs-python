@@ -39,8 +39,10 @@ def closeTab(index):
         print("there is no opened Tabs currently!you must open a Tab first.")
     elif index == "":
         current_tabs.pop()
+        print(f"Tab at index {len(current_tabs) - 1} has been closed.")
     else:
         current_tabs.remove(int(index))
+        print("Tab at index ", index, " has been closed.")
 
 
 # ------- User login & greeting ------- #

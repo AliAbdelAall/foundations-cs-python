@@ -33,6 +33,15 @@ def inputTabIndex():
     return index
 
 
+def closeTab(index):
+    if len(current_tabs) == 0:
+        print("there is no opened Tabs currently!you must open a Tab first.")
+    elif index == "":
+        current_tabs.pop()
+    else:
+        current_tabs.remove(int(index))
+
+
 # ------- User login & greeting ------- #
 def greetUser():
     print("Log-in:")

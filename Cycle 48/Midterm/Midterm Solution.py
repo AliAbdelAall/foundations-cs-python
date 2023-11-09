@@ -10,3 +10,12 @@ def displayMenu():
 8. Import Tabs
 9. Exit
 """)
+
+
+def inputChoice():
+    choice = input("Enter a number as your choice: ")
+    while not choice.isdigit():
+        print("your choice must me numeric number!")
+        choice = input("Enter a number as your choice again: ")
+    return int(choice)
+

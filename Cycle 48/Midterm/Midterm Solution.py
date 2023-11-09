@@ -11,6 +11,7 @@ def openTab():
     new_tab["URL"] = url
 
     current_tabs.append(new_tab)
+    print(f"New tab opened with Title : {title}")
 
 
 def inputTabIndex():
@@ -88,9 +89,9 @@ def main():
 
     while choice != 9:
         if choice == 1:
-            pass
+            openTab()
         elif choice == 2:
-            pass
+            closeTab(inputTabIndex())
         elif choice == 3:
             pass
         elif choice == 4:

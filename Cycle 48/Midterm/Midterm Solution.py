@@ -84,8 +84,27 @@ def inputNestedTab():
 def displayNestedTabMenu():
     print("""
     1. Add a Nested-Tab
-    2. Back
+    2. Change Tab index
+    3. Back
     """)
+
+
+# ----- Function ---- #
+def openNestedTab(index):
+    if len(current_tabs) == 0:
+        print("There is no opened tabs!open a tab first")
+
+    if index == "":
+        ind = -1
+    else:
+        ind = int(index)
+
+    if "Nested_Tabs" in current_tabs[ind]:
+        print(f'This Tab have {len(current_tabs[-1]["Nested_Tabs"])} Nested-Tabs')
+        current_tabs[ind]["Nested_Tabs"].append(inputNestedTab())
+    else:
+        print("This Tab does not have Nested-Tabs")
+        current_tabs[ind]["Nested_Tabs"] = [inputNestedTab()]
 
 
 # ------- User login & greeting ------- #
@@ -135,20 +154,44 @@ def main():
     while choice != 9:
         if choice == 1:
             openTab()
+
         elif choice == 2:
             closeTab(inputTabIndex())
+
         elif choice == 3:
             pass
+
         elif choice == 4:
             displayTabs()
+
         elif choice == 5:
-            pass
+            index = inputTabIndex()
+            displayNestedTabMenu()
+            choice_n = inputChoice()
+
+            while choice_n != 3:
+                if choice_n == 1:
+                    openNestedTab(index)
+
+                elif choice_n == 2:
+                    choice = 5
+                    continue
+
+                else:
+                    print("Invalid choice!")
+
+                displayNestedTabMenu()
+                choice_n = inputChoice()
+
         elif choice == 6:
             pass
+
         elif choice == 7:
             pass
+
         elif choice == 8:
             pass
+
         else:
             print("Invalid choice!")
 

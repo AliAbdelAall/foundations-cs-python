@@ -6,14 +6,17 @@ current_tabs = []
 
 
 # ------- choice 1 ------ #
-def openTab():
+def openTab():  # O(1) since this only creates a dictionary and append it to the list of tabs
     new_tab = {}
+    # this function creates a tab as a dictionary and append it to the list "current_tabs"
 
     title = input("Enter your new Tab Title: ")
     url = input("Enter your new Tab URL: ")
 
     new_tab["Title"] = title
     new_tab["URL"] = url
+    # we create the keys and put the user input as there values,
+    # so we can have instant access values, since all tabs have the same keys ("Title", "URL")
 
     current_tabs.append(new_tab)
     print(f"New tab opened with Title : {title}")
@@ -22,31 +25,39 @@ def openTab():
 # ------- choice 2 ------ #
 
 # ----- Inputs ---- #
-def inputTabIndex():
+def inputTabIndex():  # O(N) N: the number of wrong inputs
     if len(current_tabs) == 0:
         print("there is no opened Tabs currently!you must open a Tab first.")
+        # if the list is empty then there is no tabs to open
     else:
         print(f"you currently have {len(current_tabs)} opened Tab(s).")
         index = input("Enter the Index of the Tab: ")
+        # if the list is not empty then we ask the user to input the index of the tab
 
-        while not index.isdigit():
-            print(f"the Index must be numeric! 0 --> {len(current_tabs) - 1}")
-            index = input("Enter the Index of the Tab again: ")
+        while not index.isdigit() or int(index) >= len(current_tabs):
+            if not index.isdigit():
+                print(f"the Index must be a POSITIVE numeric number!")
+                index = input("Enter the Index of the Tab again: ")
+                # here we handle the user input by checking if the number is a positive integer
 
-        if len(current_tabs) >= 1:
-            while int(index) >= len(current_tabs):
-                if len(current_tabs) == 1:
-                    print("you have only 1 Tab opened at index 0")
-                    index = input("Enter the Index of the Tab again: ")
-                elif len(current_tabs) > 1:
-                    print(f"choose Tab at index 0 --> {len(current_tabs) - 1}")
-                    index = input("Enter the Index of the Tab again: ")
+            elif len(current_tabs) == 1:
+                print("you have only 1 Tab opened at index 0")
+                index = input("Enter the Index of the Tab again: ")
+                # here we take haling user input a step further
+                # and make sure the user inputs the right index
 
+            elif len(current_tabs) > 1:
+                print(f"choose Tab at index 0 --> {len(current_tabs) - 1}")
+                index = input("Enter the Index of the Tab again: ")
+                # they may seem extra steps here, but it is more user-friendly
+                # so the user can understand what is wrong at each step
         return index
+        # we return the index as a string in case the user did not input an index,
+        # so we can access the last index
 
 
 # ----- Function ---- #
-def closeTab(index):
+def closeTab(index):  # O(1)  here we pop a tab and print it
     if index is None:
         return
     if index == "":

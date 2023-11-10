@@ -19,6 +19,8 @@ def openTab():
 
 # ----- Inputs ---- #
 def inputTabIndex():
+    if len(current_tabs) == 0:
+        return
     print(f"you have {len(current_tabs)} opened Tabs.")
     index = input("Enter the Index of the Tab you wish to close: ")
 
@@ -42,7 +44,7 @@ def inputTabIndex():
 
 # ----- Function ---- #
 def closeTab(index):
-    if len(current_tabs) == 0:
+    if index is None:
         print("there is no opened Tabs currently!you must open a Tab first.")
 
     elif index == "":
@@ -116,7 +118,7 @@ def greetUser():
         print("you must enter a Username!")
         username = input("Enter your Username again: ")
 
-    print("Welcome to our program", username)
+    print(f"Welcome to our program, {username}!")
 
 
 # ------- Menu Display ------- #

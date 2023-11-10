@@ -91,20 +91,17 @@ def displayNestedTabMenu():
 
 # ----- Function ---- #
 def openNestedTab(index):
-    if index is None:
-        print("There is no opened tabs!open a tab first")
-
     if index == "":
-        ind = -1
+        i = -1
     else:
-        ind = int(index)
+        i = int(index)
 
-    if "Nested_Tabs" in current_tabs[ind]:
+    if "Nested_Tabs" in current_tabs[i]:
         print(f'This Tab have {len(current_tabs[-1]["Nested_Tabs"])} Nested-Tabs')
-        current_tabs[ind]["Nested_Tabs"].append(inputNestedTab())
+        current_tabs[i]["Nested_Tabs"].append(inputNestedTab())
     else:
         print("This Tab does not have Nested-Tabs")
-        current_tabs[ind]["Nested_Tabs"] = [inputNestedTab()]
+        current_tabs[i]["Nested_Tabs"] = [inputNestedTab()]
 
 
 # ------- User login & greeting ------- #

@@ -1,3 +1,7 @@
+from urllib.request import urlopen
+
+# imported for choice "3. Switch Tab"
+# learned about web scraping from : https://realpython.com/python-web-scraping-practical-introduction/
 current_tabs = []
 
 
@@ -43,6 +47,8 @@ def inputTabIndex():
 
 # ----- Function ---- #
 def closeTab(index):
+    if index is None:
+        return
     if index == "":
         current_tabs.pop()
         print(f"Tab at index {len(current_tabs) - 1} has been closed.")
@@ -50,6 +56,17 @@ def closeTab(index):
     else:
         current_tabs.pop(int(index))
         print("Tab at index ", index, " has been closed.")
+
+
+# ------- choice 3 ------ #
+def switchTab(index):
+    if index is None:
+        return
+    i = -1 if index == "" else int(index)
+    page = urlopen(current_tabs[i]["URL"])
+    html_bytes = page.read()
+    html = html_bytes.decode("utf-8")
+    print(html)
 
 
 # ------- choice 4 ------ #
@@ -91,10 +108,7 @@ def displayNestedTabMenu():
 
 # ----- Function ---- #
 def openNestedTab(index):
-    if index == "":
-        i = -1
-    else:
-        i = int(index)
+    i = -1 if index == "" else int(index)
 
     if "Nested_Tabs" in current_tabs[i]:
         print(f'This Tab have {len(current_tabs[i]["Nested_Tabs"])} Nested-Tabs')
@@ -143,7 +157,7 @@ def inputChoice():
     choice = input("Enter a number as your choice: ")
 
     while not choice.isdigit():
-        print("your choice must me numeric number!")
+        print("your choice must be numeric number!")
         choice = input("Enter a number as your choice again: ")
 
     return int(choice)
@@ -160,12 +174,10 @@ def main():
             openTab()
 
         elif choice == 2:
-            index = inputTabIndex()
-            if index is not None:
-                closeTab(index)
+            closeTab(inputTabIndex())
 
         elif choice == 3:
-            pass
+            switchTab(inputTabIndex())
 
         elif choice == 4:
             displayTabs()

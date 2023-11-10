@@ -104,6 +104,13 @@ def openNestedTab(index):
         current_tabs[i]["Nested_Tabs"] = [inputNestedTab()]
 
 
+# ------- choice 5 ------ #
+def clearAllTabs():
+    for i in range(len(current_tabs)):
+        current_tabs.pop()
+    print("All tabs has been cleared.")
+
+
 # ------- User login & greeting ------- #
 def greetUser():
     print("Log-in:")
@@ -186,7 +193,7 @@ def main():
                     continue
 
         elif choice == 6:
-            pass
+            clearAllTabs()
 
         elif choice == 7:
             pass

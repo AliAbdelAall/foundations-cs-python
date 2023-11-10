@@ -45,10 +45,7 @@ def inputTabIndex():
 
 # ----- Function ---- #
 def closeTab(index):
-    if index is None:
-        print("there is no opened Tabs currently!you must open a Tab first.")
-
-    elif index == "":
+    if index == "":
         current_tabs.pop()
         print(f"Tab at index {len(current_tabs) - 1} has been closed.")
 

@@ -81,6 +81,13 @@ def inputNestedTab():
     return nested_tab
 
 
+def displayNestedTabMenu():
+    print("""
+    1. Add a Nested-Tab
+    2. Back
+    """)
+
+
 # ------- User login & greeting ------- #
 def greetUser():
     print("Log-in:")

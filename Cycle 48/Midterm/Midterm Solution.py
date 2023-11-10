@@ -1,5 +1,6 @@
 current_tabs = []
 
+
 # ------- choice 1 ------ #
 def openTab():
     new_tab = {}
@@ -12,6 +13,7 @@ def openTab():
 
     current_tabs.append(new_tab)
     print(f"New tab opened with Title : {title}")
+
 
 # ------- choice 2 ------ #
 
@@ -58,7 +60,19 @@ def displayTabs():
     if len(current_tabs) == 0:
         print("There is no opened tabs to display!")
     for i in range(len(current_tabs)):
-        print(f'Tab{i+1} : {current_tabs[i]["Title"]}')
+        print(f'Tab{i + 1} : {current_tabs[i]["Title"]}')
+
+
+# ------- choice 5 ------ #
+
+# ----- inputs ---- #
+def inputNestedTab():
+    nested_tab = {}
+    title = input("Enter the Title of the Nested Tab: ")
+    content = input("Enter the content of the Nested Tab: ")
+    nested_tab["Title"] = title
+    nested_tab["Content"] = content
+    return nested_tab
 
 
 # ------- User login & greeting ------- #

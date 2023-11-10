@@ -61,6 +61,12 @@ def displayTabs():
         print("There is no opened tabs to display!")
     for i in range(len(current_tabs)):
         print(f'Tab{i + 1} : {current_tabs[i]["Title"]}')
+        if "Nested_Tabs" in current_tabs[i]:
+            for j in range(len(current_tabs[i]["Nested_Tabs"])):
+                if current_tabs[i]["Nested_Tabs"][j] != current_tabs[i]["Nested_Tabs"][-1]:
+                    print(f'Nested-Tab{j + 1} : {current_tabs[i]["Nested_Tabs"][j]["Title"]}, ', end='')
+                else:
+                    print(f'Nested-Tab{j + 1} : {current_tabs[i]["Nested_Tabs"][j]["Title"]}')
 
 
 # ------- choice 5 ------ #
@@ -68,8 +74,8 @@ def displayTabs():
 # ----- inputs ---- #
 def inputNestedTab():
     nested_tab = {}
-    title = input("Enter the Title of the Nested Tab: ")
-    content = input("Enter the content of the Nested Tab: ")
+    title = input("Enter the Title of the Nested-Tab: ")
+    content = input("Enter the content of the Nested-Tab: ")
     nested_tab["Title"] = title
     nested_tab["Content"] = content
     return nested_tab

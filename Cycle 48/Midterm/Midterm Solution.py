@@ -20,26 +20,27 @@ def openTab():
 # ----- Inputs ---- #
 def inputTabIndex():
     if len(current_tabs) == 0:
-        return
-    print(f"you have {len(current_tabs)} opened Tabs.")
-    index = input("Enter the Index of the Tab you wish to close: ")
+        print("there is no opened Tabs currently!you must open a Tab first.")
+    else:
+        print(f"you have {len(current_tabs)} opened Tabs.")
+        index = input("Enter the Index of the Tab: ")
 
-    while not index.isdigit():
-        print("the Index must be numeric!")
-        index = input("Enter the Index of the Tab you wish to close again: ")
+        while not index.isdigit():
+            print(f"the Index must be numeric! 0 --> {len(current_tabs) - 1}")
+            index = input("Enter the Index of the Tab you wish to close again: ")
 
-    if len(current_tabs) >= 1:
-        while int(index) >= len(current_tabs):
-            print(f"you have {len(current_tabs)} opened Tabs.")
+        if len(current_tabs) >= 1:
+            while int(index) >= len(current_tabs):
+                print(f"you have {len(current_tabs)} opened Tabs.")
 
-            if len(current_tabs) == 1:
-                print("you have only 1 Tab opened at index 0")
-                index = input("Enter the Index of the Tab you wish to close again: ")
-            elif len(current_tabs) > 1:
-                print("choose Tab at index 0 --> {len(current_tabs) - 1}")
-                index = input("Enter the Index of the Tab you wish to close again: ")
+                if len(current_tabs) == 1:
+                    print("you have only 1 Tab opened at index 0")
+                    index = input("Enter the Index of the Tab you wish to close again: ")
+                elif len(current_tabs) > 1:
+                    print("choose Tab at index 0 --> {len(current_tabs) - 1}")
+                    index = input("Enter the Index of the Tab you wish to close again: ")
 
-    return index
+        return index
 
 
 # ----- Function ---- #
@@ -93,7 +94,7 @@ def displayNestedTabMenu():
 
 # ----- Function ---- #
 def openNestedTab(index):
-    if len(current_tabs) == 0:
+    if index is None:
         print("There is no opened tabs!open a tab first")
 
     if index == "":
@@ -158,7 +159,9 @@ def main():
             openTab()
 
         elif choice == 2:
-            closeTab(inputTabIndex())
+            index = inputTabIndex()
+            if index is not None:
+                closeTab(index)
 
         elif choice == 3:
             pass
@@ -168,22 +171,23 @@ def main():
 
         elif choice == 5:
             index = inputTabIndex()
-            displayNestedTabMenu()
-            choice_n = inputChoice()
-
-            while choice_n != 3:
-                if choice_n == 1:
-                    openNestedTab(index)
-
-                elif choice_n == 2:
-                    choice = 5
-                    continue
-
-                else:
-                    print("Invalid choice!")
-
+            if index is not None:
                 displayNestedTabMenu()
                 choice_n = inputChoice()
+
+                if choice_n == 2:
+                    choice = 5
+                    continue
+                else:
+                    while choice_n != 3:
+                        if choice_n == 1:
+                            openNestedTab(index)
+
+                        else:
+                            print("Invalid choice!")
+
+                        displayNestedTabMenu()
+                        choice_n = inputChoice()
 
         elif choice == 6:
             pass

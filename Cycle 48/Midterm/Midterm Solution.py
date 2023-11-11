@@ -153,11 +153,14 @@ def openNestedTab(index):
         print(f'{i}. {current_tabs[i]["Title"]}')
         for j in range(len(current_tabs[i]["Nested_Tabs"])):
             print(f'\t{i}. {current_tabs[i]["Nested_Tabs"][j]["Title"]}')
-        current_tabs[i]["Nested_Tabs"].append(inputNestedTab())
+        nested_tab = inputNestedTab()
+        current_tabs[i]["Nested_Tabs"].append(nested_tab)
     else:
         print("This Tab does not have Nested-Tabs")
-        current_tabs[i]["Nested_Tabs"] = [inputNestedTab()]
+        nested_tab = inputNestedTab()
+        current_tabs[i]["Nested_Tabs"] = [nested_tab]
 
+    print(f'A new nested-Tab:"{nested_tab["Title"]}" was added to Tab:"{current_tabs[i]["Title"]}"')
 
 # ------- choice 5 ------ #
 def clearAllTabs():

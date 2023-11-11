@@ -174,9 +174,22 @@ def clearAllTabs():
 # ------- choice 7 ------ #
 def saveTabs():
     file_path = "E:/PyCharm/PyCharm Community Edition 2023.1/Coding/foundations-cs-python/Cycle 48/Midterm/Save.JSON"
-    save = open(file_path, "w")
-    json.dump(current_tabs, save, indent=4)
-    save.close()
+    # file_path = input("Enter the file-path which you want to save the tabs in: ")
+    with open(file_path, "w") as file:
+        json.dump(current_tabs, file, indent=4)
+    file.close()
+    print("All current tabs was SAVED.")
+
+
+# ------- choice 8 ------ #
+def importTabs():
+    file_path = "E:/PyCharm/PyCharm Community Edition 2023.1/Coding/foundations-cs-python/Cycle 48/Midterm/Load.JSON"
+    # file_path = input("Enter the file-path which you want to save the tabs in: ")
+    with open(file_path, "r") as file:
+        data = json.load(file)
+        for i in range(len(data)):
+            current_tabs.append(data[i])
+    file.close()
     print("All current tabs was SAVED.")
 
 

@@ -1,8 +1,9 @@
 from urllib.request import urlopen
-import json
-
 # imported for choice "3. Switch Tab" and used in switchTab() function
 # learned about web scraping from : https://realpython.com/python-web-scraping-practical-introduction/
+import json
+# imported for choices "7. Save Tabs" and "8. Import Tabs" and used in saveTabs() and importTabs() functions
+# learned the basics of JSON from : https://www.programiz.com/python-programming/json
 current_tabs = []
 
 
@@ -17,16 +18,17 @@ def checkUrl():  # O(N) N is the wrong inputs by the user
         # and to avoid that we added try/except block with 2 except blocks
         try:
             # the try block tries to execute the code inside it
-            # if an error was raised it will skip to except part with will handle it
-            urlopen(url)  # this function tries to access the HTML code of a web and returns an object
+            # if an error was raised it will skip to except part where it will be handled
+            urlopen(url)  # urlopen() tries to access the HTML code of a web and returns an object
             return url  # when we return the loop will break
         except ValueError:  # if the parameter (url) was not a URL it will print an appropriate message
             print("This is not a URL!")
-            url = input("Enter Tab URL again: ")  # to avoid going in an infinite loop we ask again for the URL
+            url = input("Enter Tab URL again: ")
+            # to avoid going in an infinite loop we ask again for the URL from the user
         except IOError:
             # if the web's HTML could not be accessed, "urlopen()" will raise an error
-            # "except IOError" will not let "urlopen()" to raise an error if it could not return the object
-            # instead it will print this message below
+            # "except IOError" will print an appropriate message instead of program termination
+            # this step is necessary when we print the HTLM code in choice 3
             print("This URL is INVALID")
             url = input("Enter Tab URL again: ")
 
@@ -59,7 +61,7 @@ def inputTabIndex():  # O(N) or O(N+M) N: len(list) , M: wrong inputs
     else:
         print(f"\nyou currently have {len(current_tabs)} opened Tab(s):")
         for i in range(len(current_tabs)):
-            print(f'{i}. {current_tabs[i]["Title"]}')
+            print(f'{i+1}_ {current_tabs[i]["Title"]}')
         index = input("\nEnter the Index of the Tab: ")
         # if the list is not empty then we ask the user to input the index of the tab
 
@@ -109,14 +111,11 @@ def switchTab(index):
     i = -1 if index == "" else int(index)
     # we have the same method we used in the recent function
 
-    try:
-        url = current_tabs[i]["URL"]  # we get the URL of the selected tab
-        page = urlopen(url)
-        html = page.read().decode("utf-8")
-        print("\nRequest to the HTML code SUCCEEDED!\n")
-        print(html)
-    except IOError:
-        print("\nRequest to the HTML code FAILED!\n")
+    url = current_tabs[i]["URL"]  # we get the URL of the selected tab
+    page = urlopen(url)
+    html = page.read().decode("utf-8")
+
+    print(html)
 
 
 # ------- choice 4 ------ #
@@ -161,7 +160,7 @@ def openNestedTab(index):
         print(f'Tab at index {i} have {len(current_tabs[i]["Nested_Tabs"])} Nested-Tabs')
         print(f'{i}. {current_tabs[i]["Title"]}')
         for j in range(len(current_tabs[i]["Nested_Tabs"])):
-            print(f'\t{i}. {current_tabs[i]["Nested_Tabs"][j]["Title"]}')
+            print(f'\t{j}. {current_tabs[i]["Nested_Tabs"][j]["Title"]}')
         nested_tab = inputNestedTab()
         current_tabs[i]["Nested_Tabs"].append(nested_tab)
     else:
@@ -181,6 +180,9 @@ def clearAllTabs():
 
 # ------- choice 7 ------ #
 def saveTabs():
+    if len(current_tabs) == 0:
+        print("There is no Tabs to save! Open a tab first.")
+        return
     file_path = "E:/PyCharm/PyCharm Community Edition 2023.1/Coding/foundations-cs-python/Cycle 48/Midterm/Save.JSON"
     # file_path = input("Enter the file-path which you want to save the tabs in: ")
     with open(file_path, "w") as file:
@@ -192,13 +194,13 @@ def saveTabs():
 # ------- choice 8 ------ #
 def importTabs():
     file_path = "E:/PyCharm/PyCharm Community Edition 2023.1/Coding/foundations-cs-python/Cycle 48/Midterm/Load.JSON"
-    # file_path = input("Enter the file-path which you want to save the tabs in: ")
+    # file_path = input("Enter the file-path which you want to load the tabs from: ")
     with open(file_path, "r") as file:
         data = json.load(file)
         for i in range(len(data)):
             current_tabs.append(data[i])
     file.close()
-    print("All current tabs was SAVED.")
+    print("All tabs from selected file was IMPORTED.")
 
 
 # ------- User greeting ------- #
@@ -283,10 +285,10 @@ def main():
             clearAllTabs()
 
         elif choice == 7:
-            pass
+            saveTabs()
 
         elif choice == 8:
-            pass
+            importTabs()
 
         else:
             print("Invalid choice!")

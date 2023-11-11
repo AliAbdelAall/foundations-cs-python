@@ -1,0 +1,38 @@
+[
+    {
+        "Title": "JSON",
+        "URL": "https://www.json.org/json-en.html",
+        "Nested_Tabs": [
+            {
+                "Title": "PureBasic - JSON",
+                "URL": "https://www.purebasic.com/documentation/json/index.html"
+            },
+            {
+                "Title": "JSON library",
+                "URL": "https://api.dart.dev/stable/3.1.5/index.html"
+            }
+        ]
+    },
+    {
+        "Title": "W3schools",
+        "URL": "https://www.w3schools.com/",
+        "Nested_Tabs": [
+            {
+                "Title": "HTML Tutorial",
+                "URL": "https://www.w3schools.com/html/default.asp"
+            },
+            {
+                "Title": "CSS Tutorial",
+                "URL": "https://www.w3schools.com/css/default.asp"
+            },
+            {
+                "Title": "JavaScript Tutorial",
+                "URL": "https://www.w3schools.com/js/default.asp"
+            },
+            {
+                "Title": "Python Tutorial",
+                "URL": "https://www.w3schools.com/python/default.asp"
+            }
+        ]
+    }
+]

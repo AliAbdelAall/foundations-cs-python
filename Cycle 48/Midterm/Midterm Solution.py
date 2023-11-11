@@ -8,13 +8,17 @@ current_tabs = []
 # ------- choice 1 ------ #
 
 # ----- Inputs ---- #
-def checkUrl():
+def checkUrl():  # O(N) N is the wrong inputs by the user
     url = input("Enter your new Tab URL: ")
-    while True:
+    while True:  # we use while True to we keep looping util the URL is valid to return
         try:
-            urlopen(url)
-            return url
+            urlopen(url)  # this function tries to access the HTML code of a web and returns an object
+            return url  # when we return the loop will break
         except IOError:
+            # if the web's HTML could not be accessed, "urlopen()" will raise an error
+            # and to avoid that we added try and except to it
+            # "except IOError" will not let "urlopen()" to raise an error if it could not return the object
+            # instead it will print this message below
             print("This URL is INVALID")
 
 
@@ -57,7 +61,7 @@ def inputTabIndex():  # O(N) N: the number of wrong inputs
             elif len(current_tabs) == 1:
                 print("you have only 1 Tab opened at index 0")
                 index = input("Enter the Index of the Tab again: ")
-                # here we take haling user input a step further
+                # here we take handling user input a step further
                 # and make sure the user inputs the right index
 
             elif len(current_tabs) > 1:
@@ -74,13 +78,10 @@ def inputTabIndex():  # O(N) N: the number of wrong inputs
 def closeTab(index):  # O(1)  here we pop a tab and print it
     if index is None:
         return
+    i = -1 if index == "" else int(index)
     if index == "":
-        current_tabs.pop()
-        print(f"Tab at index {len(current_tabs) - 1} has been closed.")
-
-    else:
-        current_tabs.pop(int(index))
-        print("Tab at index ", index, " has been closed.")
+        current_tabs.pop(i)
+        print(f"Tab at index {i} has been closed.")
 
 
 # ------- choice 3 ------ #
@@ -108,13 +109,10 @@ def displayTabs():
     else:
         print(f"you currently have {len(current_tabs)} opened Tab(s).")
         for i in range(len(current_tabs)):
-            print(f'\nTab{i + 1} : {current_tabs[i]["Title"]}')
+            print(f'\n{i}. {current_tabs[i]["Title"]}')
             if "Nested_Tabs" in current_tabs[i]:
                 for j in range(len(current_tabs[i]["Nested_Tabs"])):
-                    if current_tabs[i]["Nested_Tabs"][j] != current_tabs[i]["Nested_Tabs"][-1]:
-                        print(f'Nested-Tab{j + 1} : {current_tabs[i]["Nested_Tabs"][j]["Title"]}, ', end='')
-                    else:
-                        print(f'Nested-Tab{j + 1} : {current_tabs[i]["Nested_Tabs"][j]["Title"]}')
+                    print(f'\t{j}. {current_tabs[i]["Nested_Tabs"][j]["Title"]}')
 
 
 # ------- choice 5 ------ #

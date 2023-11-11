@@ -1,6 +1,6 @@
 from urllib.request import urlopen
 
-# imported for choice "3. Switch Tab"
+# imported for choice "3. Switch Tab" and used in switchTab() function
 # learned about web scraping from : https://realpython.com/python-web-scraping-practical-introduction/
 current_tabs = []
 
@@ -41,7 +41,7 @@ def openTab():  # O(1) since this only creates a dictionary and append it to the
 
 # ------- choice 2 ------ #
 
-# ----- Function ---- #
+# ----- Inputs ---- #
 def inputTabIndex():  # O(N) or O(N+M) N: len(list) , M: wrong inputs
     if len(current_tabs) == 0:
         print("there is no opened Tabs currently!you must open a Tab first.")
@@ -71,6 +71,12 @@ def inputTabIndex():  # O(N) or O(N+M) N: len(list) , M: wrong inputs
                 index = input("Enter the Index of the Tab again: ")
                 # they may seem extra steps here, but it is more user-friendly
                 # so the user can understand what is wrong at each step
+        print(f"Tab at Index {index}:")
+        print(current_tabs[int(index)]["Title"])
+        if "Nested_Tabs" in current_tabs[int(index)]:
+            for j in range(len(current_tabs[int(index)]["Nested_Tabs"])):
+                print(f'\t{current_tabs[int(index)]["Nested_Tabs"][j]["Title"]}')
+
         return index
         # we return the index as a string in case the user did not input an index,
         # so we can access the last opened tab
@@ -134,7 +140,7 @@ def displayNestedTabMenu():
     print("""
     1. Add a Nested-Tab
     2. Change Tab index
-    3. Back
+    3. Back to Menu
     """)
 
 
@@ -143,7 +149,10 @@ def openNestedTab(index):
     i = -1 if index == "" else int(index)
 
     if "Nested_Tabs" in current_tabs[i]:
-        print(f'This Tab have {len(current_tabs[i]["Nested_Tabs"])} Nested-Tabs')
+        print(f'Tab at index {i} have {len(current_tabs[i]["Nested_Tabs"])} Nested-Tabs')
+        print(f'{i}. {current_tabs[i]["Title"]}')
+        for j in range(len(current_tabs[i]["Nested_Tabs"])):
+            print(f'\t{i}. {current_tabs[i]["Nested_Tabs"][j]["Title"]}')
         current_tabs[i]["Nested_Tabs"].append(inputNestedTab())
     else:
         print("This Tab does not have Nested-Tabs")

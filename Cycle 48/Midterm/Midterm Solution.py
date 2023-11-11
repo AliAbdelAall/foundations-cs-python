@@ -28,7 +28,7 @@ def checkUrl():  # O(N) N is the wrong inputs by the user
         except IOError:
             # if the web's HTML could not be accessed, "urlopen()" will raise an error
             # "except IOError" will print an appropriate message instead of program termination
-            # this step is necessary when we print the HTLM code in choice 3
+            # this step is necessary for choice 3 when we print the HTML code of a Tab
             print("This URL is INVALID")
             url = input("Enter Tab URL again: ")
 
@@ -64,7 +64,8 @@ def inputTabIndex():  # O(N) or O(N+M) N: len(list) , M: wrong inputs
             print(f'{i+1}_ {current_tabs[i]["Title"]}')
         index = input("\nEnter the Index of the Tab: ")
         # if the list is not empty then we ask the user to input the index of the tab
-
+        if index == "":
+            return -1
         while not index.isdigit() or int(index) > len(current_tabs) or int(index) == 0:
             if not index.isdigit():
                 print(f"the Index must be a POSITIVE numeric number!")
@@ -89,7 +90,7 @@ def inputTabIndex():  # O(N) or O(N+M) N: len(list) , M: wrong inputs
             for j in range(len(current_tabs[int(index)-1]["Nested_Tabs"])):
                 print(f'\t{current_tabs[int(index)-1]["Nested_Tabs"][j]["Title"]}')
 
-        return str(int(index)-1) if index.isdigit() else index
+        return int(index)-1
         # we return the index as a string in case the user did not input an index,
         # so we can access the last opened tab
 
@@ -98,7 +99,7 @@ def inputTabIndex():  # O(N) or O(N+M) N: len(list) , M: wrong inputs
 def closeTab(index):  # O(1)  here we pop a tab and print it
     if index is None:  # if we have no opened tabs
         return
-    i = -1 if index == "" else int(index)
+    i = -1 if index == "" else index
     # learned about this method while practicing "leetcode"
     # we save the index in a variable depending on the returned "index" from  inputTabIndex() function
     # so we avoid repetition in our code
@@ -112,7 +113,7 @@ def switchTab(index):
     # which we cannot see the code inside it, here it depends on the functions inside
     if index is None:
         return
-    i = -1 if index == "" else int(index)
+    i = -1 if index == "" else index
     # we have the same method we used in the recent function
 
     url = current_tabs[i]["URL"]  # we get the URL of the selected tab
@@ -158,7 +159,7 @@ def displayNestedTabMenu():
 
 # ----- Function ---- #
 def openNestedTab(index):
-    i = -1 if index == "" else int(index)
+    i = -1 if index == "" else index
 
     if "Nested_Tabs" in current_tabs[i]:
         print(f'Tab at index {i} have {len(current_tabs[i]["Nested_Tabs"])} Nested-Tabs')

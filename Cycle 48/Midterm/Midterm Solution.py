@@ -6,6 +6,9 @@ current_tabs = []
 
 
 # ------- choice 1 ------ #
+
+
+# ----- Function ---- #
 def openTab():  # O(1) since this only creates a dictionary and append it to the list of tabs
     new_tab = {}
     # this function creates a tab as a dictionary and append it to the list "current_tabs"
@@ -24,7 +27,7 @@ def openTab():  # O(1) since this only creates a dictionary and append it to the
 
 # ------- choice 2 ------ #
 
-# ----- Inputs ---- #
+# ----- Function ---- #
 def inputTabIndex():  # O(N) N: the number of wrong inputs
     if len(current_tabs) == 0:
         print("there is no opened Tabs currently!you must open a Tab first.")

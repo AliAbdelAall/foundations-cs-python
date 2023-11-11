@@ -83,13 +83,13 @@ def inputTabIndex():  # O(N) or O(N+M) N: len(list) , M: wrong inputs
                 # they may seem extra steps here, but it is more user-friendly
                 # so the user can understand what is wrong at each step
 
-        print(f"Tab at Index {index}:")
-        print(current_tabs[int(index)]["Title"])
-        if "Nested_Tabs" in current_tabs[int(index)]:
-            for j in range(len(current_tabs[int(index)]["Nested_Tabs"])):
-                print(f'\t{current_tabs[int(index)]["Nested_Tabs"][j]["Title"]}')
+        print(f"\nTab at Index {index}:")
+        print(current_tabs[int(index)-1]["Title"])
+        if "Nested_Tabs" in current_tabs[int(index)-1]:
+            for j in range(len(current_tabs[int(index)-1]["Nested_Tabs"])):
+                print(f'\t{current_tabs[int(index)-1]["Nested_Tabs"][j]["Title"]}')
 
-        return str(int(index)+1) if index.isdigit() else index
+        return str(int(index)-1) if index.isdigit() else index
         # we return the index as a string in case the user did not input an index,
         # so we can access the last opened tab
 
@@ -98,23 +98,26 @@ def inputTabIndex():  # O(N) or O(N+M) N: len(list) , M: wrong inputs
 def closeTab(index):  # O(1)  here we pop a tab and print it
     if index is None:  # if we have no opened tabs
         return
-    i = -1 if index == "" else int(index)  # learned about this method while practicing "leetcode"
+    i = -1 if index == "" else int(index)
+    # learned about this method while practicing "leetcode"
     # we save the index in a variable depending on the returned "index" from  inputTabIndex() function
     # so we avoid repetition in our code
     current_tabs.pop(i)
-    print(f"Tab at index {i} has been closed.")
+    print(f"Tab at index {i+1} has been closed.")
 
 
 # ------- choice 3 ------ #
 def switchTab(index):
+    # I am not ganna say O(1) here since it there are functions from an imported library
+    # which we cannot see the code inside it, here it depends on the functions inside
     if index is None:
         return
     i = -1 if index == "" else int(index)
     # we have the same method we used in the recent function
 
     url = current_tabs[i]["URL"]  # we get the URL of the selected tab
-    page = urlopen(url)
-    html = page.read().decode("utf-8")
+    page = urlopen(url)  # since we have a function above to check URL validity we are safe to go here
+    html = page.read().decode("utf-8")  # and here we read and decode the object "page" the get the HTML code as text
 
     print(html)
 

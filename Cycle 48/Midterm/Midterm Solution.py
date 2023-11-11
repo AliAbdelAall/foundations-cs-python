@@ -1,4 +1,5 @@
 from urllib.request import urlopen
+import json
 
 # imported for choice "3. Switch Tab" and used in switchTab() function
 # learned about web scraping from : https://realpython.com/python-web-scraping-practical-introduction/
@@ -163,11 +164,20 @@ def openNestedTab(index):
     print(f'A new nested-Tab:"{nested_tab["Title"]}" was added to Tab:"{current_tabs[i]["Title"]}"')
 
 
-# ------- choice 5 ------ #
+# ------- choice 6 ------ #
 def clearAllTabs():
     for i in range(len(current_tabs)):
         current_tabs.pop()
     print("All tabs has been cleared.")
+
+
+# ------- choice 7 ------ #
+def saveTabs():
+    file_path = "E:/PyCharm/PyCharm Community Edition 2023.1/Coding/foundations-cs-python/Cycle 48/Midterm/Save.JSON"
+    save = open(file_path, "w")
+    json.dump(current_tabs, save, indent=4)
+    save.close()
+    print("All current tabs was SAVED.")
 
 
 # ------- User greeting ------- #

@@ -65,30 +65,31 @@ def inputTabIndex():  # O(N) or O(N+M) N: len(list) , M: wrong inputs
         index = input("\nEnter the Index of the Tab: ")
         # if the list is not empty then we ask the user to input the index of the tab
 
-        while not index.isdigit() or int(index) >= len(current_tabs):
+        while not index.isdigit() or int(index) > len(current_tabs) or int(index) == 0:
             if not index.isdigit():
                 print(f"the Index must be a POSITIVE numeric number!")
                 index = input("\nEnter the Index of the Tab again: ")
                 # here we handle the user input by checking if the number is a positive integer
 
             elif len(current_tabs) == 1:
-                print("you have only 1 Tab opened at index 0")
+                print("you have only 1 Tab opened at index 1")
                 index = input("\nEnter the Index of the Tab again: ")
                 # here we take handling user input a step further
                 # and make sure the user inputs the right index
 
             elif len(current_tabs) > 1:
-                print(f"choose Tab at index 0 --> {len(current_tabs) - 1}")
+                print(f"choose Tab at index 1 --> {len(current_tabs)}")
                 index = input("Enter the Index of the Tab again: ")
                 # they may seem extra steps here, but it is more user-friendly
                 # so the user can understand what is wrong at each step
+
         print(f"Tab at Index {index}:")
         print(current_tabs[int(index)]["Title"])
         if "Nested_Tabs" in current_tabs[int(index)]:
             for j in range(len(current_tabs[int(index)]["Nested_Tabs"])):
                 print(f'\t{current_tabs[int(index)]["Nested_Tabs"][j]["Title"]}')
 
-        return index
+        return str(int(index)+1) if index.isdigit() else index
         # we return the index as a string in case the user did not input an index,
         # so we can access the last opened tab
 
@@ -300,3 +301,8 @@ def main():
 
 
 main()
+
+# Index display
+# index user input adjust
+# comment
+# run multiple situations and retest the code

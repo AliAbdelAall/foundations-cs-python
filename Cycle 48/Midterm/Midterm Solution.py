@@ -65,7 +65,7 @@ def inputTabIndex():  # O(N) or O(N+M) N: len(list) , M: wrong inputs
         index = input("\nEnter the Index of the Tab: ")
         # if the list is not empty then we ask the user to input the index of the tab
         if index == "":
-            return -1
+            return len(current_tabs) - 1
         while not index.isdigit() or int(index) > len(current_tabs) or int(index) == 0:
             if not index.isdigit():
                 print(f"the Index must be a POSITIVE numeric number!")
@@ -78,18 +78,18 @@ def inputTabIndex():  # O(N) or O(N+M) N: len(list) , M: wrong inputs
                 # here we take handling user input a step further
                 # and make sure the user inputs the right index
 
-            elif len(current_tabs) > 1:
+            else:
                 print(f"choose Tab at index 1 --> {len(current_tabs)}")
                 index = input("Enter the Index of the Tab again: ")
                 # they may seem extra steps here, but it is more user-friendly
                 # so the user can understand what is wrong at each step
         index = int(index) - 1
-        print(f"\nTab at Index {index}:")
+        print(f"\nTab at Index {index + 1}:")
         print(current_tabs[index]["Title"])
         if "Nested_Tabs" in current_tabs[index]:
             for j in range(len(current_tabs[index]["Nested_Tabs"])):
                 print(f'\t{current_tabs[index]["Nested_Tabs"][j]["Title"]}')
-
+        # and after the user chooses the index we display the tab at this index
         return index
         # we return the index as a string in case the user did not input an index,
         # so we can access the last opened tab
@@ -110,14 +110,12 @@ def switchTab(index):
     # which we cannot see the code inside it, here it depends on the functions inside
     if index is None:
         return
-    i = -1 if index == "" else index
-    # we have the same method we used in the recent function
 
-    url = current_tabs[i]["URL"]  # we get the URL of the selected tab
+    url = current_tabs[index]["URL"]  # we get the URL of the selected tab
     page = urlopen(url)  # since we have a function above to check URL validity we are safe to go here
     html = page.read().decode("utf-8")  # and here we read and decode the object "page" the get the HTML code as text
 
-    print(html)
+    print(f"\nHTML code:\n\n{html}")
 
 
 # ------- choice 4 ------ #
@@ -156,21 +154,20 @@ def displayNestedTabMenu():
 
 # ----- Function ---- #
 def openNestedTab(index):
-    i = -1 if index == "" else index
+    if "Nested_Tabs" in current_tabs[index]:
+        print(f'Tab at index {index} have {len(current_tabs[index]["Nested_Tabs"])} Nested-Tabs')
+        print(f'{index}. {current_tabs[index]["Title"]}')
 
-    if "Nested_Tabs" in current_tabs[i]:
-        print(f'Tab at index {i} have {len(current_tabs[i]["Nested_Tabs"])} Nested-Tabs')
-        print(f'{i}. {current_tabs[i]["Title"]}')
-        for j in range(len(current_tabs[i]["Nested_Tabs"])):
-            print(f'\t{j}. {current_tabs[i]["Nested_Tabs"][j]["Title"]}')
+        for j in range(len(current_tabs[index]["Nested_Tabs"])):
+            print(f'\t{j}. {current_tabs[index]["Nested_Tabs"][j]["Title"]}')
         nested_tab = inputNestedTab()
-        current_tabs[i]["Nested_Tabs"].append(nested_tab)
+        current_tabs[index]["Nested_Tabs"].append(nested_tab)
     else:
         print("This Tab does not have Nested-Tabs")
         nested_tab = inputNestedTab()
-        current_tabs[i]["Nested_Tabs"] = [nested_tab]
+        current_tabs[index]["Nested_Tabs"] = [nested_tab]
 
-    print(f'A new nested-Tab:"{nested_tab["Title"]}" was added to Tab:"{current_tabs[i]["Title"]}"')
+    print(f'A new nested-Tab:"{nested_tab["Title"]}" was added to Tab:"{current_tabs[index]["Title"]}"')
 
 
 # ------- choice 6 ------ #
@@ -303,7 +300,5 @@ def main():
 
 main()
 
-# Index display
-# index user input adjust
 # comment
 # run multiple situations and retest the code

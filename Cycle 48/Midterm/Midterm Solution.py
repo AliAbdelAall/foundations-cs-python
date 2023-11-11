@@ -10,17 +10,25 @@ current_tabs = []
 
 # ----- Inputs ---- #
 def checkUrl():  # O(N) N is the wrong inputs by the user
-    url = input("Enter your new Tab URL: ")
+    url = input("Enter Tab URL: ")
     while True:  # we use while True to we keep looping util the URL is valid to return
+        # urlopen(url) function will raise an error if the object(access to HTML code) was not found
+        # or the parameter (url) was not a URL to begin with
+        # and to avoid that we added try/except block with 2 except blocks
         try:
+            # the try block tries to execute the code inside it
+            # if an error was raised it will skip to except part with will handle it
             urlopen(url)  # this function tries to access the HTML code of a web and returns an object
             return url  # when we return the loop will break
+        except ValueError:  # if the parameter (url) was not a URL it will print an appropriate message
+            print("This is not a URL!")
+            url = input("Enter Tab URL again: ")  # to avoid going in an infinite loop we ask again for the URL
         except IOError:
             # if the web's HTML could not be accessed, "urlopen()" will raise an error
-            # and to avoid that we added try and except to it
             # "except IOError" will not let "urlopen()" to raise an error if it could not return the object
             # instead it will print this message below
             print("This URL is INVALID")
+            url = input("Enter Tab URL again: ")
 
 
 # ----- Function ---- #
@@ -28,8 +36,8 @@ def openTab():  # O(1) since this only creates a dictionary and append it to the
     new_tab = {}
     # this function creates a tab as a dictionary and append it to the list "current_tabs"
 
-    title = input("Enter your new Tab Title: ")
-    url = input("Enter your new Tab URL: ")
+    title = input("Enter Tab Title: ")
+    url = checkUrl()
 
     new_tab["Title"] = title
     new_tab["URL"] = url
@@ -130,8 +138,8 @@ def displayTabs():
 # ----- inputs ---- #
 def inputNestedTab():
     nested_tab = {}
-    title = input("Enter the Title of the Nested-Tab: ")
-    url = input("Enter the content of the Nested-Tab: ")
+    title = input("Enter Tab Title: ")
+    url = checkUrl()
     nested_tab["Title"] = title
     nested_tab["URL"] = url
     return nested_tab

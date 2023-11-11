@@ -83,14 +83,14 @@ def inputTabIndex():  # O(N) or O(N+M) N: len(list) , M: wrong inputs
                 index = input("Enter the Index of the Tab again: ")
                 # they may seem extra steps here, but it is more user-friendly
                 # so the user can understand what is wrong at each step
-
+        index = int(index) - 1
         print(f"\nTab at Index {index}:")
-        print(current_tabs[int(index)-1]["Title"])
-        if "Nested_Tabs" in current_tabs[int(index)-1]:
-            for j in range(len(current_tabs[int(index)-1]["Nested_Tabs"])):
-                print(f'\t{current_tabs[int(index)-1]["Nested_Tabs"][j]["Title"]}')
+        print(current_tabs[index]["Title"])
+        if "Nested_Tabs" in current_tabs[index]:
+            for j in range(len(current_tabs[index]["Nested_Tabs"])):
+                print(f'\t{current_tabs[index]["Nested_Tabs"][j]["Title"]}')
 
-        return int(index)-1
+        return index
         # we return the index as a string in case the user did not input an index,
         # so we can access the last opened tab
 

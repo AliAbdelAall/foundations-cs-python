@@ -42,25 +42,27 @@ def openTab():  # O(1) since this only creates a dictionary and append it to the
 # ------- choice 2 ------ #
 
 # ----- Function ---- #
-def inputTabIndex():  # O(N) N: the number of wrong inputs
+def inputTabIndex():  # O(N) or O(N+M) N: len(list) , M: wrong inputs
     if len(current_tabs) == 0:
         print("there is no opened Tabs currently!you must open a Tab first.")
         return
-        # if the list is empty then there is no tabs to open ande we return None
+        # if the list is empty then there is no tabs to open, so we return None
     else:
-        print(f"you currently have {len(current_tabs)} opened Tab(s).")
-        index = input("Enter the Index of the Tab: ")
+        print(f"\nyou currently have {len(current_tabs)} opened Tab(s):")
+        for i in range(len(current_tabs)):
+            print(f'{i}. {current_tabs[i]["Title"]}')
+        index = input("\nEnter the Index of the Tab: ")
         # if the list is not empty then we ask the user to input the index of the tab
 
         while not index.isdigit() or int(index) >= len(current_tabs):
             if not index.isdigit():
                 print(f"the Index must be a POSITIVE numeric number!")
-                index = input("Enter the Index of the Tab again: ")
+                index = input("\nEnter the Index of the Tab again: ")
                 # here we handle the user input by checking if the number is a positive integer
 
             elif len(current_tabs) == 1:
                 print("you have only 1 Tab opened at index 0")
-                index = input("Enter the Index of the Tab again: ")
+                index = input("\nEnter the Index of the Tab again: ")
                 # here we take handling user input a step further
                 # and make sure the user inputs the right index
 
@@ -71,17 +73,18 @@ def inputTabIndex():  # O(N) N: the number of wrong inputs
                 # so the user can understand what is wrong at each step
         return index
         # we return the index as a string in case the user did not input an index,
-        # so we can access the last index
+        # so we can access the last opened tab
 
 
 # ----- Function ---- #
 def closeTab(index):  # O(1)  here we pop a tab and print it
-    if index is None:
+    if index is None:  # if we have no opened tabs
         return
-    i = -1 if index == "" else int(index)
-    if index == "":
-        current_tabs.pop(i)
-        print(f"Tab at index {i} has been closed.")
+    i = -1 if index == "" else int(index)  # learned about this method while practicing "leetcode"
+    # we save the index in a variable depending on the returned "index" from  inputTabIndex() function
+    # so we avoid repetition in our code
+    current_tabs.pop(i)
+    print(f"Tab at index {i} has been closed.")
 
 
 # ------- choice 3 ------ #
@@ -89,7 +92,7 @@ def switchTab(index):
     if index is None:
         return
     i = -1 if index == "" else int(index)
-    # we 
+    # we have the same method we used in the recent function
 
     try:
         url = current_tabs[i]["URL"]  # we get the URL of the selected tab

@@ -99,12 +99,9 @@ def inputTabIndex():  # O(N) or O(N+M) N: len(list) , M: wrong inputs
 def closeTab(index):  # O(1)  here we pop a tab and print it
     if index is None:  # if we have no opened tabs
         return
-    i = -1 if index == "" else index
-    # learned about this method while practicing "leetcode"
-    # we save the index in a variable depending on the returned "index" from  inputTabIndex() function
-    # so we avoid repetition in our code
-    current_tabs.pop(i)
-    print(f"Tab at index {i+1} has been closed.")
+
+    current_tabs.pop(index)
+    print(f"Tab at index {index+1} has been closed.")
 
 
 # ------- choice 3 ------ #

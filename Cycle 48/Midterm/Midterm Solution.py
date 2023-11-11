@@ -7,6 +7,16 @@ current_tabs = []
 
 # ------- choice 1 ------ #
 
+# ----- Inputs ---- #
+def checkUrl():
+    url = input("Enter your new Tab URL: ")
+    while True:
+        try:
+            urlopen(url)
+            return url
+        except IOError:
+            print("This URL is INVALID")
+
 
 # ----- Function ---- #
 def openTab():  # O(1) since this only creates a dictionary and append it to the list of tabs

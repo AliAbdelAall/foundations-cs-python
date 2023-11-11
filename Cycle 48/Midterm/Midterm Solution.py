@@ -28,7 +28,8 @@ def openTab():  # O(1) since this only creates a dictionary and append it to the
 def inputTabIndex():  # O(N) N: the number of wrong inputs
     if len(current_tabs) == 0:
         print("there is no opened Tabs currently!you must open a Tab first.")
-        # if the list is empty then there is no tabs to open
+        return
+        # if the list is empty then there is no tabs to open ande we return None
     else:
         print(f"you currently have {len(current_tabs)} opened Tab(s).")
         index = input("Enter the Index of the Tab: ")
@@ -74,10 +75,16 @@ def switchTab(index):
     if index is None:
         return
     i = -1 if index == "" else int(index)
-    page = urlopen(current_tabs[i]["URL"])
-    html_bytes = page.read()
-    html = html_bytes.decode("utf-8")
-    print(html)
+    # we 
+
+    try:
+        url = current_tabs[i]["URL"]  # we get the URL of the selected tab
+        page = urlopen(url)
+        html = page.read().decode("utf-8")
+        print("\nRequest to the HTML code SUCCEEDED!\n")
+        print(html)
+    except IOError:
+        print("\nRequest to the HTML code FAILED!\n")
 
 
 # ------- choice 4 ------ #
@@ -136,9 +143,8 @@ def clearAllTabs():
     print("All tabs has been cleared.")
 
 
-# ------- User login & greeting ------- #
+# ------- User greeting ------- #
 def greetUser():
-    print("Log-in:")
     username = input("Enter your Username: ")
 
     while username == "":

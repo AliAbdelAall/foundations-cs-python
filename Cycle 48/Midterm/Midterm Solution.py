@@ -19,8 +19,11 @@ def checkUrl():  # O(N) N is the wrong inputs by the user
         try:  # try block will try to execute the block inside it if an error was raised except block will handle it
             urlopen(url)  # O(1) # urlopen() tries to access the HTML code of a web and returns an object
             return url  # when we return the loop will break
+        except ValueError:  # if URL was not in URL format it will be handled here
+            print("This is not a URL")
+            url = input("Enter Tab URL again: ").strip()
         except URLError:
-            # if the URL was not accessible or not in URL format an appropriate message will be displayed
+            # if the URL was not accessible format an appropriate message will be displayed
             print("This URL is INVALID")
             url = input("Enter Tab URL again: ").strip()  # we ask for the URL again from the user
 
@@ -168,12 +171,30 @@ def clearAllTabs():  # O(1) since we only assign to an empty list
 
 
 # ------- choice 7 ------ #
+
+# ----- inputs ---- #
+def checkFilePath():
+    file_path = input("Enter file path: ")
+    while True:
+        try:
+            with open(file_path,"r") as file:
+                pass
+            file.close()
+            return file_path
+        except PermissionError:
+            print("File path is INVALID")
+            file_path = input("Enter file path again: ")
+        except FileNotFoundError:
+            print("File path is INVALID")
+            file_path = input("Enter file path again: ")
+
+
+# ----- Function ---- #
 def saveTabs():  # O(N) N : the size of data going to the file
     if len(current_tabs) == 0:
         print("There is no Tabs to save! Open a tab first.")
         return
-    # file_path = "E:/PyCharm/PyCharm Community Edition 2023.1/Coding/foundations-cs-python/Cycle 48/Midterm/Save.JSON"
-    file_path = input("Enter the file-path which you want to save the tabs in: ")
+    file_path = checkFilePath()
     with open(file_path, "w") as file:
         # we open the file in "write" mode to save the data inside the file
         # if the file exists all data on it will be wiped, else a new file will be created
@@ -186,8 +207,7 @@ def saveTabs():  # O(N) N : the size of data going to the file
 
 # ------- choice 8 ------ #
 def importTabs():  # O(N) N : the size of data in the file
-    # file_path = "E:/PyCharm/PyCharm Community Edition 2023.1/Coding/foundations-cs-python/Cycle 48/Midterm/Load.JSON"
-    file_path = input("Enter the file-path which you want to load the tabs from: ")
+    file_path = checkFilePath()
     with open(file_path, "r") as file:  # we open the file in "read" mode to access the data inside the JSON file
         data = json.load(file)
         # we load the data inside the file and store it inside a variable for later usage
@@ -206,6 +226,7 @@ def greetUser():  # O(1)
         print(f"Welcome to our program, Anonymous!")
     else:
         print(f"Welcome to our program, {username}!")
+    return username
 
 
 # ------- Menu Display ------- #
@@ -224,7 +245,7 @@ def displayMenu():  # O(1) we only print
 
 
 # ------- Choice Input ------- #
-def inputChoice():
+def inputChoice():  # O(N) N: wrong input(s) by the user
     choice = input("Enter a number as your choice: ")
 
     while not choice.isdigit():
@@ -235,65 +256,63 @@ def inputChoice():
 
 
 # ------- Main ------- #
-def main():
-    greetUser()
-    displayMenu()
-    choice = inputChoice()
+def main():  # overall O(N^2) ;choice 4 displayTabs() is the dominant/slowest
+    username = greetUser()  # O(1)
+    displayMenu()  # O(1)
+    choice = inputChoice()  # O(N)
 
     while choice != 9:
         if choice == 1:
-            openTab()
+            openTab()  # O(1)
 
         elif choice == 2:
-            closeTab(inputTabIndex())
+            closeTab(inputTabIndex())  # O(N)
 
         elif choice == 3:
-            switchTab(inputTabIndex())
+            switchTab(inputTabIndex())  # O(N)
 
         elif choice == 4:
-            displayTabs()
+            displayTabs()  # O(N^2)
 
         elif choice == 5:
-            index = inputTabIndex()
-            if index is not None:
-                displayNestedTabMenu()
-                choice_n = inputChoice()
+            index = inputTabIndex()  # O(N)
+            if index is not None:  # if the list of tabs is empty
+                displayNestedTabMenu()  # O(1)
+                choice_n = inputChoice()  # O(N)
 
                 while choice_n != 3:
                     if choice_n == 1:
-                        openNestedTab(index)
+                        openNestedTab(index)  # O(N)
                     elif choice_n == 2:
-                        break
+                        break  # if the user want to change index we break out of the inner loop to access the main loop
 
                     else:
                         print("Invalid choice!")
 
-                    displayNestedTabMenu()
-                    choice_n = inputChoice()
+                    displayNestedTabMenu()  # O(1)
+                    choice_n = inputChoice()  # O(N)
 
                 if choice_n == 2:
-                    choice = 5
-                    continue
+                    choice = 5  # after breaking out of the loop we assign choice = 5 to enter choice 5 again
+                    continue  # and then the "continue" statement will let us skip all steps after it and loop again
 
         elif choice == 6:
-            clearAllTabs()
+            clearAllTabs()  # O(1)
 
         elif choice == 7:
-            saveTabs()
+            saveTabs()  # O(N)
 
         elif choice == 8:
-            importTabs()
+            importTabs()  # O(N)
 
         else:
             print("Invalid choice!")
 
-        displayMenu()
-        choice = inputChoice()
-
+        displayMenu()  # O(1)
+        choice = inputChoice()  # O(N)
+    print(f"We hope you enjoyed uor program, {username}!")
     print("you Exited the program...")
 
 
 main()
 
-# comment
-# run multiple situations and retest the code

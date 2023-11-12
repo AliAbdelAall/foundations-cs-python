@@ -135,7 +135,7 @@ def displayTabs():  # O(N^2) N: opened tabs
 def inputNestedTab():
     # O(N) since we have checkUrl() inside this function N : Wrong inputs by the user
     nested_tab = {}
-    title = input("Enter Tab Title: ")
+    title = input("Enter Tab Title: ").strip()
     url = checkUrl()  # O(N)
     nested_tab["Title"] = title
     nested_tab["URL"] = url
@@ -173,20 +173,21 @@ def clearAllTabs():  # O(1) since we only assign to an empty list
 # ------- choice 7 ------ #
 
 # ----- inputs ---- #
-def checkFilePath():
-    file_path = input("Enter file path: ")
+def checkFilePath():  # O(N) N: wrong inputs by the user
+    file_path = input("Enter file path: ").strip()
     while True:
-        try:
-            with open(file_path,"r") as file:
+        try:  # we try to open the file as "read" to check its validity
+            with open(file_path, "r") as file:  # O(1) it try to access the file
                 pass
-            file.close()
+            file.close()  # if the file is valid we close it and return the file path
             return file_path
         except PermissionError:
+            # if the selected file is a folder it will be handled here
             print("File path is INVALID")
-            file_path = input("Enter file path again: ")
-        except FileNotFoundError:
+            file_path = input("Enter file path again: ").strip()
+        except FileNotFoundError:  # if the input was not a file path or the file does not exist it will be handled
             print("File path is INVALID")
-            file_path = input("Enter file path again: ")
+            file_path = input("Enter file path again: ").strip()
 
 
 # ----- Function ---- #
@@ -220,12 +221,12 @@ def importTabs():  # O(N) N : the size of data in the file
 
 # ------- User greeting ------- #
 def greetUser():  # O(1)
-    username = input("Enter your Username: ")
+    username = input("Enter your Username: ").strip()
 
     if username == "":  # this was just a little funny thing to add in my opinion
-        print(f"Welcome to our program, Anonymous!")
-    else:
-        print(f"Welcome to our program, {username}!")
+        username = "Anonymous"
+
+    print(f"Welcome to our program, {username}!")
     return username
 
 
@@ -246,11 +247,11 @@ def displayMenu():  # O(1) we only print
 
 # ------- Choice Input ------- #
 def inputChoice():  # O(N) N: wrong input(s) by the user
-    choice = input("Enter a number as your choice: ")
+    choice = input("Enter a number as your choice: ").strip()
 
     while not choice.isdigit():
-        print("your choice must be numeric number!")
-        choice = input("Enter a number as your choice again: ")
+        print("your choice must be a POSITIVE numeric number!")
+        choice = input("Enter a number as your choice again: ").strip()
 
     return int(choice)
 
@@ -310,8 +311,8 @@ def main():  # overall O(N^2) ;choice 4 displayTabs() is the dominant/slowest
 
         displayMenu()  # O(1)
         choice = inputChoice()  # O(N)
-    print(f"We hope you enjoyed uor program, {username}!")
-    print("you Exited the program...")
+    print(f"We hope you enjoyed the program, {username}!")
+    print("Exiting the program...")
 
 
 main()

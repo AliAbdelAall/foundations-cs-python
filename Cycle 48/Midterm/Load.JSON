@@ -34,5 +34,27 @@
                 "URL": "https://www.w3schools.com/python/default.asp"
             }
         ]
+    },
+    {
+        "Title": "SE Factory",
+        "URL": "https://www.sefactory.io/",
+        "Nested_Tabs": [
+            {
+                "Title": "FCS: Foundations of Computer Science",
+                "URL": "https://www.sefactory.io/fcs"
+            },
+            {
+                "Title": "FSW: Full-Stack Web Development",
+                "URL": "https://www.sefactory.io/fsw"
+            },
+            {
+                "Title": "FSD: Full-Stack Data",
+                "URL": "https://www.sefactory.io/fsd"
+            },
+            {
+                "Title": "UIX: UI/UX Design Bootcamp",
+                "URL": "https://www.sefactory.io/uix"
+            }
+        ]
     }
 ]

@@ -1,6 +1,9 @@
 from urllib.request import urlopen
 # imported for choice "3. Switch Tab" and used in switchTab() function
 # learned about web scraping from : https://realpython.com/python-web-scraping-practical-introduction/
+from urllib.error import URLError
+# imported the handle user input to get a valid URL which we can access
+# from : https://docs.python.org/3/library/urllib.error.html
 import json
 # imported for choices "7. Save Tabs" and "8. Import Tabs" and used in saveTabs() and importTabs() functions
 # learned the basics of JSON from : https://www.programiz.com/python-programming/json
@@ -11,26 +14,15 @@ current_tabs = []
 
 # ----- Inputs ---- #
 def checkUrl():  # O(N) N is the wrong inputs by the user
-    url = input("Enter Tab URL: ")
+    url = input("Enter Tab URL: ").strip()
     while True:  # we use while True to we keep looping util the URL is valid to return
-        # urlopen(url) function will raise an error if the object(access to HTML code) was not found
-        # or the parameter (url) was not a URL to begin with
-        # and to avoid that we added try/except block with 2 except blocks
-        try:
-            # the try block tries to execute the code inside it
-            # if an error was raised it will skip to except part where it will be handled
-            urlopen(url)  # urlopen() tries to access the HTML code of a web and returns an object
+        try:  # try block will try to execute the block inside it if an error was raised except block will handle it
+            urlopen(url)  # O(1) # urlopen() tries to access the HTML code of a web and returns an object
             return url  # when we return the loop will break
-        except ValueError:  # if the parameter (url) was not a URL it will print an appropriate message
-            print("This is not a URL!")
-            url = input("Enter Tab URL again: ")
-            # to avoid going in an infinite loop we ask again for the URL from the user
-        except IOError:
-            # if the web's HTML could not be accessed, "urlopen()" will raise an error
-            # "except IOError" will print an appropriate message instead of program termination
-            # this step is necessary for choice 3 when we print the HTML code of a Tab
+        except URLError:
+            # if the URL was not accessible or not in URL format an appropriate message will be displayed
             print("This URL is INVALID")
-            url = input("Enter Tab URL again: ")
+            url = input("Enter Tab URL again: ").strip()  # we ask for the URL again from the user
 
 
 # ----- Function ---- #
@@ -38,7 +30,7 @@ def openTab():  # O(1) since this only creates a dictionary and append it to the
     new_tab = {}
     # this function creates a tab as a dictionary and append it to the list "current_tabs"
 
-    title = input("Enter Tab Title: ")
+    title = input("Enter Tab Title: ").strip()
     url = checkUrl()
 
     new_tab["Title"] = title
@@ -63,7 +55,7 @@ def inputTabIndex():  # O(N) N: len(list)
         for i in range(len(current_tabs)):
             print(f'{i+1}_ {current_tabs[i]["Title"]}')
 
-        index = input("\nEnter the Index of the Tab: ")
+        index = input("\nEnter the Index of the Tab: ").strip()
         # if the list is not empty then we ask the user to input the index of the tab
         if index == "":
             return len(current_tabs) - 1  # if the user did not input an index, then no need for extra steps
@@ -71,18 +63,18 @@ def inputTabIndex():  # O(N) N: len(list)
         while not index.isdigit() or int(index) > len(current_tabs) or int(index) == 0:
             if not index.isdigit():
                 print(f"the Index must be a POSITIVE numeric number!")
-                index = input("\nEnter the Index of the Tab again: ")
+                index = input("\nEnter the Index of the Tab again: ").strip()
                 # here we handle the user input by checking if the number is a positive integer
 
             elif len(current_tabs) == 1:
                 print("you have only 1 Tab opened at index 1")
-                index = input("\nEnter the Index of the Tab again: ")
+                index = input("\nEnter the Index of the Tab again: ").strip()
                 # here we take handling user input a step further
                 # and make sure the user inputs the right index
 
             else:
                 print(f"choose Tab at index 1 --> {len(current_tabs)}")
-                index = input("Enter the Index of the Tab again: ")
+                index = input("Enter the Index of the Tab again: ").strip()
                 # they may seem extra steps here, but it is more user-friendly
                 # so the user can understand what is wrong at each step
         index = int(index) - 1  # we adjust the index as it should be to access the real index of the list
@@ -92,7 +84,7 @@ def inputTabIndex():  # O(N) N: len(list)
         if "Nested_Tabs" in current_tabs[index]:
             for j in range(len(current_tabs[index]["Nested_Tabs"])):
                 print(f'\t{current_tabs[index]["Nested_Tabs"][j]["Title"]}')
-        # and after the user chooses the index we display the tab at this index
+        # and after the user chooses the index we display the tab at this index and its nested-tabs if there are any
         return index
 
 
@@ -105,14 +97,13 @@ def closeTab(index):  # O(1)  here we pop a tab and print it
 
 
 # ------- choice 3 ------ #
-def switchTab(index):
-    # I am not ganna say O(1) here since it there are functions from an imported library
-    # which we cannot see the code inside it, here it depends on the functions inside
+def switchTab(index):  # O(N) N : the size of HTML code in the page
     if index is None:
         return
 
     url = current_tabs[index]["URL"]  # we get the URL of the selected tab
-    page = urlopen(url)  # since we have a function above to check URL validity we are safe to go here
+    page = urlopen(url)  # O(1)
+    # since we have a function above to check URL validity we are safe to go here
     html = page.read().decode("utf-8")  # and here we read and decode the object "page" the get the HTML code as text
 
     print(f"\nHTML code:\n{html}")
@@ -156,21 +147,21 @@ def displayNestedTabMenu():  # O(1) we display a menu
 
 
 # ----- Function ---- #
-def openNestedTab(index):
+def openNestedTab(index):  # O(?) since we call inputNestedTab() inside it
     if "Nested_Tabs" in current_tabs[index]:
-        nested_tab = inputNestedTab()
+        nested_tab = inputNestedTab()   # O(?)
         current_tabs[index]["Nested_Tabs"].append(nested_tab)
     else:
-        nested_tab = inputNestedTab()
+        nested_tab = inputNestedTab()  # O(?)
         current_tabs[index]["Nested_Tabs"] = [nested_tab]
 
     print(f'A new nested-Tab:"{nested_tab["Title"]}" was added to Tab:"{current_tabs[index]["Title"]}"')
 
 
 # ------- choice 6 ------ #
-def clearAllTabs():
-    for i in range(len(current_tabs)):
-        current_tabs.pop()
+def clearAllTabs():  # O(1) since we only assign to an empty list
+    global current_tabs  # the global statement let us access the global variable like it is outside the function
+    current_tabs = []  # we re-assign the variable to an empty list instead of looping to pop all elements inside
     print("All tabs has been cleared.")
 
 

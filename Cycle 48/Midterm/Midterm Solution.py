@@ -53,7 +53,7 @@ def openTab():  # O(1) since this only creates a dictionary and append it to the
 # ------- choice 2 ------ #
 
 # ----- Inputs ---- #
-def inputTabIndex():  # O(N) or O(N+M) N: len(list) , M: wrong inputs
+def inputTabIndex():  # O(N) N: len(list)
     if len(current_tabs) == 0:
         print("there is no opened Tabs currently!you must open a Tab first.")
         return
@@ -62,10 +62,12 @@ def inputTabIndex():  # O(N) or O(N+M) N: len(list) , M: wrong inputs
         print(f"\nyou currently have {len(current_tabs)} opened Tab(s):")
         for i in range(len(current_tabs)):
             print(f'{i+1}_ {current_tabs[i]["Title"]}')
+
         index = input("\nEnter the Index of the Tab: ")
         # if the list is not empty then we ask the user to input the index of the tab
         if index == "":
-            return len(current_tabs) - 1
+            return len(current_tabs) - 1  # if the user did not input an index, then no need for extra steps
+
         while not index.isdigit() or int(index) > len(current_tabs) or int(index) == 0:
             if not index.isdigit():
                 print(f"the Index must be a POSITIVE numeric number!")
@@ -83,7 +85,8 @@ def inputTabIndex():  # O(N) or O(N+M) N: len(list) , M: wrong inputs
                 index = input("Enter the Index of the Tab again: ")
                 # they may seem extra steps here, but it is more user-friendly
                 # so the user can understand what is wrong at each step
-        index = int(index) - 1
+        index = int(index) - 1  # we adjust the index as it should be to access the real index of the list
+
         print(f"\nTab at Index {index + 1}:")
         print(current_tabs[index]["Title"])
         if "Nested_Tabs" in current_tabs[index]:
@@ -91,15 +94,12 @@ def inputTabIndex():  # O(N) or O(N+M) N: len(list) , M: wrong inputs
                 print(f'\t{current_tabs[index]["Nested_Tabs"][j]["Title"]}')
         # and after the user chooses the index we display the tab at this index
         return index
-        # we return the index as a string in case the user did not input an index,
-        # so we can access the last opened tab
 
 
 # ----- Function ---- #
 def closeTab(index):  # O(1)  here we pop a tab and print it
     if index is None:  # if we have no opened tabs
         return
-
     current_tabs.pop(index)
     print(f"Tab at index {index+1} has been closed.")
 
@@ -115,36 +115,39 @@ def switchTab(index):
     page = urlopen(url)  # since we have a function above to check URL validity we are safe to go here
     html = page.read().decode("utf-8")  # and here we read and decode the object "page" the get the HTML code as text
 
-    print(f"\nHTML code:\n\n{html}")
+    print(f"\nHTML code:\n{html}")
 
 
 # ------- choice 4 ------ #
 
-def displayTabs():
-    if len(current_tabs) == 0:
+def displayTabs():  # O(N^2) N : opened tabs
+    if len(current_tabs) == 0:  # if there is no opened tabs a message will be displayed
         print("There is no opened tabs to display!")
     else:
         print(f"you currently have {len(current_tabs)} opened Tab(s):\n")
-        for i in range(len(current_tabs)):
+        for i in range(len(current_tabs)):  # we display the the parent tab(s)
             print(f'{current_tabs[i]["Title"]}')
             if "Nested_Tabs" in current_tabs[i]:
                 for j in range(len(current_tabs[i]["Nested_Tabs"])):
                     print(f'\t{current_tabs[i]["Nested_Tabs"][j]["Title"]}')
+                    # if there are nested tab(s) we display them under the parent tab hierarchically
 
 
 # ------- choice 5 ------ #
 
 # ----- inputs ---- #
 def inputNestedTab():
+    # O(?) since we have openurl() inside the function checkUrl() that we called inside this function
     nested_tab = {}
     title = input("Enter Tab Title: ")
     url = checkUrl()
     nested_tab["Title"] = title
     nested_tab["URL"] = url
     return nested_tab
+    # this function creates a nested tab as a dictionary
 
 
-def displayNestedTabMenu():
+def displayNestedTabMenu():  # O(1) we display a menu
     print("""
     1. Add a Nested-Tab
     2. Change Tab index
@@ -155,15 +158,9 @@ def displayNestedTabMenu():
 # ----- Function ---- #
 def openNestedTab(index):
     if "Nested_Tabs" in current_tabs[index]:
-        print(f'Tab at index {index} have {len(current_tabs[index]["Nested_Tabs"])} Nested-Tabs')
-        print(f'{index}. {current_tabs[index]["Title"]}')
-
-        for j in range(len(current_tabs[index]["Nested_Tabs"])):
-            print(f'\t{j}. {current_tabs[index]["Nested_Tabs"][j]["Title"]}')
         nested_tab = inputNestedTab()
         current_tabs[index]["Nested_Tabs"].append(nested_tab)
     else:
-        print("This Tab does not have Nested-Tabs")
         nested_tab = inputNestedTab()
         current_tabs[index]["Nested_Tabs"] = [nested_tab]
 

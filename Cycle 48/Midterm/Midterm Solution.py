@@ -2,8 +2,8 @@ from urllib.request import urlopen
 # imported for choice "3. Switch Tab" and used in switchTab() function
 # learned about web scraping from : https://realpython.com/python-web-scraping-practical-introduction/
 from urllib.error import URLError
-# imported the handle user input to get a valid URL which we can access
-# from : https://docs.python.org/3/library/urllib.error.html
+# imported the handle user input to get a valid URL which we can access and used in checkUrl() function
+# leaned about it from : https://docs.python.org/3/library/urllib.error.html and from Google search
 import json
 # imported for choices "7. Save Tabs" and "8. Import Tabs" and used in saveTabs() and importTabs() functions
 # learned the basics of JSON from : https://www.programiz.com/python-programming/json
@@ -77,7 +77,8 @@ def inputTabIndex():  # O(N) N: len(list)
                 index = input("Enter the Index of the Tab again: ").strip()
                 # they may seem extra steps here, but it is more user-friendly
                 # so the user can understand what is wrong at each step
-        index = int(index) - 1  # we adjust the index as it should be to access the real index of the list
+        index = int(index) - 1
+        # we re-assign the index, so we access the real index of the list in the other functions
 
         print(f"\nTab at Index {index + 1}:")
         print(current_tabs[index]["Title"])
@@ -97,21 +98,22 @@ def closeTab(index):  # O(1)  here we pop a tab and print it
 
 
 # ------- choice 3 ------ #
-def switchTab(index):  # O(N) N : the size of HTML code in the page
+def switchTab(index):  # O(N) N: the size of HTML code in the page
     if index is None:
         return
 
     url = current_tabs[index]["URL"]  # we get the URL of the selected tab
     page = urlopen(url)  # O(1)
     # since we have a function above to check URL validity we are safe to go here
-    html = page.read().decode("utf-8")  # and here we read and decode the object "page" the get the HTML code as text
+    html = page.read().decode("utf-8")  # O(N) N: the size of HTML code in the page
+    # and here we read and decode the object "page" the get the HTML code as text
 
     print(f"\nHTML code:\n{html}")
 
 
 # ------- choice 4 ------ #
 
-def displayTabs():  # O(N^2) N : opened tabs
+def displayTabs():  # O(N^2) N: opened tabs
     if len(current_tabs) == 0:  # if there is no opened tabs a message will be displayed
         print("There is no opened tabs to display!")
     else:
@@ -128,10 +130,10 @@ def displayTabs():  # O(N^2) N : opened tabs
 
 # ----- inputs ---- #
 def inputNestedTab():
-    # O(?) since we have openurl() inside the function checkUrl() that we called inside this function
+    # O(N) since we have checkUrl() inside this function N : Wrong inputs by the user
     nested_tab = {}
     title = input("Enter Tab Title: ")
-    url = checkUrl()
+    url = checkUrl()  # O(N)
     nested_tab["Title"] = title
     nested_tab["URL"] = url
     return nested_tab
@@ -147,12 +149,12 @@ def displayNestedTabMenu():  # O(1) we display a menu
 
 
 # ----- Function ---- #
-def openNestedTab(index):  # O(?) since we call inputNestedTab() inside it
+def openNestedTab(index):  # O(N) since we call inputNestedTab() inside it
     if "Nested_Tabs" in current_tabs[index]:
-        nested_tab = inputNestedTab()   # O(?)
+        nested_tab = inputNestedTab()   # O(N)
         current_tabs[index]["Nested_Tabs"].append(nested_tab)
     else:
-        nested_tab = inputNestedTab()  # O(?)
+        nested_tab = inputNestedTab()  # O(N)
         current_tabs[index]["Nested_Tabs"] = [nested_tab]
 
     print(f'A new nested-Tab:"{nested_tab["Title"]}" was added to Tab:"{current_tabs[index]["Title"]}"')
@@ -166,43 +168,48 @@ def clearAllTabs():  # O(1) since we only assign to an empty list
 
 
 # ------- choice 7 ------ #
-def saveTabs():
+def saveTabs():  # O(N) N : the size of data going to the file
     if len(current_tabs) == 0:
         print("There is no Tabs to save! Open a tab first.")
         return
-    file_path = "E:/PyCharm/PyCharm Community Edition 2023.1/Coding/foundations-cs-python/Cycle 48/Midterm/Save.JSON"
-    # file_path = input("Enter the file-path which you want to save the tabs in: ")
+    # file_path = "E:/PyCharm/PyCharm Community Edition 2023.1/Coding/foundations-cs-python/Cycle 48/Midterm/Save.JSON"
+    file_path = input("Enter the file-path which you want to save the tabs in: ")
     with open(file_path, "w") as file:
+        # we open the file in "write" mode to save the data inside the file
+        # if the file exists all data on it will be wiped, else a new file will be created
         json.dump(current_tabs, file, indent=4)
+        # we dump the tabs inside the file with indentation = 4 for better visual reasons
     file.close()
+    # we make sure to close the file after we finish saving, so we can access it again without terminating the program
     print("All current tabs was SAVED.")
 
 
 # ------- choice 8 ------ #
-def importTabs():
-    file_path = "E:/PyCharm/PyCharm Community Edition 2023.1/Coding/foundations-cs-python/Cycle 48/Midterm/Load.JSON"
-    # file_path = input("Enter the file-path which you want to load the tabs from: ")
-    with open(file_path, "r") as file:
+def importTabs():  # O(N) N : the size of data in the file
+    # file_path = "E:/PyCharm/PyCharm Community Edition 2023.1/Coding/foundations-cs-python/Cycle 48/Midterm/Load.JSON"
+    file_path = input("Enter the file-path which you want to load the tabs from: ")
+    with open(file_path, "r") as file:  # we open the file in "read" mode to access the data inside the JSON file
         data = json.load(file)
+        # we load the data inside the file and store it inside a variable for later usage
         for i in range(len(data)):
             current_tabs.append(data[i])
-    file.close()
+        # we loop to add all the data inside the list "data" to ADD them to current_tabs list
+    file.close()  # and we close the file
     print("All tabs from selected file was IMPORTED.")
 
 
 # ------- User greeting ------- #
-def greetUser():
+def greetUser():  # O(1)
     username = input("Enter your Username: ")
 
-    while username == "":
-        print("you must enter a Username!")
-        username = input("Enter your Username again: ")
-
-    print(f"Welcome to our program, {username}!")
+    if username == "":  # this was just a little funny thing to add in my opinion
+        print(f"Welcome to our program, Anonymous!")
+    else:
+        print(f"Welcome to our program, {username}!")
 
 
 # ------- Menu Display ------- #
-def displayMenu():
+def displayMenu():  # O(1) we only print
     print("""
 1. Open Tab
 2. Close Tab

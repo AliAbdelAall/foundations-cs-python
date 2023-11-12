@@ -108,12 +108,41 @@ def closeTab(index):  # O(1)  here we pop a tab and print it
 
 # ----- Inputs ---- #
 
-def intInputNestedTab():  # O(N) N: Wrong input by the user
+def inputNestedTabIndex():  # O(N) N: Wrong input by the user
     index = input("Enter Index: ")
     while not index.isdigit():
         print("Index must me a Positive Numeric number!")
         index = input("Enter Index again: ")
     return int(index)
+
+
+def getUrl(index):  # O(N) N: wrong inputs by the user
+    if index is None:
+        return  # if the list is empty we return None
+    elif "Nested_Tabs" not in current_tabs[index]:
+        return current_tabs[index]["URL"]
+        # if the tab does not have nested tabs it will print the HTM right away
+    else:
+        print("Enter 1 for parent tab, 2 for nested tab(s): ")
+        choice = inputNestedTabIndex()
+        # we let the user choose between parent or nested tab the print it HTML code
+        while choice != 1 and choice != 2:
+            print("Enter 1 for parent tab, 2 for nested tab(s): ")
+            choice = inputNestedTabIndex()
+
+        if choice == 1:
+            return current_tabs[index]["URL"]  # we return the parent tab URL if the user chooses 1
+        else:
+            print()  # for nested tabs we print the nested tab inside the parent tab and let the user choose
+            for j in range(len(current_tabs[index]["Nested_Tabs"])):
+                print(f'{j+1}_ {current_tabs[index]["Nested_Tabs"][j]["Title"]}')
+            print()
+            nested_index = inputNestedTabIndex()
+            while nested_index > len(current_tabs[index]["Nested_Tabs"]) or nested_index == 0:
+                print("Invalid Index!")
+                nested_index = inputNestedTabIndex()
+            # after the user choose the index of the nested tab we return its URL
+            return current_tabs[index]["Nested_Tabs"][nested_index - 1]["URL"]
 
 
 # ----- Function ---- #
@@ -235,13 +264,13 @@ def importTabs():  # O(N) N : the size of data in the file
 
 # ------- User greeting ------- #
 def greetUser():  # O(1)
-    username = input("Enter your Username: ").strip()
+    name = input("Enter your Name: ").strip()
 
-    if username == "":  # this was just a little funny thing to add in my opinion
-        username = "Anonymous"
+    if name == "":  # this was just a little nice thing to add
+        name = "User"
 
-    print(f"Welcome to our program, {username}!")
-    return username
+    print(f"Welcome, {name}!")
+    return name
 
 
 # ------- Menu Display ------- #
@@ -272,7 +301,7 @@ def inputChoice():  # O(N) N: wrong input(s) by the user
 
 # ------- Main ------- #
 def main():  # overall O(N^2) ;choice 4 displayTabs() is the dominant/slowest
-    username = greetUser()  # O(1)
+    name = greetUser()  # O(1)
     displayMenu()  # O(1)
     choice = inputChoice()  # O(N)
 
@@ -284,7 +313,7 @@ def main():  # overall O(N^2) ;choice 4 displayTabs() is the dominant/slowest
             closeTab(inputTabIndex())  # O(N)
 
         elif choice == 3:
-            switchTab(inputUrl(inputTabIndex()))  # O(N)
+            switchTab(getUrl(inputTabIndex()))  # O(N)
 
         elif choice == 4:
             displayTabs()  # O(N^2)
@@ -325,7 +354,7 @@ def main():  # overall O(N^2) ;choice 4 displayTabs() is the dominant/slowest
 
         displayMenu()  # O(1)
         choice = inputChoice()  # O(N)
-    print(f"We hope you enjoyed the program, {username}!")
+    print(f"We hope you enjoyed the program, {name}!")
     print("Exiting the program...")
 
 

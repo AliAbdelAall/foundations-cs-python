@@ -16,3 +16,12 @@ def displayLinkedListMenu():
     c. Search for & Delete Node
     d. Return to main menu
     """)
+
+
+def displayStudentMenu():
+    print("""
+    a. Add a student
+    b. Interview a student
+    c. Return to main menu
+    """)
+

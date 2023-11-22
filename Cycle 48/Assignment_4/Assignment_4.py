@@ -108,6 +108,7 @@ def inputGrade():
         else:
             print("Grade must be between 0 and 100.")
         grade = input("Enter student's NUMERICAL Grade(0-100) again:")
+    return int(grade)
 
 
 def inputAttitude():
@@ -119,11 +120,11 @@ def inputAttitude():
 
 
 class Student:
-    def __init__(self, name, midterm_grade: int, final_grade: int, good_attitude: bool):
+    def __init__(self):
         self.name = input("Enter Student Name: ")
-        self.midterm_grade = midterm_grade
-        self.final_grade = final_grade
-        self.good_attitude = good_attitude
+        self.midterm_grade = inputGrade()
+        self.final_grade = inputGrade()
+        self.good_attitude = inputAttitude()
 
 
 class PriorityQueue:

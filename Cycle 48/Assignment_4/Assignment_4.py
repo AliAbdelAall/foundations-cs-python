@@ -13,7 +13,7 @@ class LinkedList:
         self.head = None
         self.size = 0
 
-    def addNode(self, value):
+    def addNode(self, value: int):
         new_node = Node(value)
         new_node.next = self.head
         self.head = new_node
@@ -31,7 +31,7 @@ class LinkedList:
                 current = current.next
             print("None")
 
-    def removeNode(self, value):
+    def removeNode(self, value: int):
         if self.size == 0:
             print("Linked-List is empty!")
 
@@ -57,6 +57,23 @@ class LinkedList:
                     previous = current
                     current = current.next
             print("Could not find Node with value:", value)
+
+
+ll = LinkedList
+
+
+# ------- INPUTS ------- #
+
+def inputInteger():
+    num = input("Enter a number: ").strip()
+    while True:
+        try:
+            num = int(num)
+            return num
+        except ValueError:
+            print("This is not a Number!")
+            num = input("Enter a number again: ").strip()
+
 
 # ----------- MENUS ----------- #
 
@@ -102,25 +119,25 @@ def displayGraphMenu():
 # ----------- CHOICE ----------- #
 
 def inputIntChoice():
-    choice = input("Enter a number as your choice: ")
+    choice = input("Enter a number as your choice: ").strip()
     while not choice.isdigit():
         print("this is not a number!")
-        choice = input("Enter a number as your choice again: ")
+        choice = input("Enter a number as your choice again: ").strip()
     return int(choice)
 
 
 def inputStrChoice():
-    choice = input("Enter a letter as your choice: ")
+    choice = input("Enter a letter as your choice: ").strip()
     while len(choice) != 1:
         print("your choice must be one letter!")
-        choice = input("Enter a letter as your choice again: ")
+        choice = input("Enter a letter as your choice again: ").strip()
     return choice
 
 
 # ----------- User Greeting ----------- #
 
 def greetUser():
-    name = input("Enter your name: ")
+    name = input("Enter your name: ").strip()
     if name == "":
         name = "Anonymous"
     print(f"Welcome, {name}!")
@@ -129,6 +146,7 @@ def greetUser():
 # ----------- MAIN ----------- #
 
 def main():
+    greetUser()
     displayMainMenu()
     choice = inputIntChoice()
     error_count = 0
@@ -147,11 +165,11 @@ def main():
 
                 while choice_ll != "d":
                     if choice == "a":
-                        pass
+                        ll.addNode(inputInteger())
                     elif choice == "b":
-                        pass
+                        ll.displayNodes()
                     elif choice == "c":
-                        pass
+                        ll.removeNode(inputInteger())
                     else:
                         print("this choice is INVALID!")
 
@@ -200,3 +218,6 @@ def main():
 
         displayMainMenu()
         choice = inputIntChoice()
+
+
+main()

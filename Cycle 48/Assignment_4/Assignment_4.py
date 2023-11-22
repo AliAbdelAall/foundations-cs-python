@@ -125,6 +125,7 @@ class Student:
         self.midterm_grade = inputGrade()
         self.final_grade = inputGrade()
         self.good_attitude = inputAttitude()
+        self.next = None
 
 
 class PriorityQueue:
@@ -133,6 +134,19 @@ class PriorityQueue:
         self.tail = None
         self.size = 0
 
+    def addStudent(self):
+        new_student = Student()
+        if not self.size:
+            new_student.next = self.head
+            self.head = new_student
+        else:
+            pass
+        print(f"""
+    New student added:
+    Name: {new_student.name}
+    Midterm grade: {new_student.midterm_grade}/100
+    Final Grade: {new_student.final_grade}/100
+    Good attitude: {new_student.good_attitude}""")
 
 # ----------- MENUS ----------- #
 

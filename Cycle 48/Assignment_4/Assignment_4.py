@@ -110,6 +110,14 @@ def inputGrade():
         grade = input("Enter student's NUMERICAL Grade(0-100) again:")
 
 
+def inputAttitude():
+    attitude = input("Good Attitude? y(YES)/n(NO): ")
+    while attitude.lower != "y" and attitude.lower != "n":
+        print("INVALID answer!")
+        attitude = input("Good Attitude? y(YES)/n(NO): ")
+    return True if attitude == "y" else False
+
+
 class Student:
     def __init__(self, name, midterm_grade: int, final_grade: int, good_attitude: bool):
         self.name = input("Enter Student Name: ")

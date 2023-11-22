@@ -126,6 +126,13 @@ class Student:
         self.good_attitude = good_attitude
 
 
+class PriorityQueue:
+    def __init__(self):
+        self.head = None
+        self.tail = None
+        self.size = 0
+
+
 # ----------- MENUS ----------- #
 
 def displayMainMenu():

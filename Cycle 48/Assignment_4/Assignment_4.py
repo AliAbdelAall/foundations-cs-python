@@ -8,3 +8,11 @@ def displayMainMenu():
 6. Exit
 """)
 
+
+def displayLinkedListMenu():
+    print("""
+    a. Add Node
+    b. Display Nodes
+    c. Search for & Delete Node
+    d. Return to main menu
+    """)

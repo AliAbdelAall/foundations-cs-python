@@ -95,6 +95,17 @@ def checkPalindrome():
                 return False
     return True
 
+
+# ----------- choice_3 ----------- #
+
+class Student:
+    def __init__(self, name, midterm_grade: int, final_grade: int, good_attitude: bool):
+        self.name = name
+        self.midterm_grade = midterm_grade
+        self.final_grade = final_grade
+        self.good_attitude = good_attitude
+
+
 # ----------- MENUS ----------- #
 
 def displayMainMenu():

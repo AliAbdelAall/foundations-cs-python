@@ -64,3 +64,81 @@ def greetUser():
     if name == "":
         name = "Anonymous"
     print(f"Welcome, {name}!")
+
+
+# ----------- MAIN ----------- #
+
+def main():
+    displayMainMenu()
+    choice = inputIntChoice()
+    error_count = 0
+
+    while choice != 6 and error_count != 4:
+        if choice > 6 or choice < 1:
+            print("this choice is INVALID!")
+            print(f"you still have {4 - error_count} attempts")
+            error_count += 1
+
+        else:
+            error_count = 0
+            if choice == 1:
+                displayLinkedListMenu()
+                choice_ll = inputStrChoice()
+
+                while choice_ll != "d":
+                    if choice == "a":
+                        pass
+                    elif choice == "b":
+                        pass
+                    elif choice == "c":
+                        pass
+                    else:
+                        print("this choice is INVALID!")
+
+                    displayLinkedListMenu()
+                    choice_ll = inputStrChoice()
+
+            elif choice == 2:
+                pass
+            elif choice == 3:
+                displayStudentMenu()
+                choice_s = inputStrChoice()
+
+                while choice_s != "c":
+                    if choice == "a":
+                        pass
+                    elif choice == "b":
+                        pass
+                    else:
+                        print("this choice is INVALID!")
+
+                    displayStudentMenu()
+                    choice_s = inputStrChoice()
+
+            elif choice == 4:
+                pass
+            elif choice == 5:
+                displayStudentMenu()
+                choice_g = inputStrChoice()
+
+                while choice_g != "f":
+                    if choice == "a":
+                        pass
+                    elif choice == "b":
+                        pass
+                    elif choice == "c":
+                        pass
+                    elif choice == "d":
+                        pass
+                    elif choice == "e":
+                        pass
+                    else:
+                        print("this choice is INVALID!")
+
+                    displayStudentMenu()
+                    choice_g = inputStrChoice()
+
+        displayMainMenu()
+        choice = inputIntChoice()
+
+

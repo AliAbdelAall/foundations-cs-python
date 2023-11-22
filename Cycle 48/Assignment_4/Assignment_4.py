@@ -25,3 +25,13 @@ def displayStudentMenu():
     c. Return to main menu
     """)
 
+
+def displayGraphMenu():
+    print("""
+    a. Add vertex
+    b. Add edge
+    c. Remove vertex
+    d. Remove edge
+    e. Display vertices with a degree of X or more.
+    f. Return to main menu
+    """)

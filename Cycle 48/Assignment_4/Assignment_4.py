@@ -47,3 +47,11 @@ def inputIntChoice():
         print("this is not a number!")
         choice = input("Enter a number as your choice again: ")
     return int(choice)
+
+
+def inputStrChoice():
+    choice = input("Enter a letter as your choice: ")
+    while len(choice) != 1:
+        print("your choice must be one letter!")
+        choice = input("Enter a letter as your choice again: ")
+    return choice

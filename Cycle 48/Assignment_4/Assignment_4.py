@@ -31,7 +31,7 @@ class LinkedList:
                 current = current.next
             print("None")
 
-    def removeNode(self):
+    def removeNodes(self):
         if self.size == 0:
             print("\nLinked-List is empty!")
 
@@ -77,6 +77,23 @@ def inputInteger():
             print("This is not a Number!")
             num = input("Enter a number again: ").strip()
 
+
+# ----------- choice_2 ----------- #
+
+def checkPalindrome():
+    s = input("Enter a string: ")
+    if len(s) == 0 or len(s) == 1:
+        return True
+    else:
+        stack = []
+        for i in range(len(s)):
+            stack.append(s[i])
+        for j in range(len(s)):
+            if s[j] == stack[-1]:
+                stack.pop()
+            else:
+                return False
+    return True
 
 # ----------- MENUS ----------- #
 
@@ -172,7 +189,7 @@ def main():
                     elif choice_ll == "b":
                         ll.displayNodes()
                     elif choice_ll == "c":
-                        ll.removeNode()
+                        ll.removeNodes()
                     else:
                         print("this choice is INVALID!")
 
@@ -180,7 +197,7 @@ def main():
                     choice_ll = inputStrChoice()
 
             elif choice == 2:
-                pass
+                print(checkPalindrome())
             elif choice == 3:
                 displayStudentMenu()
                 choice_s = inputStrChoice()
@@ -199,7 +216,7 @@ def main():
             elif choice == 4:
                 pass
             elif choice == 5:
-                displayStudentMenu()
+                displayGraphMenu()
                 choice_g = inputStrChoice()
 
                 while choice_g != "f":
@@ -216,7 +233,7 @@ def main():
                     else:
                         print("this choice is INVALID!")
 
-                    displayStudentMenu()
+                    displayGraphMenu()
                     choice_g = inputStrChoice()
 
         displayMainMenu()
@@ -224,5 +241,3 @@ def main():
 
 
 main()
-
-# fix remove node method

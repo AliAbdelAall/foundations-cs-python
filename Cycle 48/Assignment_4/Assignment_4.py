@@ -22,7 +22,7 @@ class LinkedList:
 
     def displayNodes(self):
         if self.size == 0:
-            print("Linked-List is empty!")
+            print("\nLinked-List is empty!")
         else:
             current = self.head
             print("ll: Head-> ", end="")
@@ -31,31 +31,35 @@ class LinkedList:
                 current = current.next
             print("None")
 
-    def removeNode(self, value: int):
+    def removeNode(self):
         if self.size == 0:
-            print("Linked-List is empty!")
-
-        elif self.size == 1:
-            if self.head.data == value:
-                self.head = None
-                self.size -= 1
-                print("Removed Node with value:", value)
-            else:
-                print("Could not find Node with value:", value)
+            print("\nLinked-List is empty!")
 
         else:
+            value = inputInteger()
             current = self.head
-            previous = self.head
+            previous = None
+            count = 0
+
             while current:
                 if current.data == value:
-                    previous.next = current.next
-                    current.next = None
+                    if previous:
+                        previous.next = current.next
+                        current.next = None
+                        current = previous.next
+                    else:
+                        self.head = current.next
+                        current = current.next
                     self.size -= 1
-                    print("Removed Node with value:", value)
+                    count += 1
                 else:
                     previous = current
                     current = current.next
-            print("Could not find Node with value:", value)
+
+            if count:
+                print(f"\nRemoved {count} Node(s) with value:", value)
+            else:
+                print("\nNode with value:", value, ", was not found.")
 
 
 ll = LinkedList()
@@ -168,7 +172,7 @@ def main():
                     elif choice_ll == "b":
                         ll.displayNodes()
                     elif choice_ll == "c":
-                        ll.removeNode(inputInteger())
+                        ll.removeNode()
                     else:
                         print("this choice is INVALID!")
 
@@ -220,3 +224,5 @@ def main():
 
 
 main()
+
+# fix remove node method

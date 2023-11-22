@@ -8,6 +8,56 @@ class Node:
         self.next = None
 
 
+class LinkedList:
+    def __init__(self):
+        self.head = None
+        self.size = 0
+
+    def addNode(self, value):
+        new_node = Node(value)
+        new_node.next = self.head
+        self.head = new_node
+        self.size += 1
+        print(f"New Node with value: {value}, added.")
+
+    def displayNodes(self):
+        if self.size == 0:
+            print("Linked-List is empty!")
+        else:
+            current = self.head
+            print("head: ")
+            while current:
+                print(current.data, end="-> ")
+                current = current.next
+            print("None")
+
+    def removeNode(self, value):
+        if self.size == 0:
+            print("Linked-List is empty!")
+
+        elif self.size == 1:
+            if self.head.data == value:
+                self.head = None
+                self.size -= 1
+                print("Removed Node with value:", value)
+            else:
+                print("Could not find Node with value:", value)
+
+        else:
+            current = self.head
+            previous = self.head
+            while current:
+                if current.data == value:
+                    previous.next = current.next
+                    current.next = None
+                    self.size -= 1
+                    print("Removed Node with value:", value)
+                    return
+                else:
+                    previous = current
+                    current = current.next
+            print("Could not find Node with value:", value)
+
 # ----------- MENUS ----------- #
 
 def displayMainMenu():

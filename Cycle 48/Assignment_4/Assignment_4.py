@@ -1,3 +1,13 @@
+# ----------- choice_1 ----------- #
+
+# ------- classes ------- #
+
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+
 # ----------- MENUS ----------- #
 
 def displayMainMenu():
@@ -140,5 +150,3 @@ def main():
 
         displayMainMenu()
         choice = inputIntChoice()
-
-

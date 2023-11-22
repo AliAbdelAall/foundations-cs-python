@@ -55,3 +55,12 @@ def inputStrChoice():
         print("your choice must be one letter!")
         choice = input("Enter a letter as your choice again: ")
     return choice
+
+
+# ----------- User Greeting ----------- #
+
+def greetUser():
+    name = input("Enter your name: ")
+    if name == "":
+        name = "Anonymous"
+    print(f"Welcome, {name}!")

@@ -1,3 +1,5 @@
+# ----------- MENUS ----------- #
+
 def displayMainMenu():
     print("""
 1. Singly Linked List
@@ -35,3 +37,13 @@ def displayGraphMenu():
     e. Display vertices with a degree of X or more.
     f. Return to main menu
     """)
+
+
+# ----------- CHOICE ----------- #
+
+def inputIntChoice():
+    choice = input("Enter a number as your choice: ")
+    while not choice.isdigit():
+        print("this is not a number!")
+        choice = input("Enter a number as your choice again: ")
+    return int(choice)

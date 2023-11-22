@@ -25,9 +25,9 @@ class LinkedList:
             print("Linked-List is empty!")
         else:
             current = self.head
-            print("head: ")
+            print("ll: Head-> ", end="")
             while current:
-                print(current.data, end="-> ")
+                print(current.data, end=" -> ")
                 current = current.next
             print("None")
 
@@ -52,14 +52,13 @@ class LinkedList:
                     current.next = None
                     self.size -= 1
                     print("Removed Node with value:", value)
-                    return
                 else:
                     previous = current
                     current = current.next
             print("Could not find Node with value:", value)
 
 
-ll = LinkedList
+ll = LinkedList()
 
 
 # ------- INPUTS ------- #
@@ -164,11 +163,11 @@ def main():
                 choice_ll = inputStrChoice()
 
                 while choice_ll != "d":
-                    if choice == "a":
+                    if choice_ll == "a":
                         ll.addNode(inputInteger())
-                    elif choice == "b":
+                    elif choice_ll == "b":
                         ll.displayNodes()
-                    elif choice == "c":
+                    elif choice_ll == "c":
                         ll.removeNode(inputInteger())
                     else:
                         print("this choice is INVALID!")

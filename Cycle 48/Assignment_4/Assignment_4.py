@@ -98,9 +98,21 @@ def checkPalindrome():
 
 # ----------- choice_3 ----------- #
 
+# ------- INPUTS ------- #
+
+def inputGrade():
+    grade = input("Enter student's NUMERICAL Grade(0-100):")
+    while not grade.isdigit() or int(grade) < 0 or int(grade) > 100:
+        if not grade.isdigit():
+            print("This is not a NUMERICAL Grade!")
+        else:
+            print("Grade must be between 0 and 100.")
+        grade = input("Enter student's NUMERICAL Grade(0-100) again:")
+
+
 class Student:
     def __init__(self, name, midterm_grade: int, final_grade: int, good_attitude: bool):
-        self.name = name
+        self.name = input("Enter Student Name: ")
         self.midterm_grade = midterm_grade
         self.final_grade = final_grade
         self.good_attitude = good_attitude

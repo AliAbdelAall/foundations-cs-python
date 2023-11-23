@@ -100,20 +100,20 @@ def checkPalindrome():
 
 # ------- INPUTS ------- #
 
-def inputGrade():
-    grade = input("Enter student's NUMERICAL Grade(0-100):")
+def inputGrade(grade):
+    grade = input(f"Enter student's {grade} Grade(0-100):")
     while not grade.isdigit() or int(grade) < 0 or int(grade) > 100:
         if not grade.isdigit():
             print("This is not a NUMERICAL Grade!")
         else:
             print("Grade must be between 0 and 100.")
-        grade = input("Enter student's NUMERICAL Grade(0-100) again:")
+        grade = input(f"Enter student's {grade} Grade(0-100) again:")
     return int(grade)
 
 
 def inputAttitude():
     attitude = input("Good Attitude? y(YES)/n(NO): ")
-    while attitude.lower != "y" and attitude.lower != "n":
+    while attitude.lower() != "y" and attitude.lower() != "n":
         print("INVALID answer!")
         attitude = input("Good Attitude? y(YES)/n(NO): ")
     return True if attitude == "y" else False
@@ -122,8 +122,8 @@ def inputAttitude():
 class Student:
     def __init__(self):
         self.name = input("Enter Student Name: ")
-        self.midterm_grade = inputGrade()
-        self.final_grade = inputGrade()
+        self.midterm_grade = inputGrade("Midterm")
+        self.final_grade = inputGrade("Final")
         self.good_attitude = inputAttitude()
         self.next = None
 
@@ -131,61 +131,90 @@ class Student:
 class PriorityQueue:
     def __init__(self):
         self.head = None
-        self.tail = None
         self.size = 0
 
-    def enqueue(self):
-        new_student = Student()
+    def enqueue(self, new_student):
         if not self.size:
             self.head = new_student
         else:
             current = self.head
             previous = None
-            while current:
+            inserted = False
+
+            while current and not inserted:
                 if new_student.good_attitude and not current.good_attitude:
                     if not previous:
-                        new_student.next = current
-                        current.next = new_student
+                        new_student.next = self.head
+                        self.head = new_student
                     else:
                         previous.next = new_student
                         new_student.next = current
-                        break
+                    inserted = True
 
-                elif (new_student.good_attitude and current.good_attitude) \
-                        and (new_student.final_grade > current.final_grade):
-                    if not previous:
-                        new_student.next = current
-                        current.next = new_student
-                    else:
-                        previous.next = new_student
-                        new_student.next = current
-                        break
-
-                elif (new_student.good_attitude and current.good_attitude) \
-                        and (new_student.final_grade == current.final_grade)\
-                        and (new_student.midterm_grade > current.midterm_grade):
-                    if not previous:
-                        new_student.next = current
-                        current.next = new_student
-                    else:
-                        previous.next = new_student
-                        new_student.next = current
-                        break
+                elif new_student.good_attitude == current.good_attitude:
+                    if new_student.final_grade > current.final_grade:
+                        if not previous:
+                            new_student.next = self.head
+                            self.head = new_student
+                        else:
+                            previous.next = new_student
+                            new_student.next = current
+                        inserted = True
+                    elif new_student.final_grade == current.final_grade:
+                        if new_student.midterm_grade >= current.midterm_grade:
+                            if not previous:
+                                new_student.next = self.head
+                                self.head = new_student
+                            else:
+                                previous.next = new_student
+                                new_student.next = current
+                            inserted = True
 
                 previous = current
                 current = current.next
 
-            if not current:
+            if not inserted:
                 previous.next = new_student
 
         self.size += 1
 
         print(f"""
-    New student added:
-    Name: {new_student.name}
-    Midterm grade: {new_student.midterm_grade}/100
-    Final Grade: {new_student.final_grade}/100
-    Good attitude: {new_student.good_attitude}""")
+New student added:
+Name: {new_student.name}
+Midterm grade: {new_student.midterm_grade}/100
+Final Grade: {new_student.final_grade}/100
+Good attitude: {new_student.good_attitude}
+""")
+
+    def dequeue(self):
+        if not self.size:
+            print("There is no students to interview!")
+        else:
+            print(f"""
+student ready for interview:
+Name: {self.head.name}
+Midterm grade: {self.head.midterm_grade}/100
+Final Grade: {self.head.final_grade}/100
+Good attitude: {self.head.good_attitude}
+""")
+            current = self.head
+            self.head = self.head.next
+            current.next = None
+        self.size -= 1
+
+    def displayQueue(self):
+        if not self.size:
+            print("Queue is empty!")
+        else:
+            current = self.head
+            print("Head: ", end="")
+            while current is not None:
+                print(current.name, end=" -> ")
+                current = current.next
+            print("None")
+
+
+queue = PriorityQueue()
 
 
 # ----------- MENUS ----------- #
@@ -296,10 +325,12 @@ def main():
                 choice_s = inputStrChoice()
 
                 while choice_s != "c":
-                    if choice == "a":
-                        pass
-                    elif choice == "b":
-                        pass
+                    if choice_s == "a":
+                        queue.enqueue(Student())
+                    elif choice_s == "b":
+                        queue.dequeue()
+                    elif choice_s == "d":
+                        queue.displayQueue()
                     else:
                         print("this choice is INVALID!")
 
@@ -313,15 +344,15 @@ def main():
                 choice_g = inputStrChoice()
 
                 while choice_g != "f":
-                    if choice == "a":
+                    if choice_g == "a":
                         pass
-                    elif choice == "b":
+                    elif choice_g == "b":
                         pass
-                    elif choice == "c":
+                    elif choice_g == "c":
                         pass
-                    elif choice == "d":
+                    elif choice_g == "d":
                         pass
-                    elif choice == "e":
+                    elif choice_g == "e":
                         pass
                     else:
                         print("this choice is INVALID!")

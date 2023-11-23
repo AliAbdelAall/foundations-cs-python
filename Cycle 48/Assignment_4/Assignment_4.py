@@ -134,19 +134,59 @@ class PriorityQueue:
         self.tail = None
         self.size = 0
 
-    def addStudent(self):
+    def enqueue(self):
         new_student = Student()
         if not self.size:
-            new_student.next = self.head
             self.head = new_student
         else:
-            pass
+            current = self.head
+            previous = None
+            while current:
+                if new_student.good_attitude and not current.good_attitude:
+                    if not previous:
+                        new_student.next = current
+                        current.next = new_student
+                    else:
+                        previous.next = new_student
+                        new_student.next = current
+                        break
+
+                elif (new_student.good_attitude and current.good_attitude) \
+                        and (new_student.final_grade > current.final_grade):
+                    if not previous:
+                        new_student.next = current
+                        current.next = new_student
+                    else:
+                        previous.next = new_student
+                        new_student.next = current
+                        break
+
+                elif (new_student.good_attitude and current.good_attitude) \
+                        and (new_student.final_grade == current.final_grade)\
+                        and (new_student.midterm_grade > current.midterm_grade):
+                    if not previous:
+                        new_student.next = current
+                        current.next = new_student
+                    else:
+                        previous.next = new_student
+                        new_student.next = current
+                        break
+
+                previous = current
+                current = current.next
+
+            if not current:
+                previous.next = new_student
+
+        self.size += 1
+
         print(f"""
     New student added:
     Name: {new_student.name}
     Midterm grade: {new_student.midterm_grade}/100
     Final Grade: {new_student.final_grade}/100
     Good attitude: {new_student.good_attitude}""")
+
 
 # ----------- MENUS ----------- #
 

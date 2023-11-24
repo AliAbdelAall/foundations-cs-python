@@ -219,6 +219,9 @@ queue = PriorityQueue()
 
 # ----------- choice_5 ----------- #
 
+# ------- INPUTS ------- #
+
+
 class Graph:
     def __init__(self):
         self.graph = {}
@@ -227,6 +230,14 @@ class Graph:
     def addVertex(self):
         self.graph[str(self.vertex_num)](LinkedList())
         self.vertex_num += 1
+
+    def inputVertex(self, vertex, _):
+        vertex = input(f"Enter {_} vertex: ")
+        while not vertex.isdigit():
+            print("vertex must be numeric!")
+            vertex = input(f"Enter {_} vertex again: ")
+        return vertex
+
 
     def addEdge(self, v1, v2):
         if v1 in self.graph and v2 in self.graph:

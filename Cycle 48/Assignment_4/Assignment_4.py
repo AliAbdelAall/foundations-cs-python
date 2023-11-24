@@ -238,7 +238,19 @@ class Graph:
             vertex = input(f"Enter {_} vertex again: ")
         return vertex
 
+    def checkVertices(self, v1, v2):
+        if v1 in self.graph and v2 in self.graph:
+            print(f"Added an Edge between {v1} and {v2}.\n")
 
+        elif v1 not in self.graph or v2 not in self.graph:
+            if v1 not in self.graph:
+                print(f"Vertex {v1} does not exist!\n")
+            elif v2 not in self.graph:
+                print(f"Vertex {v2} does not exist!\n")
+            else:
+                print(f"Both vertices {v1} and {v2} does not exist!\n")
+        else:
+            return [v1, v2]
     def addEdge(self, v1, v2):
         if v1 in self.graph and v2 in self.graph:
             self.graph[v1].addNode(v2)

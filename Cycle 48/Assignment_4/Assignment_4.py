@@ -228,10 +228,11 @@ class Graph:
         self.vertex_num = "0"
 
     def addVertex(self):
-        self.graph[str(self.vertex_num)](LinkedList())
-        self.vertex_num += 1
+        self.graph[str(self.vertex_num)] = LinkedList()
+        print(f"Vertex {self.vertex_num} was added to the graph.")
+        self.vertex_num = str(int(self.vertex_num) + 1)
 
-    def inputVertex(self, vertex, _):
+    def inputVertex(self, _):
         vertex = input(f"Enter {_} vertex: ")
         while not vertex.isdigit():
             print("vertex must be numeric!")
@@ -251,13 +252,16 @@ class Graph:
                 print(f"Both vertices {v1} and {v2} does not exist!\n")
         else:
             return [v1, v2]
-    def addEdge(self, vertices):
-        v1 = vertices[0]
-        v2 = vertices[1]
-        self.graph[v1].addNode(v2)
-        self.graph[v2].addNode(v1)
+    def addEdge(self):
+        v1 = self.inputVertex("first")
+        v2 = self.inputVertex("second")
+        checked = self.checkVertices(v1, v2)
+        if checked:
+            self.graph[v1].addNode(v2)
+            self.graph[v2].addNode(v1)
 
-    def removeVertex(self, vertex):
+    def removeVertex(self):
+        vertex = self.inputVertex("")
         if vertex not in self.graph:
             print(f"Vertex {vertex} does not exist")
 
@@ -281,6 +285,62 @@ class Graph:
                         removed = True
 
                 current = current.next
+
+    def removeEdge(self):
+        v1 = self.inputVertex("first")
+        v2 = self.inputVertex("second")
+        checked = self.checkVertices(v1, v2)
+        if checked:
+            current = self.graph[v1].head
+            previous = None
+            found = False
+            while current and not found:
+                if current.data == v2:
+                    if not previous:
+                        self.graph[v1].head = self.graph[v1].head.next
+                        current.next = None
+                    else:
+                        previous.next = current.next
+                        current.next = None
+
+                    found = True
+
+            if found:
+                current_v = self.graph[v2].head
+                previous_v = None
+                removed = False
+                while current_v and not removed:
+                    if current_v.data == v1:
+                        if not previous_v:
+                            self.graph[v1].head = self.graph[v1].head.next
+                            current_v.next = None
+                        else:
+                            previous_v.next = current_v.next
+                            current_v.next = None
+
+                    removed = True
+            else:
+                print(f"Edge between {v1} and {v2} does not exist!")
+
+    def displayGraph(self):
+        vertex = self.inputVertex("")
+        if not self.graph:
+            print("Graph is empty add a vertex first!")
+        else:
+            if vertex not in self.graph:
+                print("vertex does not exist")
+            else:
+                s = ""
+                for v in self.graph:
+                    if v >= vertex:
+                        s += v + ","
+                if s:
+                    print(s.strip(","))
+                else:
+                    print("No vertices found at degree", vertex, "or above")
+
+
+graph = Graph()
 
 
 # ----------- MENUS ----------- #
@@ -411,15 +471,15 @@ def main():
 
                 while choice_g != "f":
                     if choice_g == "a":
-                        pass
+                        graph.addVertex()
                     elif choice_g == "b":
-                        pass
+                        graph.addEdge()
                     elif choice_g == "c":
-                        pass
+                        graph.removeVertex()
                     elif choice_g == "d":
-                        pass
+                        graph.removeEdge()
                     elif choice_g == "e":
-                        pass
+                        graph.displayGraph()
                     else:
                         print("this choice is INVALID!")
 

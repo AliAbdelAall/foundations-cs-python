@@ -251,19 +251,11 @@ class Graph:
                 print(f"Both vertices {v1} and {v2} does not exist!\n")
         else:
             return [v1, v2]
-    def addEdge(self, v1, v2):
-        if v1 in self.graph and v2 in self.graph:
-            self.graph[v1].addNode(v2)
-            self.graph[v2].addNode(v1)
-            print(f"Added an Edge between {v1} and {v2}.\n")
-
-        else:
-            if v1 not in self.graph:
-                print(f"Vertex {v1} does not exist!\n")
-            elif v2 not in self.graph:
-                print(f"Vertex {v2} does not exist!\n")
-            else:
-                print(f"Both vertices {v1} and {v2} does not exist!\n")
+    def addEdge(self, vertices):
+        v1 = vertices[0]
+        v2 = vertices[1]
+        self.graph[v1].addNode(v2)
+        self.graph[v2].addNode(v1)
 
     def removeVertex(self, vertex):
         if vertex not in self.graph:

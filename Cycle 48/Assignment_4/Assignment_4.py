@@ -242,6 +242,31 @@ class Graph:
             else:
                 print(f"Both vertices {v1} and {v2} does not exist!\n")
 
+    def removeVertex(self, vertex):
+        if vertex not in self.graph:
+            print(f"Vertex {vertex} does not exist")
+
+        else:
+            current = self.graph[vertex].head
+            while current:
+                v = current.data
+                current_v = self.graph[v].head
+                previous_v = None
+                removed = False
+                while current_v and not removed:
+                    if current_v.data == vertex:
+                        if not previous_v:
+                            self.graph[v].head = self.graph[v].head.next
+                            current_v.next = None
+
+                        else:
+                            previous_v.next = current_v.next
+                            current_v.next = None
+
+                        removed = True
+
+                current = current.next
+
 
 # ----------- MENUS ----------- #
 

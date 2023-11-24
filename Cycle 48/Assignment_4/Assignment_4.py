@@ -224,6 +224,10 @@ class Graph:
         self.graph = {}
         self.vertex_num = "0"
 
+    def addVertex(self):
+        self.graph[str(self.vertex_num)](LinkedList())
+        self.vertex_num += 1
+
 
 # ----------- MENUS ----------- #
 

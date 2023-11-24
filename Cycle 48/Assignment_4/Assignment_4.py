@@ -13,13 +13,12 @@ class LinkedList:
         self.head = None
         self.size = 0
 
-    def addNode(self, value: int):
+    def addNode(self, value):
         new_node = Node(value)
         new_node.next = self.head
         self.head = new_node
         self.size += 1
-        print(f"New Node with value: {value}, added.")
-
+        return value
     def displayNodes(self):
         if self.size == 0:
             print("\nLinked-List is empty!")
@@ -31,12 +30,11 @@ class LinkedList:
                 current = current.next
             print("None")
 
-    def removeNodes(self):
+    def removeNodes(self, value):
         if self.size == 0:
             print("\nLinked-List is empty!")
 
         else:
-            value = inputInteger()
             current = self.head
             previous = None
             count = 0
@@ -72,7 +70,7 @@ def inputInteger():
     while True:
         try:
             num = int(num)
-            return num
+            return str(num)
         except ValueError:
             print("This is not a Number!")
             num = input("Enter a number again: ").strip()
@@ -241,17 +239,18 @@ class Graph:
 
     def checkVertices(self, v1, v2):
         if v1 in self.graph and v2 in self.graph:
-            print(f"Added an Edge between {v1} and {v2}.\n")
-
-        elif v1 not in self.graph or v2 not in self.graph:
-            if v1 not in self.graph:
-                print(f"Vertex {v1} does not exist!\n")
-            elif v2 not in self.graph:
-                print(f"Vertex {v2} does not exist!\n")
-            else:
-                print(f"Both vertices {v1} and {v2} does not exist!\n")
-        else:
             return [v1, v2]
+
+        elif v1 not in self.graph and v2 not in self.graph:
+            print(f"Both vertices {v1} and {v2} does not exist!\n")
+
+        elif v1 not in self.graph:
+            print(f"Vertex {v1} does not exist!\n")
+
+        elif v2 not in self.graph:
+            print(f"Vertex {v2} does not exist!\n")
+
+
     def addEdge(self):
         v1 = self.inputVertex("first")
         v2 = self.inputVertex("second")
@@ -259,6 +258,7 @@ class Graph:
         if checked:
             self.graph[v1].addNode(v2)
             self.graph[v2].addNode(v1)
+            print(f"Added and Edge between vertex {v1} and vertex {v2}.")
 
     def removeVertex(self):
         vertex = self.inputVertex("")
@@ -285,12 +285,21 @@ class Graph:
                         removed = True
 
                 current = current.next
+            print(f"Removed Vertex {vertex} from graph")
+            del self.graph[vertex]
+
 
     def removeEdge(self):
+        if not self.graph:
+            print("Graph is empty! Add vertices and edges first.")
+            return
         v1 = self.inputVertex("first")
         v2 = self.inputVertex("second")
         checked = self.checkVertices(v1, v2)
         if checked:
+            if self.graph[v1].head is None:
+                print(f"Edge between vertex {v1} and vertex {v2} does not exist!")
+                return
             current = self.graph[v1].head
             previous = None
             found = False
@@ -304,6 +313,8 @@ class Graph:
                         current.next = None
 
                     found = True
+                previous = current
+                current = current.next
 
             if found:
                 current_v = self.graph[v2].head
@@ -318,9 +329,12 @@ class Graph:
                             previous_v.next = current_v.next
                             current_v.next = None
 
-                    removed = True
+                        removed = True
+                    previous_v = current_v
+                    current_v = current_v.next
+                print(f"Removed Edge between vertex {v1} and vertex {v2}.")
             else:
-                print(f"Edge between {v1} and {v2} does not exist!")
+                print(f"Edge between vertex {v1} and vertex {v2} does not exist!")
 
     def displayGraph(self):
         vertex = self.inputVertex("")
@@ -433,11 +447,13 @@ def main():
 
                 while choice_ll != "d":
                     if choice_ll == "a":
-                        ll.addNode(inputInteger())
+                        value = inputInteger()
+                        ll.addNode(value)
+                        print(f"New Node with value: {value}, added.")
                     elif choice_ll == "b":
                         ll.displayNodes()
                     elif choice_ll == "c":
-                        ll.removeNodes()
+                        ll.removeNodes(inputInteger())
                     else:
                         print("this choice is INVALID!")
 

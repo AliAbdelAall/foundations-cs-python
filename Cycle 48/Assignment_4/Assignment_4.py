@@ -217,6 +217,14 @@ Good attitude: {self.head.good_attitude}
 queue = PriorityQueue()
 
 
+# ----------- choice_5 ----------- #
+
+class Graph:
+    def __init__(self):
+        self.graph = {}
+        self.vertex_num = "0"
+
+
 # ----------- MENUS ----------- #
 
 def displayMainMenu():

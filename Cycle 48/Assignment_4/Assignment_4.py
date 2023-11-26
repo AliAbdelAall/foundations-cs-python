@@ -352,6 +352,13 @@ class Graph:
                 else:
                     print("No vertices found at degree", vertex, "or above")
 
+    def displayConnectedVertices(self):
+        vertex = self.inputVertex("")
+        if vertex not in self.adj_list:
+            print("vertex does not exist")
+        else:
+            self.adj_list[vertex].displayNodes()
+
 
 graph = Graph()
 

@@ -19,6 +19,7 @@ class LinkedList:
         self.head = new_node
         self.size += 1
         return value
+
     def displayNodes(self):
         if self.size == 0:
             print("\nLinked-List is empty!")
@@ -30,7 +31,7 @@ class LinkedList:
                 current = current.next
             print("None")
 
-    def removeNodes(self, value):
+    def removeAllValueNodes(self, value):
         if self.size == 0:
             print("\nLinked-List is empty!")
 
@@ -222,11 +223,11 @@ queue = PriorityQueue()
 
 class Graph:
     def __init__(self):
-        self.graph = {}
+        self.adj_list = {}
         self.vertex_num = "0"
 
     def addVertex(self):
-        self.graph[str(self.vertex_num)] = LinkedList()
+        self.adj_list[self.vertex_num] = LinkedList()
         print(f"Vertex {self.vertex_num} was added to the graph.")
         self.vertex_num = str(int(self.vertex_num) + 1)
 
@@ -238,44 +239,43 @@ class Graph:
         return vertex
 
     def checkVertices(self, v1, v2):
-        if v1 in self.graph and v2 in self.graph:
+        if v1 in self.adj_list and v2 in self.adj_list:
             return [v1, v2]
 
-        elif v1 not in self.graph and v2 not in self.graph:
+        elif v1 not in self.adj_list and v2 not in self.adj_list:
             print(f"Both vertices {v1} and {v2} does not exist!\n")
 
-        elif v1 not in self.graph:
+        elif v1 not in self.adj_list:
             print(f"Vertex {v1} does not exist!\n")
 
-        elif v2 not in self.graph:
+        elif v2 not in self.adj_list:
             print(f"Vertex {v2} does not exist!\n")
-
 
     def addEdge(self):
         v1 = self.inputVertex("first")
         v2 = self.inputVertex("second")
         checked = self.checkVertices(v1, v2)
         if checked:
-            self.graph[v1].addNode(v2)
-            self.graph[v2].addNode(v1)
+            self.adj_list[v1].addNode(v2)
+            self.adj_list[v2].addNode(v1)
             print(f"Added and Edge between vertex {v1} and vertex {v2}.")
 
     def removeVertex(self):
         vertex = self.inputVertex("")
-        if vertex not in self.graph:
+        if vertex not in self.adj_list:
             print(f"Vertex {vertex} does not exist")
 
         else:
-            current = self.graph[vertex].head
+            current = self.adj_list[vertex].head
             while current:
                 v = current.data
-                current_v = self.graph[v].head
+                current_v = self.adj_list[v].head
                 previous_v = None
                 removed = False
                 while current_v and not removed:
                     if current_v.data == vertex:
                         if not previous_v:
-                            self.graph[v].head = self.graph[v].head.next
+                            self.adj_list[v].head = self.adj_list[v].head.next
                             current_v.next = None
 
                         else:
@@ -286,27 +286,26 @@ class Graph:
 
                 current = current.next
             print(f"Removed Vertex {vertex} from graph")
-            del self.graph[vertex]
-
+            del self.adj_list[vertex]
 
     def removeEdge(self):
-        if not self.graph:
+        if not self.adj_list:
             print("Graph is empty! Add vertices and edges first.")
             return
         v1 = self.inputVertex("first")
         v2 = self.inputVertex("second")
         checked = self.checkVertices(v1, v2)
         if checked:
-            if self.graph[v1].head is None:
+            if not self.adj_list[v1].head or not self.adj_list[v2].head:
                 print(f"Edge between vertex {v1} and vertex {v2} does not exist!")
                 return
-            current = self.graph[v1].head
+            current = self.adj_list[v1].head
             previous = None
             found = False
             while current and not found:
                 if current.data == v2:
                     if not previous:
-                        self.graph[v1].head = self.graph[v1].head.next
+                        self.adj_list[v1].head = self.adj_list[v1].head.next
                         current.next = None
                     else:
                         previous.next = current.next
@@ -317,13 +316,13 @@ class Graph:
                 current = current.next
 
             if found:
-                current_v = self.graph[v2].head
+                current_v = self.adj_list[v2].head
                 previous_v = None
                 removed = False
                 while current_v and not removed:
                     if current_v.data == v1:
                         if not previous_v:
-                            self.graph[v1].head = self.graph[v1].head.next
+                            self.adj_list[v1].head = self.adj_list[v1].head.next
                             current_v.next = None
                         else:
                             previous_v.next = current_v.next
@@ -338,14 +337,14 @@ class Graph:
 
     def displayGraph(self):
         vertex = self.inputVertex("")
-        if not self.graph:
+        if not self.adj_list:
             print("Graph is empty add a vertex first!")
         else:
-            if vertex not in self.graph:
+            if vertex not in self.adj_list:
                 print("vertex does not exist")
             else:
                 s = ""
-                for v in self.graph:
+                for v in self.adj_list:
                     if v >= vertex:
                         s += v + ","
                 if s:
@@ -453,7 +452,7 @@ def main():
                     elif choice_ll == "b":
                         ll.displayNodes()
                     elif choice_ll == "c":
-                        ll.removeNodes(inputInteger())
+                        ll.removeAllValueNodes(inputInteger())
                     else:
                         print("this choice is INVALID!")
 
@@ -496,6 +495,8 @@ def main():
                         graph.removeEdge()
                     elif choice_g == "e":
                         graph.displayGraph()
+                    elif choice_g == "g":
+                        graph.displayConnectedVertices()
                     else:
                         print("this choice is INVALID!")
 

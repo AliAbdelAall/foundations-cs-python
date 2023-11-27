@@ -498,15 +498,16 @@ def displayGraphMenu():  # O(1)
 # ----------- CHOICE ----------- #
 
 def inputIntChoice():  # O(N) N: wrong inputs by the user
-    error_count = 0
+    attempts = 3
     choice = input("Enter a number as your choice: ").strip()
-    while (not choice.isdigit() or 1 < int(choice) < 7) and error_count != 4:
+    while not choice.isdigit() or 1 > int(choice) or int(choice) > 7:
+        if attempts == 0:
+            return
         print("INVALID! Your Choice MUST be a POSITIVE numerical number 0->6")
-        print(f"you still have {4 - error_count} attempts\n")
-        error_count += 1
+        print(f"you still have {attempts} attempts\n")
         choice = input("Enter a number as your choice again: ").strip()
-
-    return None if error_count == 4 else int(choice)
+        attempts -= 1
+    return int(choice)
 
 
 def inputStrChoice():  # O(N) N: wrong inputs by the user
@@ -532,78 +533,74 @@ def main():
     greetUser()  # O(1)
     displayMainMenu()  # O(1)
     choice = inputIntChoice()  # O(N)
-    error_count = 0
+    if not choice:
+        print("you have reach MAX-LIMIT of ATTEMPTS!\n\n EXITING the program....")
+        return
 
-    while choice != 6 and error_count != 4:
-        if choice > 6 or choice < 1:
-            print("this choice is INVALID!")
-            print(f"you still have {4 - error_count} attempts")
-            error_count += 1
+    while choice != 6:
 
-        else:
-            error_count = 0
-            if choice == 1:
+        if choice == 1:
+            displayLinkedListMenu()
+            choice_ll = inputStrChoice()
+
+            while choice_ll != "d":
+                if choice_ll == "a":
+                    value = inputInteger()
+                    ll.addNode(value)
+                    print(f"New Node with value: {value}, added.")
+                elif choice_ll == "b":
+                    ll.displayNodes()
+                elif choice_ll == "c":
+                    ll.removeAllValueNodes(inputInteger())
+                else:
+                    print("this choice is INVALID!")
+
                 displayLinkedListMenu()
                 choice_ll = inputStrChoice()
 
-                while choice_ll != "d":
-                    if choice_ll == "a":
-                        value = inputInteger()
-                        ll.addNode(value)
-                        print(f"New Node with value: {value}, added.")
-                    elif choice_ll == "b":
-                        ll.displayNodes()
-                    elif choice_ll == "c":
-                        ll.removeAllValueNodes(inputInteger())
-                    else:
-                        print("this choice is INVALID!")
+        elif choice == 2:
+            print(checkPalindrome())
+        elif choice == 3:
+            displayStudentMenu()
+            choice_s = inputStrChoice()
 
-                    displayLinkedListMenu()
-                    choice_ll = inputStrChoice()
+            while choice_s != "c":
+                if choice_s == "a":
+                    queue.enqueue(Student())
+                elif choice_s == "b":
+                    queue.dequeue()
+                elif choice_s == "d":
+                    queue.displayQueue()
+                else:
+                    print("this choice is INVALID!")
 
-            elif choice == 2:
-                print(checkPalindrome())
-            elif choice == 3:
                 displayStudentMenu()
                 choice_s = inputStrChoice()
 
-                while choice_s != "c":
-                    if choice_s == "a":
-                        queue.enqueue(Student())
-                    elif choice_s == "b":
-                        queue.dequeue()
-                    elif choice_s == "d":
-                        queue.displayQueue()
-                    else:
-                        print("this choice is INVALID!")
+        elif choice == 4:
+            print(evaluateInfix(inputInfix()))
+        elif choice == 5:
+            displayGraphMenu()
+            choice_g = inputStrChoice()
 
-                    displayStudentMenu()
-                    choice_s = inputStrChoice()
+            while choice_g != "f":
+                if choice_g == "a":
+                    graph.addVertex()
+                elif choice_g == "b":
+                    graph.addEdge()
+                elif choice_g == "c":
+                    graph.removeVertex()
+                elif choice_g == "d":
+                    graph.removeEdge()
+                elif choice_g == "e":
+                    graph.displayGraph()
+                elif choice_g == "g":
+                    graph.displayConnectedVertices()
+                else:
+                    print("this choice is INVALID!")
 
-            elif choice == 4:
-                print(evaluateInfix(inputInfix()))
-            elif choice == 5:
                 displayGraphMenu()
                 choice_g = inputStrChoice()
-
-                while choice_g != "f":
-                    if choice_g == "a":
-                        graph.addVertex()
-                    elif choice_g == "b":
-                        graph.addEdge()
-                    elif choice_g == "c":
-                        graph.removeVertex()
-                    elif choice_g == "d":
-                        graph.removeEdge()
-                    elif choice_g == "e":
-                        graph.displayGraph()
-                    elif choice_g == "g":
-                        graph.displayConnectedVertices()
-                    else:
-                        print("this choice is INVALID!")
-
-                    displayGraphMenu()
-                    choice_g = inputStrChoice()
 
         displayMainMenu()
         choice = inputIntChoice()

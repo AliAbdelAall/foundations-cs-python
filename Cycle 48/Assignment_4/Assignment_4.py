@@ -154,6 +154,8 @@ def inputAttitude():  # O(N) N wrong inputs
     return True if attitude == "y" else False
 
 
+# ------- CLASS ------- #
+
 class Student:
     def __init__(self):  # O(N) since we have inputGrade() inside
         self.name = input("Enter Student Name: ").strip()
@@ -601,4 +603,6 @@ def main():  # O(N^2) since we have graph.removeVertex()  # O(N^2) inside
         choice = inputIntChoice()  # O(N)
 
     print("Exiting the program ...")
+
+
 main()

@@ -133,7 +133,8 @@ def checkPalindrome():  # O(N) N: len(s)
 
 # ------- INPUTS ------- #
 
-def inputGrade(grade):
+def inputGrade(grade):  # O(N) N wrong inputs
+    # this function handles user input of the grade
     grade = input(f"Enter student's {grade} Grade(0-100):").strip()
     while not grade.isdigit() or int(grade) < 0 or int(grade) > 100:
         if not grade.isdigit():
@@ -144,7 +145,8 @@ def inputGrade(grade):
     return int(grade)
 
 
-def inputAttitude():
+def inputAttitude():  # O(N) N wrong inputs
+    # this function handles user input
     attitude = input("Good Attitude? y(YES)/n(NO): ").strip()
     while attitude.lower() != "y" and attitude.lower() != "n":
         print("INVALID answer!")
@@ -153,7 +155,7 @@ def inputAttitude():
 
 
 class Student:
-    def __init__(self):
+    def __init__(self):  # O(N) since we have inputGrade() inside
         self.name = input("Enter Student Name: ").strip()
         self.midterm_grade = inputGrade("Midterm")
         self.final_grade = inputGrade("Final")
@@ -172,10 +174,11 @@ class PriorityQueue:
         else:
             current = self.head
             previous = None
-            inserted = False
+            inserted = False  # check if we inserted the node
 
             while current and not inserted:
                 if new_student.good_attitude and not current.good_attitude:
+                    # we give 1st priority here
                     if not previous:
                         new_student.next = self.head
                         self.head = new_student
@@ -185,7 +188,9 @@ class PriorityQueue:
                     inserted = True
 
                 elif new_student.good_attitude == current.good_attitude:
+                    # for same 1st priority
                     if new_student.final_grade > current.final_grade:
+                        # we give 2nd priority here
                         if not previous:
                             new_student.next = self.head
                             self.head = new_student
@@ -194,7 +199,9 @@ class PriorityQueue:
                             new_student.next = current
                         inserted = True
                     elif new_student.final_grade == current.final_grade:
+                        # for same 2nd priority
                         if new_student.midterm_grade >= current.midterm_grade:
+                            # we give 3rd priority here
                             if not previous:
                                 new_student.next = self.head
                                 self.head = new_student
@@ -206,7 +213,7 @@ class PriorityQueue:
                 previous = current
                 current = current.next
 
-            if not inserted:
+            if not inserted:  # if student have the least priority we add it to the end
                 previous.next = new_student
 
         self.size += 1
@@ -235,7 +242,8 @@ Good attitude: {self.head.good_attitude}
             current.next = None
         self.size -= 1
 
-    def displayQueue(self):
+    def displayQueue(self):  # O(N) N:number of nodes
+        # added this function just for bug fixing, it can be removed
         if not self.size:
             print("Queue is empty!")
         else:
@@ -253,7 +261,7 @@ queue = PriorityQueue()
 # ----------- choice_4 ----------- #
 
 # ------- INPUTS ------- #
-def validateInfix(expression):
+def validateInfix(expression):  # O(N) N: len(expression)
     valid_chars = set("0123456789*/+-() ")
     operators = set("*/+-")
 
@@ -280,7 +288,10 @@ def validateInfix(expression):
     return len(stack) == 0
 
 
-def inputInfix():
+# ------- FUNCTION ------- #
+
+def inputInfix():  # O(N) N: len(expression)
+    # handles user input if the expression was in wrong format
     expression = input("Enter Infix expression: ").strip()
     valid = validateInfix(expression)
     while not valid:
@@ -290,15 +301,16 @@ def inputInfix():
     return expression
 
 
-def evaluateInfix(expression):
+def evaluateInfix(expression):  # O(N) N: len(expression)
     operator_stack = []
     operand_stack = []
 
-    operators = {'+', '-', '*', '/'}
+    operators = {'+', '-', '*', '/'}  # the set of operator makes a shortcut to check if it is an operator
 
-    precedence = {'+': 1, '-': 1, '*': 2, '/': 2}
+    precedence = {'+': 1, '-': 1, '*': 2, '/': 2}  # priority as PEMDAS
 
-    def applyOperation():
+    def applyOperation():  # O(1) we pop and compare
+        # this nested function have access to all variables in the outer function
         operator = operator_stack.pop()
         operand2 = operand_stack.pop()
         operand1 = operand_stack.pop()
@@ -312,46 +324,49 @@ def evaluateInfix(expression):
         elif operator == '/':
             operand_stack.append(operand1 // operand2)
 
-    for char in expression:
+    for char in expression:  # we append each char to its corresponding stack
         if char == "":
             continue
         elif char.isdigit():
             operand_stack.append(int(char))
-        elif char in operators:
+        elif char in operators:  # while appending we do the calculations
             while operator_stack and precedence.get(operator_stack[-1], 0) >= precedence[char]:
                 applyOperation()
             operator_stack.append(char)
-        elif char == '(':
+        elif char == '(':  # we make sure we have valid parentheses
             operator_stack.append(char)
         elif char == ')':
             while operator_stack and operator_stack[-1] != '(':
                 applyOperation()
             operator_stack.pop()
 
-    while operator_stack:
+    while operator_stack:  # we do the calculations of the rest of the expression
         applyOperation()
 
-    return operand_stack.pop()
+    return operand_stack.pop()  # the last item on the stack will be the result
 
 
 # ----------- choice_5 ----------- #
 
-class Graph:
-    def __init__(self):
-        self.adj_list = {}
-        self.vertex_num = "0"
+# ------- INPUTS ------- #
+def inputVertex(_):
+    vertex = input(f"Enter {_} vertex: ").strip()
+    while not vertex.isdigit():
+        print("vertex must be numeric!")
+        vertex = input(f"Enter {_} vertex again: ").strip()
+    return vertex
 
-    def addVertex(self):
+
+# ------- CLASS ------- #
+class Graph:
+    def __init__(self):  # O(1)
+        self.adj_list = {}
+        self.vertex_num = "0"  # for auto-generating vertices
+
+    def addVertex(self):  # O()
         self.adj_list[self.vertex_num] = LinkedList()
         print(f"Vertex {self.vertex_num} was added to the graph.")
         self.vertex_num = str(int(self.vertex_num) + 1)
-
-    def inputVertex(self, _):
-        vertex = input(f"Enter {_} vertex: ").strip()
-        while not vertex.isdigit():
-            print("vertex must be numeric!")
-            vertex = input(f"Enter {_} vertex again: ").strip()
-        return vertex
 
     def checkVertices(self, v1, v2):
         if v1 in self.adj_list and v2 in self.adj_list:
@@ -367,8 +382,8 @@ class Graph:
             print(f"Vertex {v2} does not exist!\n")
 
     def addEdge(self):
-        v1 = self.inputVertex("first")
-        v2 = self.inputVertex("second")
+        v1 = inputVertex("first")
+        v2 = inputVertex("second")
         checked = self.checkVertices(v1, v2)
         if checked:
             connected = self.adj_list[v1].checkConnectedNodes()
@@ -380,7 +395,7 @@ class Graph:
                 print(f"Edge between vertex {v1} and vertex {v2} already exist.")
 
     def removeVertex(self):
-        vertex = self.inputVertex("")
+        vertex = inputVertex("")
         if vertex not in self.adj_list:
             print(f"Vertex {vertex} does not exist")
 
@@ -397,8 +412,8 @@ class Graph:
         if not self.adj_list:
             print("Graph is empty! Add vertices and edges first.")
             return
-        v1 = self.inputVertex("first")
-        v2 = self.inputVertex("second")
+        v1 = inputVertex("first")
+        v2 = inputVertex("second")
         checked = self.checkVertices(v1, v2)
         if checked:
             removed = self.adj_list[v1].removeNode(v2)
@@ -409,7 +424,7 @@ class Graph:
                 print(f"Edge between vertex {v1} and vertex {v2} does not exist!")
 
     def displayGraph(self):
-        vertex = self.inputVertex("")
+        vertex = inputVertex("")
         if not self.adj_list:
             print("Graph is empty add a vertex first!")
         else:
@@ -426,7 +441,7 @@ class Graph:
                     print("No vertices found at degree", vertex, "or above")
 
     def displayConnectedVertices(self):
-        vertex = self.inputVertex("")
+        vertex = inputVertex("")
         if vertex not in self.adj_list:
             print("vertex does not exist")
         else:

@@ -82,10 +82,10 @@ class LinkedList:
                 current = current.next
         return  # if not found we return None
 
-    def checkConnectedNodes(self):
+    def checkConnectedNodes(self):  # O(N) N: number of nodes
         if self.size == 0:
             return
-        else:
+        else:  # we check the ll and we return the values inside the nodes as a list
             connected = []
             current = self.head
             while current:
@@ -113,7 +113,7 @@ def inputInteger():
 # ----------- choice_2 ----------- #
 
 def checkPalindrome():
-    s = input("Enter a string: ")
+    s = input("Enter a string: ").strip()
     if len(s) == 0 or len(s) == 1:
         return True
     else:
@@ -133,18 +133,18 @@ def checkPalindrome():
 # ------- INPUTS ------- #
 
 def inputGrade(grade):
-    grade = input(f"Enter student's {grade} Grade(0-100):")
+    grade = input(f"Enter student's {grade} Grade(0-100):").strip()
     while not grade.isdigit() or int(grade) < 0 or int(grade) > 100:
         if not grade.isdigit():
             print("This is not a NUMERICAL Grade!")
         else:
             print("Grade must be between 0 and 100.")
-        grade = input(f"Enter student's {grade} Grade(0-100) again:")
+        grade = input(f"Enter student's {grade} Grade(0-100) again:").strip()
     return int(grade)
 
 
 def inputAttitude():
-    attitude = input("Good Attitude? y(YES)/n(NO): ")
+    attitude = input("Good Attitude? y(YES)/n(NO): ").strip()
     while attitude.lower() != "y" and attitude.lower() != "n":
         print("INVALID answer!")
         attitude = input("Good Attitude? y(YES)/n(NO): ")
@@ -153,7 +153,7 @@ def inputAttitude():
 
 class Student:
     def __init__(self):
-        self.name = input("Enter Student Name: ")
+        self.name = input("Enter Student Name: ").strip()
         self.midterm_grade = inputGrade("Midterm")
         self.final_grade = inputGrade("Final")
         self.good_attitude = inputAttitude()
@@ -253,7 +253,7 @@ queue = PriorityQueue()
 
 # ------- INPUTS ------- #
 def validateInfix(expression):
-    valid_chars = set("0123456789*/+-()")
+    valid_chars = set("0123456789*/+-() ")
     operators = set("*/+-")
 
     stack = []
@@ -280,11 +280,11 @@ def validateInfix(expression):
 
 
 def inputInfix():
-    expression = input("Enter Infix expression: ")
+    expression = input("Enter Infix expression: ").strip()
     valid = validateInfix(expression)
     while not valid:
         print("Invalid Infix Expression!")
-        expression = input("Enter Infix expression again: ")
+        expression = input("Enter Infix expression again: ").strip()
         valid = validateInfix(expression)
     return expression
 
@@ -312,7 +312,9 @@ def evaluateInfix(expression):
             operand_stack.append(operand1 // operand2)
 
     for char in expression:
-        if char.isdigit():
+        if char == "":
+            continue
+        elif char.isdigit():
             operand_stack.append(int(char))
         elif char in operators:
             while operator_stack and precedence.get(operator_stack[-1], 0) >= precedence[char]:
@@ -344,10 +346,10 @@ class Graph:
         self.vertex_num = str(int(self.vertex_num) + 1)
 
     def inputVertex(self, _):
-        vertex = input(f"Enter {_} vertex: ")
+        vertex = input(f"Enter {_} vertex: ").strip()
         while not vertex.isdigit():
             print("vertex must be numeric!")
-            vertex = input(f"Enter {_} vertex again: ")
+            vertex = input(f"Enter {_} vertex again: ").strip()
         return vertex
 
     def checkVertices(self, v1, v2):

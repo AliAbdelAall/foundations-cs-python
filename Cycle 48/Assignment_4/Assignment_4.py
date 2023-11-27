@@ -42,13 +42,13 @@ class LinkedList:
 
             while current:
                 if current.data == value:
-                    if previous:
+                    if not previous:
+                        self.head = self.head.next
+                        current = None
+                    else:
                         previous.next = current.next
                         current.next = None
                         current = previous.next
-                    else:
-                        self.head = current.next
-                        current = current.next
                     self.size -= 1
                     count += 1
                 else:
@@ -59,6 +59,29 @@ class LinkedList:
                 print(f"\nRemoved {count} Node(s) with value:", value)
             else:
                 print("\nNode with value:", value, ", was not found.")
+
+    def removeNode(self, value):
+        if self.size == 0:
+            return
+
+        else:
+            current = self.head
+            previous = None
+
+            while current:
+                if current.data == value:
+                    if not previous:
+                        self.head = self.head.next
+                        current.next = None
+                    else:
+                        previous.next = current.next
+                        current.next = None
+                    self.size -= 1
+                    return value
+                else:
+                    previous = current
+                    current = current.next
+            return
 
 
 ll = LinkedList()

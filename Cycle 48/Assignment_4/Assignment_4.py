@@ -99,7 +99,7 @@ ll = LinkedList()
 
 # ------- INPUTS ------- #
 
-def inputInteger():
+def inputInteger():  # O(N) N: wrong inputs by the user
     num = input("Enter a number: ").strip()
     while True:
         try:
@@ -112,15 +112,16 @@ def inputInteger():
 
 # ----------- choice_2 ----------- #
 
-def checkPalindrome():
+def checkPalindrome():  # O(N) N: len(s)
     s = input("Enter a string: ").strip()
     if len(s) == 0 or len(s) == 1:
         return True
     else:
         stack = []
-        for i in range(len(s)):
+        mid = len(s) // 2  # for more optimization we have added mid
+        for i in range(mid, len(s)):  # we add mid -> end of s to the stack
             stack.append(s[i])
-        for j in range(len(s)):
+        for j in range(0, mid):  # we check until mid, no extra steps needed
             if s[j] == stack[-1]:
                 stack.pop()
             else:

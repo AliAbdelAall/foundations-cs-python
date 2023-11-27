@@ -315,41 +315,9 @@ class Graph:
         v2 = self.inputVertex("second")
         checked = self.checkVertices(v1, v2)
         if checked:
-            if not self.adj_list[v1].head or not self.adj_list[v2].head:
-                print(f"Edge between vertex {v1} and vertex {v2} does not exist!")
-                return
-            current = self.adj_list[v1].head
-            previous = None
-            found = False
-            while current and not found:
-                if current.data == v2:
-                    if not previous:
-                        self.adj_list[v1].head = self.adj_list[v1].head.next
-                        current.next = None
-                    else:
-                        previous.next = current.next
-                        current.next = None
-
-                    found = True
-                previous = current
-                current = current.next
-
-            if found:
-                current_v = self.adj_list[v2].head
-                previous_v = None
-                removed = False
-                while current_v and not removed:
-                    if current_v.data == v1:
-                        if not previous_v:
-                            self.adj_list[v1].head = self.adj_list[v1].head.next
-                            current_v.next = None
-                        else:
-                            previous_v.next = current_v.next
-                            current_v.next = None
-
-                        removed = True
-                    previous_v = current_v
-                    current_v = current_v.next
+            removed = self.adj_list[v1].removeNode(v2)
+            if removed:
+                self.adj_list[v2].removeNode(v1)
                 print(f"Removed Edge between vertex {v1} and vertex {v2}.")
             else:
                 print(f"Edge between vertex {v1} and vertex {v2} does not exist!")

@@ -312,6 +312,25 @@ def evaluateInfix(expression):
         elif operator == '/':
             operand_stack.append(operand1 // operand2)
 
+    for char in expression:
+        if char.isdigit():
+            operand_stack.append(int(char))
+        elif char in operators:
+            while operator_stack and precedence.get(operator_stack[-1], 0) >= precedence[char]:
+                applyOperation()
+            operator_stack.append(char)
+        elif char == '(':
+            operator_stack.append(char)
+        elif char == ')':
+            while operator_stack and operator_stack[-1] != '(':
+                applyOperation()
+            operator_stack.pop()
+
+    while operator_stack:
+        applyOperation()
+
+    return operand_stack.pop()
+
 
 # ----------- choice_5 ----------- #
 

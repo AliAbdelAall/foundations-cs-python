@@ -95,6 +95,7 @@ class LinkedList:
             return connected
 
 
+
 ll = LinkedList()
 
 
@@ -290,9 +291,13 @@ class Graph:
         v2 = self.inputVertex("second")
         checked = self.checkVertices(v1, v2)
         if checked:
-            self.adj_list[v1].addNode(v2)
-            self.adj_list[v2].addNode(v1)
-            print(f"Added and Edge between vertex {v1} and vertex {v2}.")
+            connected = self.adj_list[v1].checkConnectedNodes()
+            if not connected or v2 not in connected:
+                self.adj_list[v1].addNode(v2)
+                self.adj_list[v2].addNode(v1)
+                print(f"Added and Edge between vertex {v1} and vertex {v2}.")
+            else:
+                print(f"Edge between vertex {v1} and vertex {v2} already exist.")
 
     def removeVertex(self):
         vertex = self.inputVertex("")

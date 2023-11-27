@@ -281,6 +281,15 @@ def validateInfix(expression):
     return len(stack) == 0
 
 
+def inputInfix():
+    expression = input("Enter Infix expression: ")
+    valid = validateInfix(expression)
+    while not valid:
+        print("Invalid Infix Expression!")
+        expression = input("Enter Infix expression again: ")
+        valid = validateInfix(expression)
+    return expression
+
 # ----------- choice_5 ----------- #
 
 class Graph:

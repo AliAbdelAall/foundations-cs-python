@@ -251,10 +251,37 @@ Good attitude: {self.head.good_attitude}
 queue = PriorityQueue()
 
 
-# ----------- choice_5 ----------- #
+# ----------- choice_4 ----------- #
 
 # ------- INPUTS ------- #
+def validateInfix(expression):
+    valid_chars = set("0123456789*/+-")
+    operators = set("*/+-")
 
+    stack = []
+    previous_char = None
+
+    for char in expression:
+        if char not in valid_chars:
+            return False
+
+        if previous_char and previous_char in operators and char in operators:
+            return False
+
+        if char == "(":
+            stack.append(char)
+
+        elif char == ")":
+            if not stack:
+                return False
+            stack.pop()
+
+        previous_char = char
+
+    return len(stack) == 0
+
+
+# ----------- choice_5 ----------- #
 
 class Graph:
     def __init__(self):

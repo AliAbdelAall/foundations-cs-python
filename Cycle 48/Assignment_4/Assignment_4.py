@@ -76,7 +76,7 @@ class LinkedList:
                     previous.next = current.next
                     current.next = None
                 self.size -= 1
-                return value
+                return value  # we return the removed value for later use
             else:
                 previous = current
                 current = current.next
@@ -349,7 +349,8 @@ def evaluateInfix(expression):  # O(N) N: len(expression)
 # ----------- choice_5 ----------- #
 
 # ------- INPUTS ------- #
-def inputVertex(_):
+def inputVertex(_):  # O(N) N: wrong inputs by the user
+    # we make sure the user inputs a number since vertices are numbers
     vertex = input(f"Enter {_} vertex: ").strip()
     while not vertex.isdigit():
         print("vertex must be numeric!")
@@ -363,30 +364,31 @@ class Graph:
         self.adj_list = {}
         self.vertex_num = "0"  # for auto-generating vertices
 
-    def addVertex(self):  # O()
+    def addVertex(self):  # O(1)
         self.adj_list[self.vertex_num] = LinkedList()
         print(f"Vertex {self.vertex_num} was added to the graph.")
-        self.vertex_num = str(int(self.vertex_num) + 1)
+        self.vertex_num = str(int(self.vertex_num) + 1)  # we increment and convert to string
 
-    def checkVertices(self, v1, v2):
+    def checkVertices(self, v1, v2):  # O(1)
+        # we check if the vertices exists
         if v1 in self.adj_list and v2 in self.adj_list:
             return [v1, v2]
 
         elif v1 not in self.adj_list and v2 not in self.adj_list:
             print(f"Both vertices {v1} and {v2} does not exist!\n")
-
+        # extra steps to be user-friendly
         elif v1 not in self.adj_list:
             print(f"Vertex {v1} does not exist!\n")
 
         elif v2 not in self.adj_list:
             print(f"Vertex {v2} does not exist!\n")
 
-    def addEdge(self):
+    def addEdge(self):  # O(N) since we have checkConnectedNodes() inside
         v1 = inputVertex("first")
         v2 = inputVertex("second")
         checked = self.checkVertices(v1, v2)
         if checked:
-            connected = self.adj_list[v1].checkConnectedNodes()
+            connected = self.adj_list[v1].checkConnectedNodes()  # O(N)
             if not connected or v2 not in connected:
                 self.adj_list[v1].addNode(v2)
                 self.adj_list[v2].addNode(v1)
@@ -394,21 +396,21 @@ class Graph:
             else:
                 print(f"Edge between vertex {v1} and vertex {v2} already exist.")
 
-    def removeVertex(self):
+    def removeVertex(self):  # O(N^2) N: number of edges
         vertex = inputVertex("")
         if vertex not in self.adj_list:
             print(f"Vertex {vertex} does not exist")
 
         else:
-            connected = self.adj_list[vertex].checkConnectedNodes()
+            connected = self.adj_list[vertex].checkConnectedNodes()  # O(N)
             if connected:
-                for v in connected:
-                    self.adj_list[v].removeNode(vertex)
+                for v in connected:  # O(N)
+                    self.adj_list[v].removeNode(vertex)  # O(N)
 
             del self.adj_list[vertex]
             print(f"Removed Vertex {vertex} from graph")
 
-    def removeEdge(self):
+    def removeEdge(self):  # O(N) N: number of nodes
         if not self.adj_list:
             print("Graph is empty! Add vertices and edges first.")
             return
@@ -416,14 +418,14 @@ class Graph:
         v2 = inputVertex("second")
         checked = self.checkVertices(v1, v2)
         if checked:
-            removed = self.adj_list[v1].removeNode(v2)
+            removed = self.adj_list[v1].removeNode(v2)  # O(N)
             if removed:
-                self.adj_list[v2].removeNode(v1)
+                self.adj_list[v2].removeNode(v1)  # O(N)
                 print(f"Removed Edge between vertex {v1} and vertex {v2}.")
             else:
                 print(f"Edge between vertex {v1} and vertex {v2} does not exist!")
 
-    def displayGraph(self):
+    def displayGraph(self):  # O(V)
         vertex = inputVertex("")
         if not self.adj_list:
             print("Graph is empty add a vertex first!")
@@ -433,19 +435,20 @@ class Graph:
             else:
                 s = ""
                 for v in self.adj_list:
-                    if v >= vertex:
+                    if v >= vertex:  # we can compare numbers even as string (ASCII)
                         s += v + ","
                 if s:
                     print(s.strip(","))
                 else:
                     print("No vertices found at degree", vertex, "or above")
 
-    def displayConnectedVertices(self):
+    def displayConnectedVertices(self):  # O(N) since we have displayNodes() inside
+        # this is just for testing and bug fixing, it can be removed
         vertex = inputVertex("")
         if vertex not in self.adj_list:
             print("vertex does not exist")
         else:
-            self.adj_list[vertex].displayNodes()
+            self.adj_list[vertex].displayNodes()  # O(N)
 
 
 graph = Graph()
@@ -453,7 +456,7 @@ graph = Graph()
 
 # ----------- MENUS ----------- #
 
-def displayMainMenu():
+def displayMainMenu():  # O(1)
     print("""
 1. Singly Linked List
 2. Check if Palindrome
@@ -464,7 +467,7 @@ def displayMainMenu():
 """)
 
 
-def displayLinkedListMenu():
+def displayLinkedListMenu():  # O(1)
     print("""
     a. Add Node
     b. Display Nodes
@@ -473,7 +476,7 @@ def displayLinkedListMenu():
     """)
 
 
-def displayStudentMenu():
+def displayStudentMenu():  # O(1)
     print("""
     a. Add a student
     b. Interview a student
@@ -481,7 +484,7 @@ def displayStudentMenu():
     """)
 
 
-def displayGraphMenu():
+def displayGraphMenu():  # O(1)
     print("""
     a. Add vertex
     b. Add edge
@@ -494,25 +497,29 @@ def displayGraphMenu():
 
 # ----------- CHOICE ----------- #
 
-def inputIntChoice():
+def inputIntChoice():  # O(N) N: wrong inputs by the user
+    error_count = 0
     choice = input("Enter a number as your choice: ").strip()
-    while not choice.isdigit():
-        print("this is not a number!")
+    while (not choice.isdigit() or 1 < int(choice) < 7) and error_count != 4:
+        print("INVALID! Your Choice MUST be a POSITIVE numerical number 0->6")
+        print(f"you still have {4 - error_count} attempts\n")
+        error_count += 1
         choice = input("Enter a number as your choice again: ").strip()
-    return int(choice)
+
+    return None if error_count == 4 else int(choice)
 
 
-def inputStrChoice():
+def inputStrChoice():  # O(N) N: wrong inputs by the user
     choice = input("Enter a letter as your choice: ").strip()
-    while len(choice) != 1:
-        print("your choice must be one letter!")
+    while len(choice) != 1 or choice.isdigit():
+        print("your choice must be one letter!\n")
         choice = input("Enter a letter as your choice again: ").strip()
     return choice
 
 
 # ----------- User Greeting ----------- #
 
-def greetUser():
+def greetUser():  # O(1)
     name = input("Enter your name: ").strip()
     if name == "":
         name = "Anonymous"
@@ -522,9 +529,9 @@ def greetUser():
 # ----------- MAIN ----------- #
 
 def main():
-    greetUser()
-    displayMainMenu()
-    choice = inputIntChoice()
+    greetUser()  # O(1)
+    displayMainMenu()  # O(1)
+    choice = inputIntChoice()  # O(N)
     error_count = 0
 
     while choice != 6 and error_count != 4:

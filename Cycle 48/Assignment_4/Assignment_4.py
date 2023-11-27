@@ -83,6 +83,16 @@ class LinkedList:
                     current = current.next
             return
 
+    def checkConnectedNodes(self):
+        if self.size == 0:
+            return
+        else:
+            connected = []
+            current = self.head
+            while current:
+                connected.append(current.data)
+            return connected
+
 
 ll = LinkedList()
 
@@ -308,8 +318,9 @@ class Graph:
                         removed = True
 
                 current = current.next
-            print(f"Removed Vertex {vertex} from graph")
             del self.adj_list[vertex]
+            print(f"Removed Vertex {vertex} from graph")
+
 
     def removeEdge(self):
         if not self.adj_list:

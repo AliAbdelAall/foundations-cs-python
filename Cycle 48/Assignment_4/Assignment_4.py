@@ -383,9 +383,7 @@ class Graph:
         elif v2 not in self.adj_list:
             print(f"Vertex {v2} does not exist!\n")
 
-    def addEdge(self):  # O(N) since we have checkConnectedNodes() inside
-        v1 = inputVertex("first")
-        v2 = inputVertex("second")
+    def addEdge(self, v1, v2):  # O(N) since we have checkConnectedNodes() inside
         checked = self.checkVertices(v1, v2)
         if checked:
             connected = self.adj_list[v1].checkConnectedNodes()  # O(N)
@@ -396,12 +394,12 @@ class Graph:
             else:
                 print(f"Edge between vertex {v1} and vertex {v2} already exist.")
 
-    def removeVertex(self):  # O(N^2) N: number of edges
-        vertex = inputVertex("")
+    def removeVertex(self, vertex):  # O(N^2) N: number of edges
         if vertex not in self.adj_list:
             print(f"Vertex {vertex} does not exist")
 
         else:
+            # to remove a vertex we need to remove all its edges too
             connected = self.adj_list[vertex].checkConnectedNodes()  # O(N)
             if connected:
                 for v in connected:  # O(N)
@@ -410,12 +408,10 @@ class Graph:
             del self.adj_list[vertex]
             print(f"Removed Vertex {vertex} from graph")
 
-    def removeEdge(self):  # O(N) N: number of nodes
+    def removeEdge(self, v1, v2):  # O(N) N: number of nodes
         if not self.adj_list:
             print("Graph is empty! Add vertices and edges first.")
             return
-        v1 = inputVertex("first")
-        v2 = inputVertex("second")
         checked = self.checkVertices(v1, v2)
         if checked:
             removed = self.adj_list[v1].removeNode(v2)  # O(N)
@@ -425,8 +421,7 @@ class Graph:
             else:
                 print(f"Edge between vertex {v1} and vertex {v2} does not exist!")
 
-    def displayGraph(self):  # O(V)
-        vertex = inputVertex("")
+    def displayGraph(self, vertex):  # O(V)
         if not self.adj_list:
             print("Graph is empty add a vertex first!")
         else:
@@ -500,7 +495,7 @@ def displayGraphMenu():  # O(1)
 def inputIntChoice():  # O(N) N: wrong inputs by the user
     attempts = 3
     choice = input("Enter a number as your choice: ").strip()
-    while not choice.isdigit() or 1 > int(choice) or int(choice) > 7:
+    while not choice.isdigit() or int(choice) < 1 or int(choice) > 7:
         if attempts == 0:
             return
         print("INVALID! Your Choice MUST be a POSITIVE numerical number 0->6")
@@ -529,48 +524,48 @@ def greetUser():  # O(1)
 
 # ----------- MAIN ----------- #
 
-def main():
+def main():  # O(N^2) since we have graph.removeVertex()  # O(N^2) inside
     greetUser()  # O(1)
     displayMainMenu()  # O(1)
     choice = inputIntChoice()  # O(N)
     if not choice:
-        print("you have reach MAX-LIMIT of ATTEMPTS!\n\n EXITING the program....")
+        print("you have reach MAX-LIMIT of ATTEMPTS!\n\n Exiting the program....")
         return
 
     while choice != 6:
 
         if choice == 1:
-            displayLinkedListMenu()
-            choice_ll = inputStrChoice()
+            displayLinkedListMenu()  # O(1)
+            choice_ll = inputStrChoice()  # O(N)
 
             while choice_ll != "d":
                 if choice_ll == "a":
-                    value = inputInteger()
+                    value = inputInteger()  # O(N)
                     ll.addNode(value)
                     print(f"New Node with value: {value}, added.")
                 elif choice_ll == "b":
-                    ll.displayNodes()
+                    ll.displayNodes()  # O(N)
                 elif choice_ll == "c":
-                    ll.removeAllValueNodes(inputInteger())
+                    ll.removeAllValueNodes(inputInteger())  # O(N)
                 else:
                     print("this choice is INVALID!")
 
-                displayLinkedListMenu()
-                choice_ll = inputStrChoice()
+                displayLinkedListMenu()  # O(1)
+                choice_ll = inputStrChoice()  # O(N)
 
         elif choice == 2:
-            print(checkPalindrome())
+            print(checkPalindrome())  # O(N)
         elif choice == 3:
-            displayStudentMenu()
-            choice_s = inputStrChoice()
+            displayStudentMenu()  # O(1)
+            choice_s = inputStrChoice()  # O(N)
 
             while choice_s != "c":
                 if choice_s == "a":
-                    queue.enqueue(Student())
+                    queue.enqueue(Student())  # O(N)
                 elif choice_s == "b":
-                    queue.dequeue()
-                elif choice_s == "d":
-                    queue.displayQueue()
+                    queue.dequeue()  # O(1)
+                # elif choice_s == "d":
+                #     queue.displayQueue()
                 else:
                     print("this choice is INVALID!")
 
@@ -580,30 +575,30 @@ def main():
         elif choice == 4:
             print(evaluateInfix(inputInfix()))
         elif choice == 5:
-            displayGraphMenu()
-            choice_g = inputStrChoice()
+            displayGraphMenu()  # O(1)
+            choice_g = inputStrChoice()  # O(N)
 
             while choice_g != "f":
                 if choice_g == "a":
-                    graph.addVertex()
+                    graph.addVertex()  # O(1)
                 elif choice_g == "b":
-                    graph.addEdge()
+                    graph.addEdge(inputVertex("first"), inputVertex("second"))  # O(N)
                 elif choice_g == "c":
-                    graph.removeVertex()
+                    graph.removeVertex(inputVertex(""))  # O(N^2)
                 elif choice_g == "d":
-                    graph.removeEdge()
+                    graph.removeEdge(inputVertex("first"), inputVertex("second"))  # O(N)
                 elif choice_g == "e":
-                    graph.displayGraph()
-                elif choice_g == "g":
-                    graph.displayConnectedVertices()
+                    graph.displayGraph(inputVertex(""))  # O(N)
+                # elif choice_g == "g":
+                #     graph.displayConnectedVertices()  # o(N)
                 else:
                     print("this choice is INVALID!")
 
-                displayGraphMenu()
-                choice_g = inputStrChoice()
+                displayGraphMenu()  # O(1)
+                choice_g = inputStrChoice()  # O(N)
 
-        displayMainMenu()
-        choice = inputIntChoice()
+        displayMainMenu()  # O(1)
+        choice = inputIntChoice()  # O(N)
 
-
+    print("Exiting the program ...")
 main()

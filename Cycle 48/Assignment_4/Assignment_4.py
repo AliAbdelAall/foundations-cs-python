@@ -299,28 +299,13 @@ class Graph:
             print(f"Vertex {vertex} does not exist")
 
         else:
-            current = self.adj_list[vertex].head
-            while current:
-                v = current.data
-                current_v = self.adj_list[v].head
-                previous_v = None
-                removed = False
-                while current_v and not removed:
-                    if current_v.data == vertex:
-                        if not previous_v:
-                            self.adj_list[v].head = self.adj_list[v].head.next
-                            current_v.next = None
+            connected = self.adj_list[vertex].checkConnectedNodes()
+            if connected:
+                for v in connected:
+                    self.adj_list[v].removeNode(vertex)
 
-                        else:
-                            previous_v.next = current_v.next
-                            current_v.next = None
-
-                        removed = True
-
-                current = current.next
             del self.adj_list[vertex]
             print(f"Removed Vertex {vertex} from graph")
-
 
     def removeEdge(self):
         if not self.adj_list:

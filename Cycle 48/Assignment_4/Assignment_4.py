@@ -298,6 +298,20 @@ def evaluateInfix(expression):
 
     precedence = {'+': 1, '-': 1, '*': 2, '/': 2}
 
+    def applyOperation():
+        operator = operator_stack.pop()
+        operand2 = operand_stack.pop()
+        operand1 = operand_stack.pop()
+
+        if operator == '+':
+            operand_stack.append(operand1 + operand2)
+        elif operator == '-':
+            operand_stack.append(operand1 - operand2)
+        elif operator == '*':
+            operand_stack.append(operand1 * operand2)
+        elif operator == '/':
+            operand_stack.append(operand1 // operand2)
+
 
 # ----------- choice_5 ----------- #
 

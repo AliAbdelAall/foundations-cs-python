@@ -91,6 +91,7 @@ class LinkedList:
             current = self.head
             while current:
                 connected.append(current.data)
+                current = current.next
             return connected
 
 

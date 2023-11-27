@@ -95,7 +95,6 @@ class LinkedList:
             return connected
 
 
-
 ll = LinkedList()
 
 
@@ -255,7 +254,7 @@ queue = PriorityQueue()
 
 # ------- INPUTS ------- #
 def validateInfix(expression):
-    valid_chars = set("0123456789*/+-")
+    valid_chars = set("0123456789*/+-()")
     operators = set("*/+-")
 
     stack = []
@@ -289,6 +288,16 @@ def inputInfix():
         expression = input("Enter Infix expression again: ")
         valid = validateInfix(expression)
     return expression
+
+
+def evaluateInfix(expression):
+    operator_stack = []
+    operand_stack = []
+
+    operators = {'+', '-', '*', '/'}
+
+    precedence = {'+': 1, '-': 1, '*': 2, '/': 2}
+
 
 # ----------- choice_5 ----------- #
 
@@ -515,7 +524,7 @@ def main():
                     choice_s = inputStrChoice()
 
             elif choice == 4:
-                pass
+                print(evaluateInfix(inputInfix()))
             elif choice == 5:
                 displayGraphMenu()
                 choice_g = inputStrChoice()

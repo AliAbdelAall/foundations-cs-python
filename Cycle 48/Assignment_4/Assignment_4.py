@@ -3,24 +3,24 @@
 # ------- classes ------- #
 
 class Node:
-    def __init__(self, data):
+    def __init__(self, data):  # O(1)
         self.data = data
         self.next = None
 
 
 class LinkedList:
-    def __init__(self):
+    def __init__(self):  # O(1)
         self.head = None
         self.size = 0
 
-    def addNode(self, value):
+    def addNode(self, value):  # O(1)
         new_node = Node(value)
         new_node.next = self.head
         self.head = new_node
         self.size += 1
         return value
 
-    def displayNodes(self):
+    def displayNodes(self):  # O(N) N: number of nodes
         if self.size == 0:
             print("\nLinked-List is empty!")
         else:
@@ -31,28 +31,28 @@ class LinkedList:
                 current = current.next
             print("None")
 
-    def removeAllValueNodes(self, value):
+    def removeAllValueNodes(self, value):  # O(N) N: number of nodes
         if self.size == 0:
             print("\nLinked-List is empty!")
 
         else:
             current = self.head
             previous = None
-            count = 0
+            count = 0  # count is for the print and to check if we removed a node
 
             while current:
-                if current.data == value:
-                    if not previous:
+                if current.data == value:  # if we found the node we proceed
+                    if not previous:  # if it is the first node
                         self.head = self.head.next
                         current = None
                     else:
                         previous.next = current.next
-                        current.next = None
+                        current.next = None  # we detach the node from the ll
                         current = previous.next
                     self.size -= 1
                     count += 1
                 else:
-                    previous = current
+                    previous = current  # we continue looping
                     current = current.next
 
             if count:
@@ -60,28 +60,27 @@ class LinkedList:
             else:
                 print("\nNode with value:", value, ", was not found.")
 
-    def removeNode(self, value):
+    def removeNode(self, value):  # O(N) N: number of nodes
         if self.size == 0:
             return
 
-        else:
-            current = self.head
-            previous = None
+        current = self.head  # same as before but we stop when we find and remove the node
+        previous = None
 
-            while current:
-                if current.data == value:
-                    if not previous:
-                        self.head = self.head.next
-                        current.next = None
-                    else:
-                        previous.next = current.next
-                        current.next = None
-                    self.size -= 1
-                    return value
+        while current:
+            if current.data == value:
+                if not previous:
+                    self.head = self.head.next
+                    current.next = None
                 else:
-                    previous = current
-                    current = current.next
-            return
+                    previous.next = current.next
+                    current.next = None
+                self.size -= 1
+                return value
+            else:
+                previous = current
+                current = current.next
+        return  # if not found we return None
 
     def checkConnectedNodes(self):
         if self.size == 0:
